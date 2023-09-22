@@ -1,4 +1,4 @@
-$headerHeight:4rem;
+$headerHeight:3rem;
 
 *, *::before, *::after{
   font-family: "ADLaMDisplay";
@@ -23,25 +23,35 @@ $headerHeight:4rem;
 #titre{
   width:15%;
   position:relative;
-  left:7rem;
-  top:0.6rem;
+  left:3rem;
+  top:1rem;
+}
+
+.panierMobile{
+  width:50%;
+  position:relative;
+  top:8px;
+  left:10rem;
 }
 
 #menuMobile{
   margin:0;
+  position:absolute;
+  left:-10rem;
   width:100%;
   height: 20rem;
   background-color: rgba(226, 174, 122);
-
+  border-radius: 15px;
   transition: all .8s;
   ul{
+    border-radius: 30%;
     padding:0;
     margin:0;
     width:100%;
     list-style: none;
     li{
       width:100%;
-      height:calc(20rem/8);
+      height:calc(20rem/7);
       border-top:3px solid white;
       border-bottom:3px solid white;
 
@@ -53,32 +63,32 @@ $headerHeight:4rem;
     }
   }
   &.hide{
-    position:relative;
-
-    transform: translateX(-20rem);
+    transform: translateX(-25rem);
   }
 }
 
 #cercle{
-  height:110px;
-  width:110px;
+  height:75px;
+  width:75px;
   background-color: orange;
   border-radius: 100%;
   position: absolute;
-  left:45.8%;
-  top:20px;
+  left:43%;
+  top:0px;
 }
 
 #logo{
+
   position:sticky;
   width:80%;
   position:absolute;
   top:8px;
-  left:11px;
+  left:8px;
 
 }
 
 .header{
+
   position:sticky;
   top:0;
   background-color: orange;
@@ -99,10 +109,11 @@ $headerHeight:4rem;
 
 
 .burger{
-  width:60px;
-  height:35px;
+  z-index: 3;
+  width:30px;
+  height:17.5px;
   position:absolute;
-  top:-64px;
+  top:-47px;
   margin:10px;
   &:focus{
     .line1{
@@ -114,15 +125,15 @@ $headerHeight:4rem;
   }
   &.active{
     .line1{
-      transform:translateY(20px) rotate(45deg);
-      width:60px;
+      transform:translateY(10px) rotate(45deg);
+      width:35px;
     }
     .line2{
       opacity: 0;
     }
     .line3{
-      transform:translateY(-15px) rotate(-45deg);
-      width:60px;
+      transform:translateY(-7px) rotate(-45deg);
+      width:35px;
     }
   }
 }
@@ -138,18 +149,18 @@ $headerHeight:4rem;
 
   &.line1{
     top:0%;
-    width:75px;
-    height:10px;
+    width:30px;
+    height:5.83px;
   }
   &.line2{
     top:50%;
-    width:75px;
-    height:10px;
+    width:30px;
+    height:5.83px;
   }
   &.line3{
     top:100%;
-    width:75px;
-    height:10px;
+    width:30px;
+    height:5.83px;
   }
 }
 
@@ -160,8 +171,9 @@ $headerHeight:4rem;
 
 .aside2{
   position:sticky;
-  top:63px;
-  float: left;
+  top:48px;
+  width:160px;
+
 }
 
 
@@ -182,13 +194,13 @@ $headerHeight:4rem;
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
-  div{
+  .header{
     z-index: 2;
     position:sticky;
     top:0;
     background-color: orange;
     padding:0;
-    height:$headerHeight;
+    height:4rem;
     span{
       color:blue;
       display: inline-block;
@@ -203,15 +215,15 @@ $headerHeight:4rem;
   #connexion{
     display:block;
     position:absolute;
-    top: 1.5rem;
-    right:20rem;
+    top: 1.2rem;
+    right:17rem;
   }
 
   #menu_haut{
     display:flex;
     flex-direction: row;
     position:absolute;
-    top: -0.5rem;
+    top: 0rem;
     right:20px;
     width:15%;
     list-style: none;
@@ -244,22 +256,23 @@ $headerHeight:4rem;
 
   #cercle{
     position:absolute;
-    top:1px;
-    width:110px;
+    top:0px;
+    left:44.5em;
+    width:100px;
+    height:100px;
     background-color: orange;
 
-    margin-right: 46%;
     border-radius: 100%;
 
 
   }
 
   #logo{
-    position:sticky;
+
     width:70%;
     position:absolute;
     top:1rem;
-    left:1rem;
+    left:0.95rem;
 
   }
   .block{
@@ -307,7 +320,7 @@ $headerHeight:4rem;
     display:none;
   }
 
-  #menuMobile, #panierMobile, #burger{
+  #menuMobile, .panierMobile, #burger{
     display:none;
   }
 
