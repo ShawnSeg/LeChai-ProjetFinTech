@@ -9,6 +9,8 @@ import { AccueilComponent } from './components/accueil/accueil.component';
 import { CarouselAccueilComponent } from './components/accueil/carousel-accueil/carousel-accueil.component';
 import { ProduitPhareAccueilComponent } from './components/accueil/produit-phare-accueil/produit-phare-accueil.component';
 import { CarouselCollaborateurAccueilComponent } from './components/accueil/carousel-collaborateur-accueil/carousel-collaborateur-accueil.component';
+import { PanierComponent } from './panier/panier.component';
+import { ProduitPanierComponent } from './produit-panier/produit-panier.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { CarouselCollaborateurAccueilComponent } from './components/accueil/caro
     AccueilComponent,
     CarouselAccueilComponent,
     ProduitPhareAccueilComponent,
-    CarouselCollaborateurAccueilComponent
+    CarouselCollaborateurAccueilComponent,
+    PanierComponent,
+    ProduitPanierComponent
   ],
   imports: [
     BrowserModule,
