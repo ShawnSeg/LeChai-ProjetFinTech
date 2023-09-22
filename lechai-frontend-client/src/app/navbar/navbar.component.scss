@@ -68,6 +68,7 @@ $headerHeight:3rem;
 }
 
 #cercle{
+  position: absolute;
   height:75px;
   width:75px;
   background-color: orange;
@@ -216,7 +217,7 @@ $headerHeight:3rem;
     display:block;
     position:absolute;
     top: 1.2rem;
-    right:17rem;
+    right:18%;
   }
 
   #menu_haut{
@@ -255,13 +256,12 @@ $headerHeight:3rem;
   }
 
   #cercle{
-    position:absolute;
-    top:0px;
-    left:44.5em;
+
+
     width:100px;
     height:100px;
     background-color: orange;
-
+    left:47%;
     border-radius: 100%;
 
 
@@ -278,7 +278,7 @@ $headerHeight:3rem;
   .block{
     z-index: 1;
     background-color: white;
-    height: 15px;
+    height: 20px;
     position: sticky;
     top:63px
   }
