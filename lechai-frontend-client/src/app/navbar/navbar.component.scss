@@ -28,7 +28,8 @@ $headerHeight:4rem;
 }
 
 #menuMobile{
-  width:20%;
+  margin:0;
+  width:100%;
   height: 20rem;
   background-color: rgba(226, 174, 122);
 
@@ -79,6 +80,7 @@ $headerHeight:4rem;
 
 .header{
   position:sticky;
+  top:0;
   background-color: orange;
   padding:0;
   height:$headerHeight;
@@ -100,7 +102,7 @@ $headerHeight:4rem;
   width:60px;
   height:35px;
   position:absolute;
-  top:7px;
+  top:-64px;
   margin:10px;
   &:focus{
     .line1{
@@ -151,7 +153,16 @@ $headerHeight:4rem;
   }
 }
 
+.aside1{
+  position:sticky;
+  top:60px;
+}
 
+.aside2{
+  position:sticky;
+  top:63px;
+  float: left;
+}
 
 
 
@@ -172,7 +183,9 @@ $headerHeight:4rem;
   .col-12 {width: 100%;}
 
   div{
+    z-index: 2;
     position:sticky;
+    top:0;
     background-color: orange;
     padding:0;
     height:$headerHeight;
@@ -230,7 +243,8 @@ $headerHeight:4rem;
   }
 
   #cercle{
-
+    position:absolute;
+    top:1px;
     width:110px;
     background-color: orange;
 
@@ -248,11 +262,23 @@ $headerHeight:4rem;
     left:1rem;
 
   }
-
+  .block{
+    z-index: 1;
+    background-color: white;
+    height: 15px;
+    position: sticky;
+    top:63px
+  }
   #menuDesktop{
     display: block;
-    margin-top:10px;
+    position:sticky;
+    top:80px;
+    margin-top:0px;
+
     ul{
+
+      z-index: 1;
+      background-color: white;
       display: flex;
       flex-direction: row;
       width:100%;
@@ -260,6 +286,7 @@ $headerHeight:4rem;
       padding: 0%;
       li{
         display: inline-block;
+        background-color: white;
         width:25%;
         text-align: center;
         padding-bottom: 20px;
