@@ -16,6 +16,9 @@ import { IProduitPanier } from 'src/IProduitPanier';
 import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
 import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-liste-souhait.component';
+import { ProduitCommandeDetailComponent } from './produit-commande-detail/produit-commande-detail.component';
+import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
+import { CommandesListeCommandesComponent } from './commandes-liste-commandes/commandes-liste-commandes.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-li
     ProduitPanierComponent,
     ListeSouhaitComponent,
     CommandesDetailsComponent,
-    ProduitListeSouhaitComponent
+    ProduitListeSouhaitComponent,
+    ProduitCommandeDetailComponent,
+    ListeCommandesComponent,
+    CommandesListeCommandesComponent
   ],
   imports: [
     BrowserModule,
