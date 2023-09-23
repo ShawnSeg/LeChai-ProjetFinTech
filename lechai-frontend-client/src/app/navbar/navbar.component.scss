@@ -41,7 +41,7 @@ $headerHeight:3rem;
   left:-10rem;
   width:100%;
   height: 20rem;
-  background-color: rgba(226, 174, 122);
+  background-color: #CB7F1F;
   border-radius: 15px;
   transition: all .8s;
   ul{
@@ -72,7 +72,7 @@ $headerHeight:3rem;
   position: absolute;
   height:75px;
   width:75px;
-  background-color: orange;
+  background-color: #78F1EA;
   border-radius: 100%;
   position: absolute;
   left:43%;
@@ -93,7 +93,7 @@ $headerHeight:3rem;
 
   position:sticky;
   top:0;
-  background-color: orange;
+  background-color: #78F1EA;
   padding:0;
   height:$headerHeight;
   span{
@@ -200,7 +200,7 @@ $headerHeight:3rem;
     z-index: 2;
     position:sticky;
     top:0;
-    background-color: orange;
+    background-color: #FFCFDF;
     padding:0;
     height:4rem;
     span{
@@ -262,8 +262,10 @@ $headerHeight:3rem;
 
     width:100px;
     height:100px;
-    background-color: orange;
+
+    background-color: #FFCFDF;
     left:47%;
+
     border-radius: 100%;
 
 
@@ -271,10 +273,10 @@ $headerHeight:3rem;
 
   #logo{
 
-    width:70%;
+    width:80%;
     position:absolute;
-    top:1rem;
-    left:0.95rem;
+    top:0.85rem;
+    left:0.65rem;
 
   }
   .block{
@@ -311,7 +313,7 @@ $headerHeight:3rem;
         transition:border-width 0.3s ease;
         z-index: 3;
         &:hover{
-          border-bottom:5px solid rgb(4, 178, 4);
+          border-bottom:5px solid #FFE649;
         }
       }
 

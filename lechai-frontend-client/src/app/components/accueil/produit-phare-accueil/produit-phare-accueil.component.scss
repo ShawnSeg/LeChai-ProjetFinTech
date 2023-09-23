@@ -1,0 +1,23 @@
+h2{
+  text-align: center;
+  margin-top: 2em;
+}
+
+.produitPhareAccueil{
+  width: auto;
+  max-height: 20em;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+  padding-left: 10%;
+
+
+  span{
+    flex: 1;
+    text-align: center;
+  }
+
+  img{
+    width: 30%;
+  }
+}

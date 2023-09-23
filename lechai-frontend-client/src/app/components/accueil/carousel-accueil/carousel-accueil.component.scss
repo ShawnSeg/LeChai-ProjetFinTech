@@ -1,0 +1,35 @@
+.container_carousel{
+  position: relative;
+  width: 100%;
+  max-height: 30em; /* Limite la hauteur de l'image */
+  overflow: hidden; /* Cache le contenu qui dépasse la hauteur maximale */
+  display: flex;
+  align-items: center;
+
+.gauche_carousel{
+  width: 2%;
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 2%;
+  filter: white !important;
+}
+
+.droite_carousel{
+  width: 2%;
+  position: absolute;
+  z-index: 5;
+  top: 48%;
+  left: 95%;
+  filter: white !important;
+}
+
+.img_carousel {
+  width: 250%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
+  //max-height: auto; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
+  display: block;
+}
+
+}
+
+

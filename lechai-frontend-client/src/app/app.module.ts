@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { AccueilComponent } from './components/accueil/accueil.component';
+import { CarouselAccueilComponent } from './components/accueil/carousel-accueil/carousel-accueil.component';
+import { ProduitPhareAccueilComponent } from './components/accueil/produit-phare-accueil/produit-phare-accueil.component';
+import { CarouselCollaborateurAccueilComponent } from './components/accueil/carousel-collaborateur-accueil/carousel-collaborateur-accueil.component';
 import { PanierComponent } from './panier/panier.component';
 import { ProduitPanierComponent } from './produit-panier/produit-panier.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -18,6 +22,10 @@ import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-li
     AppComponent,
     NavbarComponent,
     FooterComponent,
+    AccueilComponent,
+    CarouselAccueilComponent,
+    ProduitPhareAccueilComponent,
+    CarouselCollaborateurAccueilComponent,
     PanierComponent,
     ProduitPanierComponent,
     ListeSouhaitComponent,
