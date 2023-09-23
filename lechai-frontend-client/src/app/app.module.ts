@@ -7,6 +7,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { PanierComponent } from './panier/panier.component';
 import { ProduitPanierComponent } from './produit-panier/produit-panier.component';
+import {HttpClientModule} from '@angular/common/http';
+import { IProduitPanier } from 'src/IProduitPanier';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { ProduitPanierComponent } from './produit-panier/produit-panier.componen
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
