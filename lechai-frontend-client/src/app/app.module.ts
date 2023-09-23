@@ -9,6 +9,9 @@ import { PanierComponent } from './panier/panier.component';
 import { ProduitPanierComponent } from './produit-panier/produit-panier.component';
 import {HttpClientModule} from '@angular/common/http';
 import { IProduitPanier } from 'src/IProduitPanier';
+import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
+import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
+import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-liste-souhait.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { IProduitPanier } from 'src/IProduitPanier';
     NavbarComponent,
     FooterComponent,
     PanierComponent,
-    ProduitPanierComponent
+    ProduitPanierComponent,
+    ListeSouhaitComponent,
+    CommandesDetailsComponent,
+    ProduitListeSouhaitComponent
   ],
   imports: [
     BrowserModule,
