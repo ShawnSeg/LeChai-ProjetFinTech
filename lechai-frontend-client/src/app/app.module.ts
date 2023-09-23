@@ -19,6 +19,7 @@ import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-li
 import { ProduitCommandeDetailComponent } from './produit-commande-detail/produit-commande-detail.component';
 import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
 import { CommandesListeCommandesComponent } from './commandes-liste-commandes/commandes-liste-commandes.component';
+import { PaiementComponent } from './paiement/paiement.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CommandesListeCommandesComponent } from './commandes-liste-commandes/co
     ProduitListeSouhaitComponent,
     ProduitCommandeDetailComponent,
     ListeCommandesComponent,
-    CommandesListeCommandesComponent
+    CommandesListeCommandesComponent,
+    PaiementComponent
   ],
   imports: [
     BrowserModule,
