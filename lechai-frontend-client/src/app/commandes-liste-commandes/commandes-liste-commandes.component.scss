@@ -58,6 +58,13 @@ hr{
   hr{
     width:63%
   }
+  aside{
+    &.flex{
+      label{
+        width:25%;
+      }
+    }
+  }
 
 }
 

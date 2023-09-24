@@ -1,0 +1,142 @@
+*{
+  font-size: medium;
+}
+
+aside{
+  display:flex;
+}
+
+.code{
+  width:100%;
+}
+
+h3{
+  margin-top:10%;
+  width:80%;
+  margin-left:10%;
+  +hr{
+    width:80%;
+    margin-left:10%;
+  }
+}
+
+h4{
+  +hr{
+    margin-bottom: 4%;
+  }
+}
+.marginTop{
+  margin-top:15%;
+}
+
+div{
+  margin-top: 10%;
+  background-color: rgb(255,250,234);
+  width:70%;
+  margin-left:13%;
+  padding:3%;
+  border-radius: 30px;
+  .livraison{
+    display:flex;
+    flex-direction: column;
+  }
+}
+
+button{
+  margin-top:10%;
+  width:80%;
+  margin-left:10%;
+}
+
+label{
+  width:50%;
+}
+
+
+@media only screen and (min-width: 968px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+
+  *{
+    font-size: x-large;
+  }
+
+  aside{
+    display:flex;
+  }
+
+  h3{
+    margin-top:3%;
+    width:80%;
+    margin-left:10%;
+    font-size: xx-large;
+    text-align: center;
+    +hr{
+      width:35%;
+      margin-left:32.5%;
+    }
+  }
+
+  h4{
+    +hr{
+      margin-bottom: 4%;
+    }
+  }
+  .marginTop{
+    margin-top:15%;
+  }
+  .colonnes{
+    display: flex;
+    flex-wrap: wrap;
+    width:70%;
+    margin-left: 15%;
+    .livraison{
+      margin-bottom: 3%;
+      margin-right: 0%;
+      width:50%;
+      input, select{
+        width:80%;
+      }
+    }
+  }
+
+
+  div{
+    margin-top: 4%;
+    background-color: rgb(255,250,234);
+    width:70%;
+    margin-left:13%;
+    padding:3%;
+    border-radius: 30px;
+    .livraison{
+      display:flex;
+      flex-direction: column;
+    }
+  }
+
+  button{
+    margin-top:10%;
+    width:250px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    font-size: x-large;
+    margin-left:36.5%;
+  }
+
+  label{
+    width:50%;
+  }
+
+}
+
