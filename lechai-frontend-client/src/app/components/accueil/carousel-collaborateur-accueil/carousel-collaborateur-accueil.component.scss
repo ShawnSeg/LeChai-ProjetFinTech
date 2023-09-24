@@ -1,0 +1,161 @@
+
+/* ================================ MOBILE ======================================== */
+
+section{
+  margin: 1em;
+  margin-top: 10em;
+  margin-bottom: 5em;
+  border-bottom: 5px #FFE649 solid;
+  border-right: 5px #FFE649 solid;
+  border-radius: 10px;
+  padding-bottom: 2em;
+  padding-top: 2em;
+}
+.container_carousel_collab{
+  position: relative;
+  width: 100%;
+  text-align: center;
+
+  a{
+    color:black;
+    font-size: 12px;
+  }
+
+  a:first-of-type{
+    margin-right: 1em;
+  }
+  a:last-of-type{
+    margin-left: 1em;
+  }
+}
+.gauche_carousel_collab{
+  width: 6%;
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 4%;
+}
+
+.droite_carousel_collab{
+  width: 6%;
+  position: absolute;
+  z-index: 5;
+  top: 48%;
+  left: 90%;
+}
+
+.img_collab {
+  width: 40%;
+  border-radius: 100%;
+  margin-left: 2em;
+}
+
+.desc_coll_carousel{
+  margin-left: 1em;
+  margin-top: 1em;
+  max-width: 50%;
+  overflow: hidden;
+
+  h3{
+    margin-bottom: 0.8em;
+  }
+}
+
+.res_coll_carousel{
+  margin-top: 0.9em;
+}
+
+.hide-mobile{
+  display: none;
+}
+
+@media only screen and (min-width: 968px){
+  /* ================================ WEB ======================================== */
+
+  section{
+    margin: 10em;
+    margin-top: 15em;
+    border-bottom: 8px #FFE649 solid;
+    border-right: 8px #FFE649 solid;
+    border-radius: 10px;
+    padding-bottom: 2em;
+    padding-top: 2em;
+  }
+  .container_carousel_collab{
+    position: relative;
+    width: 100%;
+    max-height: 30em; /* Limite la hauteur de l'image */
+    overflow: hidden; /* Cache le contenu qui dépasse la hauteur maximale */
+    display: flex;
+
+    a{
+      color:black;
+      font-size: 16px;
+    }
+  }
+  .gauche_carousel_collab{
+    width: 2%;
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 2%;
+  }
+
+  .droite_carousel_collab{
+    width: 2%;
+    position: absolute;
+    z-index: 5;
+    top: 48%;
+    left: 95%;
+  }
+
+  .img_collab {
+    width: 80%;
+    border-radius: 100%;
+    margin-left: 5em;
+  }
+
+  .desc_coll_carousel{
+    margin-left: 5em;
+    margin-top: 1em;
+    max-width: 40%;
+    overflow: hidden;
+
+    h3{
+      margin-bottom: 0.8em;
+    }
+
+    p:last-of-type{
+      margin-bottom: 2.5em;
+    }
+  }
+
+  .res_coll_carousel{
+    margin-top: 0.9em;
+    text-align: center;
+    max-width: 40%;
+
+    p:first-of-type{
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    div{
+      margin-bottom: 1.4em;
+    }
+  }
+
+  .hide-mobile{
+    display: block;
+  }
+
+  .collab_FB{
+    width: 8%;
+  }
+
+  .collab_IG{
+    margin-top: 0.2em;
+    width: 9%;
+  }
+
+}
