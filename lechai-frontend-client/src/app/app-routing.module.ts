@@ -5,12 +5,16 @@ import { AccueilComponent } from './components/accueil/accueil.component';
 import { PanierComponent } from './panier/panier.component';
 import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
+import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
+import { PaiementComponent } from './paiement/paiement.component';
 
 const routes: Routes = [
   {path: 'accueil', component: AccueilComponent},
   {path: 'panier', component:PanierComponent},
   {path: "listeSouhait", component:ListeSouhaitComponent},
-  {path: "commandeDetail", component:CommandesDetailsComponent}
+  {path: "commandeDetail", component:CommandesDetailsComponent},
+  {path: "anciennesCommandes", component:ListeCommandesComponent},
+  {path: "paiement", component:PaiementComponent}
 ];
 
 @NgModule({

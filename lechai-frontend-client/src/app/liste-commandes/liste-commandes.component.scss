@@ -1,0 +1,185 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    display: block;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+.mobile{
+  display:block;
+  margin-bottom:2%;
+}
+
+.web{
+  display:none;
+}
+
+.filtreButton{
+  margin-top:10%;
+  margin-left:70%;
+  padding:0;
+  width:20%;
+  position:sticky;
+  top:12%;
+  img{
+    width:25%;
+    margin-bottom: 2%;;
+  }
+  }
+
+.flex{
+  display: flex;
+  flex-direction: row;
+  button{
+    height: 35px;
+    width:35px;
+    margin-top: 3%;
+    background: none;
+    border: none;
+    b{
+      font-size: larger;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+  }
+}
+
+.filtreForm{
+  position:fixed;
+
+
+  margin-top:3%;
+  width:80%;
+  margin-left:10%;
+  border-radius: 35px;
+  background-color: rgb(255,250,234);
+  padding-bottom: 3%;
+  h3{
+    text-align: center;
+    margin-left:13%;
+    margin-bottom:3%;
+  }
+  .filtre{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-bottom: 3%;
+    input, select{
+      width:70%;
+    };
+  }
+}
+h3{
+  margin-top:5%;
+  width:70%;
+  margin-left:5%;
+
+  +hr{
+    width:85%;
+    margin-left:5%;
+  }
+
+}
+.hide{
+  display:none;
+}
+
+@media only screen and (min-width: 968px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+
+  .mobile{
+    display:none;
+  }
+
+  .web{
+    display:block;
+
+  }
+
+  h1{
+    text-align: center;
+    margin-top: 3%;
+    +hr{
+      width:35%;
+      margin-left:32.5%
+    }
+
+  }
+
+  .filtreFormWeb{
+    background-color: rgb(255,250,234);
+    margin-left: 2%;
+    margin-right: 2%;
+    width:25%;
+    border-radius: 30px;
+    padding:2%;
+    position: fixed;
+    bottom:25%;
+
+    h2{
+      text-align: center;
+      margin-top:2%;
+      margin-bottom:4%;
+    }
+    .filtre{
+      display:flex;
+      flex-direction: column;
+      margin-bottom:6%;
+      width:70%;
+      margin-left:15%;
+      label{
+        width:100%;
+      }
+      input, select{
+        width:100%;
+      }
+    }
+  }
+
+  .flex{
+    margin-top: 5%;;
+    margin-bottom: 20%;
+    width:100%;
+  }
+
+  .listeCommandes{
+    margin-left:33%;
+    width:67%;
+  }
+
+}

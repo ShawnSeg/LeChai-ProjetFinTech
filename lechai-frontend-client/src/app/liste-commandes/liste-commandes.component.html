@@ -1,0 +1,74 @@
+<div class="mobile">
+  <button #filtreButton ngModel class="filtreButton" (click)="toggleButton()">Filtrer <img src="assets/image/filtre.png" alt=""></button>
+  <aside #filtreForm ngModel class="filtreForm hide">
+
+    <h3>Filtres </h3>
+
+    <div class="filtre">
+      <label for="">Produit acheté</label>
+      <input type="text" name="" id="">
+    </div>
+    <div class="filtre">
+      <label for=""># de commande</label>
+      <input type="text" name="" id="">
+    </div>
+    <div class="filtre">
+      <label for="">État de la commande</label>
+      <select name="" id="">
+        <option value="fini">Terminé</option>
+        <option value="en_cours">En cours</option>
+        <option value="erreur">Erreur</option>
+      </select>
+    </div>
+    <div class="filtre">
+      <label for="">Date Création</label>
+      <input type="text" name="" id="">
+    </div>
+
+
+  </aside>
+  <h3>Historique de commandes</h3>
+  <hr>
+  <app-commandes-liste-commandes></app-commandes-liste-commandes>
+
+</div>
+
+<div class="web">
+  <h1>Historique de commandes</h1>
+  <hr>
+  <div class="flex">
+    <aside class="filtreFormWeb">
+      <h2>Filtres </h2>
+
+      <div class="filtre">
+        <label for="">Produit acheté</label>
+        <input type="text" name="" id="">
+      </div>
+      <div class="filtre">
+        <label for=""># de commande</label>
+        <input type="text" name="" id="">
+      </div>
+      <div class="filtre">
+        <label for="">État de la commande</label>
+        <select name="" id="">
+          <option value="fini">Terminé</option>
+          <option value="en_cours">En cours</option>
+          <option value="erreur">Erreur</option>
+        </select>
+      </div>
+      <div class="filtre">
+        <label for="">Date Création</label>
+        <input type="text" name="" id="">
+      </div>
+
+
+    </aside>
+    <aside class="listeCommandes">
+
+      <app-commandes-liste-commandes></app-commandes-liste-commandes>
+    </aside>
+  </div>
+
+
+
+</div>

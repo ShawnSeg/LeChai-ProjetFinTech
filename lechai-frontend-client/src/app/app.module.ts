@@ -16,7 +16,10 @@ import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
 import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-liste-souhait.component';
 import { NotreHistoireComponent } from './components/accueil/notre-histoire/notre-histoire.component';
-
+import { ProduitCommandeDetailComponent } from './produit-commande-detail/produit-commande-detail.component';
+import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
+import { CommandesListeCommandesComponent } from './commandes-liste-commandes/commandes-liste-commandes.component';
+import { PaiementComponent } from './paiement/paiement.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,11 @@ import { NotreHistoireComponent } from './components/accueil/notre-histoire/notr
     ListeSouhaitComponent,
     CommandesDetailsComponent,
     ProduitListeSouhaitComponent,
-    NotreHistoireComponent
+    NotreHistoireComponent,
+    ProduitCommandeDetailComponent,
+    ListeCommandesComponent,
+    CommandesListeCommandesComponent,
+    PaiementComponent
   ],
   imports: [
     BrowserModule,

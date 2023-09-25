@@ -1,0 +1,71 @@
+*{
+  margin-left:7%;
+  font-size:medium;
+}
+
+h4{
+  margin-top:2%;
+}
+.flex{
+  display: flex;
+  margin-left:0%;
+}
+hr{
+  margin-top:2%;
+  margin-bottom:3%;
+}
+
+@media only screen and (min-width: 968px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+
+
+  *{
+
+    font-size:larger;
+  }
+
+  h4{
+    font-size: x-large;
+    margin-bottom:2%;
+  }
+  div{
+    margin-bottom:2%;
+  }
+  .produitsAchetes{
+    p{
+      margin-left: 4%;
+    }
+  }
+  p{
+    margin-left: 2%;
+  }
+  label{
+    width:20%;
+
+  }
+  hr{
+    width:63%
+  }
+  aside{
+    &.flex{
+      label{
+        width:25%;
+      }
+    }
+  }
+
+}
+
+
