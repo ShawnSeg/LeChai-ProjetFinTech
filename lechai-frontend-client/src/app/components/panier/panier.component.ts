@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProduitsServiceService } from '../produits-service.service';
+import { ProduitsServiceService } from '../../produits-service.service';
 import { ProduitPanierComponent } from '../produit-panier/produit-panier.component';
 import { IProduitPanier } from 'src/IProduitPanier';
 import { Observable } from 'rxjs';
