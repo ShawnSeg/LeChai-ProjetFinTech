@@ -7,7 +7,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import { CarouselAccueilComponent } from './components/accueil/carousel-accueil/carousel-accueil.component';
-import { ProduitPhareAccueilComponent } from './components/accueil/produit-phare-accueil/produit-phare-accueil.component';
 import { CarouselCollaborateurAccueilComponent } from './components/accueil/carousel-collaborateur-accueil/carousel-collaborateur-accueil.component';
 import { PanierComponent } from './panier/panier.component';
 import { ProduitPanierComponent } from './produit-panier/produit-panier.component';
@@ -16,6 +15,8 @@ import { IProduitPanier } from 'src/IProduitPanier';
 import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
 import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-liste-souhait.component';
+import { NotreHistoireComponent } from './components/accueil/notre-histoire/notre-histoire.component';
+
 
 @NgModule({
   declarations: [
@@ -24,13 +25,13 @@ import { ProduitListeSouhaitComponent } from './produit-liste-souhait/produit-li
     FooterComponent,
     AccueilComponent,
     CarouselAccueilComponent,
-    ProduitPhareAccueilComponent,
     CarouselCollaborateurAccueilComponent,
     PanierComponent,
     ProduitPanierComponent,
     ListeSouhaitComponent,
     CommandesDetailsComponent,
-    ProduitListeSouhaitComponent
+    ProduitListeSouhaitComponent,
+    NotreHistoireComponent
   ],
   imports: [
     BrowserModule,

@@ -1,35 +1,68 @@
+
+/* ================================ MOBILE ======================================== */
+
 .container_carousel{
   position: relative;
-  width: 100%;
-  max-height: 30em; /* Limite la hauteur de l'image */
-  overflow: hidden; /* Cache le contenu qui dépasse la hauteur maximale */
+  min-width: 100vw;
+  max-height: 20em;
+  overflow: hidden;
   display: flex;
   align-items: center;
+}
 
 .gauche_carousel{
-  width: 2%;
+  width: 4%;
   position: absolute;
   z-index: 5;
   top: 50%;
-  left: 2%;
-  filter: white !important;
+  left: 1em;
 }
 
 .droite_carousel{
-  width: 2%;
+  width: 4%;
   position: absolute;
   z-index: 5;
   top: 48%;
-  left: 95%;
-  filter: white !important;
+  left: 23em;
 }
 
 .img_carousel {
-  width: 250%; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
-  //max-height: auto; /* Assurez-vous que l'image ne dépasse pas la largeur du conteneur */
+  max-width: 100vw;
+  //max-height: auto;
   display: block;
 }
 
-}
+@media only screen and (min-width: 968px){
+  /* ================================ WEB ======================================== */
+ .container_carousel{
+    position: relative;
+    min-width: 100vw;
+    max-height: 30em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
 
+  .gauche_carousel{
+    width: 2%;
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    left: 3em;
+  }
+
+  .droite_carousel{
+    width: 2%;
+    position: absolute;
+    z-index: 5;
+    top: 48%;
+    left: 88em;
+  }
+
+  .img_carousel {
+    min-width: 100vw;
+    //max-height: auto;
+    display: block;
+  }
+}
 
