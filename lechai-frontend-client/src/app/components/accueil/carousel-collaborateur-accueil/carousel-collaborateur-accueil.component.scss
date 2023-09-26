@@ -24,9 +24,7 @@ section{
   a:first-of-type{
     margin-right: 1em;
   }
-  a:last-of-type{
-    margin-left: 1em;
-  }
+
 }
 .gauche_carousel_collab{
   width: 6%;
@@ -120,6 +118,7 @@ section{
     margin-top: 1em;
     max-width: 40%;
     overflow: hidden;
+    text-align: justify;
 
     h3{
       margin-bottom: 0.8em;
@@ -141,6 +140,7 @@ section{
     }
 
     div{
+      margin-top: 2.5em;
       margin-bottom: 1.4em;
     }
   }

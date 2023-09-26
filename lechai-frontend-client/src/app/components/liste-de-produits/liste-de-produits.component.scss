@@ -1,0 +1,83 @@
+
+/* ================================ MOBILE ======================================== */
+
+.divTitreCat{
+  margin-left: 2em;
+  margin-bottom: 2em;
+  border-bottom: 3px black solid;
+}
+
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hide{
+  display: none;
+}
+
+.listeProduits{
+  position: relative;
+  max-width: 40%;
+  margin-left: 2.5em;
+  margin-bottom: 2em;
+  font-size: 10px;
+  text-align: center;
+  z-index: 1;
+
+  .imgProd{
+    width: 50%;
+    margin-bottom: 1em;
+  }
+
+  .iconePanier{
+    width: 14%;
+    position: absolute;
+    margin-top: 6.5em;
+    margin-left: -1em;
+  }
+
+}
+
+@media only screen and (min-width: 968px){
+  /* ================================ WEB ======================================== */
+
+  .divTitreCat{
+    font-size: 22px;
+  }
+
+  .listeProduits{
+    max-width: 30%;
+    margin-bottom: 5em;
+
+    .iconePanier{
+      margin-top: 13em;
+      margin-left: -1.5em;
+    }
+
+    transition: transform 0.3s ease-in-out;
+
+  }
+
+  .listeProduits:hover{
+    transform: scale(1.2);
+
+    .hide{
+      display: block;
+      position: absolute;
+      width: 10%;
+      height: 13%;
+      margin-left: 20em;
+      margin-top: -1em;
+      background-color: white;
+      padding: 2%;
+      border: 1px black solid;
+      border-radius: 100%;
+      z-index: 2;
+
+    }
+  }
+
+}
+
+

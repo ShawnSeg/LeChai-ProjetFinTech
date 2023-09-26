@@ -20,6 +20,10 @@ import { ProduitCommandeDetailComponent } from './produit-commande-detail/produi
 import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
 import { CommandesListeCommandesComponent } from './commandes-liste-commandes/commandes-liste-commandes.component';
 import { PaiementComponent } from './paiement/paiement.component';
+import { ListeDeProduitsComponent } from './components/liste-de-produits/liste-de-produits.component';
+import { FiltresListeDeProduitsComponent } from './components/filtres-liste-de-produits/filtres-liste-de-produits.component';
+import { DetailsProduitComponent } from './components/details-produit/details-produit.component';
+import { FiltreListeCollaborateursComponent } from './components/filtre-liste-collaborateurs/filtre-liste-collaborateurs.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { PaiementComponent } from './paiement/paiement.component';
     ProduitCommandeDetailComponent,
     ListeCommandesComponent,
     CommandesListeCommandesComponent,
-    PaiementComponent
+    PaiementComponent,
+    ListeDeProduitsComponent,
+    FiltresListeDeProduitsComponent,
+    DetailsProduitComponent,
+    FiltreListeCollaborateursComponent
   ],
   imports: [
     BrowserModule,

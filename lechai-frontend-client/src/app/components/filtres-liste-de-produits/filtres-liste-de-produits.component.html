@@ -1,0 +1,71 @@
+<section>
+  <div class="mobile">
+    <button #filtreButton ngModel class="filtreButton" (click)="toggleButton()">Filtrer <img src="assets/image/filtre.png" alt=""></button>
+    <aside #filtreForm ngModel class="filtreForm hide">
+
+      <h3>Filtres </h3>
+
+      <div class="filtre">
+        <label for="nomP">Nom du produit</label>
+        <input type="text" name="nomP" id="nomP">
+      </div>
+      <div class="filtre">
+        <label for="categorieP">Ctégorie du produit</label>
+        <select name="categorieP" id="categorieP">
+          <option value="fini">Thé</option>
+          <option value="en_cours">Marchandise</option>
+          <option value="erreur">Objet</option>
+        </select>
+      </div>
+      <div class="filtre">
+        <label for="prixP">Prix</label>
+        <span class="filtrePrix">
+          <input type="text" name="prixP" id="prixPmin" placeholder="min">
+          <input type="text" name="prixP" id="prixPmax" placeholder="max">
+        </span>
+      </div>
+
+
+    </aside>
+    <app-liste-de-produits></app-liste-de-produits>
+
+  </div>
+
+  <div class="web">
+    <div class="flex">
+      <aside class="filtreFormWeb">
+        <h2>Filtres </h2>
+
+        <div class="filtre">
+          <label for="nomP">Nom du produit</label>
+          <input type="text" name="nomP" id="nomP">
+        </div>
+        <div class="filtre">
+          <label for="categorieP">Ctégorie du produit</label>
+          <select name="categorieP" id="categorieP">
+            <option value="fini">Thé</option>
+            <option value="en_cours">Marchandise</option>
+            <option value="erreur">Objet</option>
+          </select>
+        </div>
+        <div class="filtre">
+          <label for="prixP">Prix</label>
+          <span class="filtrePrix">
+            <input type="text" name="prixP" id="prixPminWeb" placeholder="min">
+            <input type="text" name="prixP" id="prixPmaxWeb" placeholder="max">
+          </span>
+        </div>
+
+
+      </aside>
+      <aside class="listeCommandes">
+
+        <app-liste-de-produits></app-liste-de-produits>
+      </aside>
+    </div>
+
+
+
+  </div>
+</section>
+

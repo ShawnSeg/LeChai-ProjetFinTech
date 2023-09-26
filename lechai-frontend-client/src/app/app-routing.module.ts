@@ -7,6 +7,9 @@ import { ListeSouhaitComponent } from './liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './commandes-details/commandes-details.component';
 import { ListeCommandesComponent } from './liste-commandes/liste-commandes.component';
 import { PaiementComponent } from './paiement/paiement.component';
+import { FiltresListeDeProduitsComponent } from './components/filtres-liste-de-produits/filtres-liste-de-produits.component';
+import { DetailsProduitComponent } from './components/details-produit/details-produit.component';
+import { FiltreListeCollaborateursComponent } from './components/filtre-liste-collaborateurs/filtre-liste-collaborateurs.component';
 
 const routes: Routes = [
   {path: 'accueil', component: AccueilComponent},
@@ -14,7 +17,11 @@ const routes: Routes = [
   {path: "listeSouhait", component:ListeSouhaitComponent},
   {path: "commandeDetail", component:CommandesDetailsComponent},
   {path: "anciennesCommandes", component:ListeCommandesComponent},
-  {path: "paiement", component:PaiementComponent}
+  {path: "paiement", component:PaiementComponent},
+  {path: "listeProduits", component:FiltresListeDeProduitsComponent},
+  {path: "detailsProduit", component:DetailsProduitComponent},
+  {path: "listeCollaborateurs", component:FiltreListeCollaborateursComponent},
+
 ];
 
 @NgModule({
