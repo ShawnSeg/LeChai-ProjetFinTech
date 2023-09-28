@@ -2,32 +2,39 @@
   <aside class="asideProduit">
     <img src="" alt="image">
     <div>
-      <h3>Nom produit</h3>
+      <h3>{{produit?.nom}}</h3>
       <aside class="flex">
         <label for="">Description:</label>
-        <p>ownowgogoi</p>
+        <p>{{produit?.description}}</p>
       </aside>
 
 
       <aside class="flex">
         <label for="">Quantité:</label>
-        <select  name="selectQuantite" class="selectQuantite">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
+        <input type="number" class="selectQuantite" value="{{produit?.quantite}}">
+      </aside>
+      <aside class="flex" *ngIf="produit?.grandeur?.length!=0">
+        <label for="">Grandeur:</label>
+        <select name="selectGrandeur" class="selectQuantite">
+          <ng-container *ngFor="let grandeur of produit?.grandeur">
+            <option [value]="grandeur.nom">{{grandeur.nom}}</option>
+          </ng-container>
         </select>
       </aside>
-      <aside class="flex">
-        <label for="">Grandeur:</label>
-        <select  name="selectGrandeur" class="selectQuantite">
-          <option value="1">XS</option>
-          <option value="2">S</option>
-          <option value="3">M</option>
-          <option value="4">L</option>
-          <option value="5">XL</option>
+      <aside class="flex" *ngIf="produit?.couleur?.length!=0">
+        <label for="">Couleur:</label>
+        <select name="selectCouleur" class="selectQuantite">
+          <ng-container *ngFor="let couleur of produit?.couleur">
+            <option [value]="couleur.nom">{{couleur.nom}}</option>
+          </ng-container>
+        </select>
+      </aside>
+      <aside class="flex" *ngIf="produit?.quantite_g?.length!=0">
+        <label for="">Gram:</label>
+        <select name="selectGram" class="selectQuantite">
+          <ng-container *ngFor="let gram of produit?.quantite_g">
+            <option [value]="gram.quantite">{{gram.quantite}}</option>
+          </ng-container>
         </select>
       </aside>
     </div>
@@ -35,7 +42,7 @@
   </aside>
   <aside class="flex center max-width">
     <h2 id="cout" >Coût:</h2>
-    <h2>X</h2>
+    <h2>{{produit?.cout}}</h2>
   </aside>
 
 </div>

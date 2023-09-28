@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input  } from '@angular/core';
+import { ProduitPanier } from 'src/IProduitPanier';
+
 
 @Component({
   selector: 'app-produit-panier',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./produit-panier.component.scss']
 })
 export class ProduitPanierComponent {
-
+  @Input() produit?:ProduitPanier
 }

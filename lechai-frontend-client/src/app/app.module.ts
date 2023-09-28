@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -11,7 +10,6 @@ import { CarouselCollaborateurAccueilComponent } from './components/accueil/caro
 import { PanierComponent } from './components/panier/panier.component';
 import { ProduitPanierComponent } from './components/produit-panier/produit-panier.component';
 import {HttpClientModule} from '@angular/common/http';
-import { IProduitPanier } from 'src/IProduitPanier';
 import { ListeSouhaitComponent } from './components/liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './components/commandes-details/commandes-details.component';
 import { ProduitListeSouhaitComponent } from './components/produit-liste-souhait/produit-liste-souhait.component';
@@ -20,8 +18,10 @@ import { ProduitCommandeDetailComponent } from './components/produit-commande-de
 import { ListeCommandesComponent } from './components/liste-commandes/liste-commandes.component';
 import { CommandesListeCommandesComponent } from './components/commandes-liste-commandes/commandes-liste-commandes.component';
 import { PaiementComponent } from './components/paiement/paiement.component';
-import { NgxStripeModule } from 'ngx-stripe';
-import { Stripe } from '@stripe/stripe-js';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataService } from './data.service';
+import { ProduitsServiceService } from './services/produits-service.service';
+
 
 
 
@@ -48,7 +48,9 @@ import { Stripe } from '@stripe/stripe-js';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxStripeModule.forRoot('your_public_key_here')
+    HttpClientInMemoryWebApiModule.forRoot(DataService),
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
