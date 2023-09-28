@@ -1,0 +1,135 @@
+
+.sectionCompteClient{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  margin-top: 5em;
+  margin-bottom: 5em;
+}
+
+.form-box{
+  position: relative;
+  width: auto;
+  height: auto;
+  background: rgb(255,250,234);
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4em 2em 4em 2em;
+
+  .title{
+    text-align: center;
+  }
+
+  .nomClient{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    padding-bottom: 0.5em;
+    border-bottom: 3px solid black;
+
+    input:first-of-type{
+      margin-right: 0.5em;
+    }
+    input{
+      padding: 0.5em;
+    }
+
+  }
+
+  .infoD{
+    margin-bottom: 2em;
+
+    p:nth-of-type(1){
+      margin-right: 2.2em;
+    }
+
+    input{
+      width: 100%;
+    }
+  }
+
+  .infoC{
+    .mdpMin{
+      margin-top: 0.2em;
+      p{
+        font-size:x-small;
+        margin-left: 55%;
+      }
+    }
+
+    input{
+      width: 100%;
+    }
+  }
+
+  .mdpActu{
+
+    padding-top: 2em;
+    margin-top: 2em;
+    border-top: 1px solid black;
+    input{
+      width: 100%;
+    }
+  }
+
+  .adresse{
+    padding-bottom: 2em;
+    border-bottom: solid black 1px;
+    margin-bottom: 2em;
+
+    .add{
+      margin-right: 2em;
+    }
+
+    .rue{
+      display: flex;
+
+      input:first-of-type{
+        width: 77%;
+        margin-right: 0.3em;
+      }
+
+      input:last-of-type{
+        margin-left: 0.2em;
+        width: 10%;
+      }
+    }
+
+    input{
+      width: 100%;
+    }
+  }
+
+  .btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 3em;
+    button{
+      width: 50%;
+      border-radius: 10px;
+      padding: 0.5em;
+      background: white;
+    }
+
+    button:first-of-type{
+      margin-right: 1em;
+    }
+  }
+}
+
+@media only screen and (min-width: 968px){
+
+  /* ================================ WEB ======================================== */
+  .infoC{
+    .mdpMin{
+      margin-left: 30%;
+    }
+  }
+}
+
