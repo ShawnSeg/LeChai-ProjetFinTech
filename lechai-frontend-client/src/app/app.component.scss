@@ -1,0 +1,95 @@
+.toast-container{
+  width: auto;
+  height: auto;
+  color:black;
+  margin-right: 10px;
+  padding: 40px 45px;
+  position: fixed;
+  z-index: 1001;
+  box-shadow: 0 0 12px #999;
+  display: flex;
+  border-radius: 50px;
+  border: solid 4px black;
+}
+
+.toast-content{
+  align-self: center;
+}
+
+/* .iconToast{
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  padding-left: 6px;
+  font-weight: bolder;
+  margin-right: 15px;
+}
+ */
+.closeToast{
+  position:absolute;
+  right: 12px;
+  top: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.toast-container.success{
+  background-color: #A0FF89;
+  border-color: #0EDD00;
+}
+
+.toast-container.error{
+  background-color: #FF8989;
+  border-color: #FF0000;
+}
+
+.toast-container.warn{
+  background-color: #FFE489;
+  border-color: #FFC900;
+  border-radius: 0%;
+  width: 100px;
+}
+.toast-container.warn .closeToast{
+  background-color: #FFE489;
+}
+
+.toast-container.info{
+  background-color: #89C4FF;
+  border-color: #00B6FF;
+}
+.toast-container.info .closeToast{
+  background-color: #89C4FF;
+}
+
+.toast-container.top-left{
+  left: 2%;
+  top: 2%;
+}
+.toast-container.top-right{
+  left: 90%;
+  top: 2%;
+}
+.toast-container.bottom-left{
+  left: 2%;
+  top: 88%;
+}
+.toast-container.bottom-right{
+  left: 90%;
+  top: 88%;
+}
+.toast-container.bottom-center{
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 80%;
+}
+.toast-container.top-center{
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 15%;
+}
+
+

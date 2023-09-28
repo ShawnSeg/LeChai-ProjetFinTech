@@ -6,28 +6,27 @@
       <h3>Filtres </h3>
 
       <div class="filtre">
-        <label for="nomP">Nom du produit</label>
-        <input type="text" name="nomP" id="nomP">
+        <label for="nomC">Nom du collaborateur</label>
+        <input type="text" name="nomC" id="nomC">
       </div>
       <div class="filtre">
-        <label for="categorieP">Ctégorie du produit</label>
+        <label for="categorieP">Compagnie du collaborateur</label>
         <select name="categorieP" id="categorieP">
-          <option value="fini">Thé</option>
-          <option value="en_cours">Marchandise</option>
-          <option value="erreur">Objet</option>
+          <option value="fini">Indépendant</option>
         </select>
       </div>
       <div class="filtre">
-        <label for="prixP">Prix</label>
-        <span class="filtrePrix">
-          <input type="text" name="prixP" id="prixPmin" placeholder="min">
-          <input type="text" name="prixP" id="prixPmax" placeholder="max">
-        </span>
+        <label for="categorieP">Produit de ce collaborateur</label>
+        <select name="categorieP" id="categorieP">
+          <option value="fini">Prod 1</option>
+          <option value="fini">Prod 2</option>
+          <option value="fini">Prod 3</option>
+        </select>
       </div>
 
 
     </aside>
-    <app-liste-de-produits></app-liste-de-produits>
+    <app-liste-collaborateurs></app-liste-collaborateurs>
 
   </div>
 
@@ -37,30 +36,29 @@
         <h2>Filtres </h2>
 
         <div class="filtre">
-          <label for="nomP">Nom du produit</label>
-          <input type="text" name="nomP" id="nomP">
+          <label for="nomC">Nom du collaborateur</label>
+          <input type="text" name="nomC" id="nomC">
         </div>
         <div class="filtre">
-          <label for="categorieP">Ctégorie du produit</label>
+          <label for="categorieP">Compagnie du collaborateur</label>
           <select name="categorieP" id="categorieP">
-            <option value="fini">Thé</option>
-            <option value="en_cours">Marchandise</option>
-            <option value="erreur">Objet</option>
+            <option value="fini">Indépendant</option>
           </select>
         </div>
         <div class="filtre">
-          <label for="prixP">Prix</label>
-          <span class="filtrePrix">
-            <input type="text" name="prixP" id="prixPminWeb" placeholder="min">
-            <input type="text" name="prixP" id="prixPmaxWeb" placeholder="max">
-          </span>
+          <label for="categorieP">Produit de ce collaborateur</label>
+          <select name="categorieP" id="categorieP">
+            <option value="fini">Prod 1</option>
+            <option value="fini">Prod 2</option>
+            <option value="fini">Prod 3</option>
+          </select>
         </div>
 
 
       </aside>
       <aside class="listeCommandes">
 
-        <app-liste-de-produits></app-liste-de-produits>
+        <app-liste-collaborateurs></app-liste-collaborateurs>
       </aside>
     </div>
 

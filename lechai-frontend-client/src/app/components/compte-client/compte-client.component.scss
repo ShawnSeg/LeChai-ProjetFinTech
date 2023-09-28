@@ -1,0 +1,92 @@
+
+.sectionCompteClient{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: white;
+  margin-top: 5em;
+  margin-bottom: 5em;
+}
+
+.form-box{
+  position: relative;
+  width: auto;
+  height: auto;
+  background: rgb(255,250,234);
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4em 2em 4em 2em;
+
+  .title{
+    text-align: center;
+  }
+
+  .nomClient{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    padding-bottom: 0.5em;
+    border-bottom: 3px solid black;
+
+    h3:first-of-type{
+      margin-right: 0.5em;
+
+    }
+
+  }
+
+  .infoD{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    margin-bottom: 2em;
+
+    p:nth-of-type(1){
+      margin-right: 2.2em;
+    }
+  }
+
+  .infoC{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+
+    p:nth-of-type(1){
+      margin-right: 7em;
+    }
+  }
+
+  .adresse{
+    display: flex;
+    text-align: justify;
+    justify-content: flex-start;
+    margin-top: 2em;
+    flex-wrap: nowrap;
+
+    p:first-of-type{
+      margin-right: 2em;
+    }
+  }
+
+  .btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    button{
+      width: 50%;
+      border-radius: 10px;
+      padding: 0.5em;
+      background: white;
+    }
+
+    button:first-of-type{
+      margin-right: 1em;
+    }
+  }
+}
+
