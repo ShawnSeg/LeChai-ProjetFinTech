@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
