@@ -1,13 +1,7 @@
-interface Grandeur{
-  nom:String
-}
-
-interface Couleur{
-  nom:String
-}
-
-interface QuantiteG{
-  quantite:number
+interface TypeFormat{
+  nom:string,
+  format:String[],
+  format_selected:String
 }
 
 interface Taxes{
@@ -21,9 +15,8 @@ export interface ProduitPanier{
   nom:string,
   description:string,
   quantite:number,
-  grandeur:Grandeur[],
-  couleur:Couleur[],
-  quantite_g:QuantiteG[],
+  quantite_restante:number,
+  format:TypeFormat[],
   taxes:Taxes[],
   cout:number
 }

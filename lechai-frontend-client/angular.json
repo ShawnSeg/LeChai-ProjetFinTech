@@ -63,11 +63,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "ssl": true,
-            "sslCert": "./LeChaiCert/cert.pem",
-            "sslKey": "./LeChaiCert/key.pem"
-          },
+
 
           "configurations": {
             "production": {

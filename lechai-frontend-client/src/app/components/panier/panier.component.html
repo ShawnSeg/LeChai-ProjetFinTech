@@ -6,8 +6,8 @@
   <hr>
 </div>
 
-<span *ngFor="let produit of produits$ ">
-  <app-produit-panier [produit]="produit"></app-produit-panier>
+<span *ngFor="let produit of produits$">
+  <app-produit-panier [produit]="produit" (removeProduct)="removeProduct($event)" (changeQuantity)="changeQuantity($event)" (changeFormatSelected)="formatChange($event)"></app-produit-panier>
 </span>
 
 
