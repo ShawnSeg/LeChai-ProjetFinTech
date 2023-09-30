@@ -5,7 +5,7 @@ import { ProduitPanier } from 'src/IProduitPanier';
 import { Observable } from 'rxjs';
 import { ProduitsServiceService } from 'src/app/services/produits-service.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
-import { ToastrService } from 'src/app/toastr.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-panier',
@@ -28,7 +28,7 @@ export class PanierComponent {
 
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
-  constructor(private paniertService: ProduitsServiceService, private footerPosition: FooterPositionService, private toast:ToastrService){
+  constructor(private paniertService: ProduitsServiceService, private footerPosition: FooterPositionService, private toast:ToastService){
 
   }
 
@@ -136,6 +136,7 @@ export class PanierComponent {
     if (index !== -1&& typeof index === 'number') {
       this.produits$?.splice(index, 1);
       this.calculateTotalCost(); // Recalculate the total cost
+      this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
     }
   }
 
