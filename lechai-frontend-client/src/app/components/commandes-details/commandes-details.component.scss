@@ -38,6 +38,19 @@ h4{
   text-align: center;
 }
 
+aside{
+  width:100%;
+}
+p{
+  width:30%;
+  text-align: right;
+}
+
+#autreTaxeLabelMobile{
+  margin-left:5%;
+  width:45%;
+}
+
 @media only screen and (min-width: 968px) {
   /* For desktop: */
   .col-1 {width: 8.33%;}
@@ -97,6 +110,29 @@ h4{
     margin-top:0%;
     margin-left:0%;
 
+  }
+  ul{
+    margin-left:5%;
+    li{
+      label{
+
+      }
+    }
+  }
+  aside{
+    width:100%;
+  }
+  #autreTaxeLabel{
+    width:21.5%;
+
+  }
+  p{
+    width:10%;
+    text-align: right;
+  }
+
+  .listeAutreTaxe{
+    list-style-type:circle;
   }
 }
 

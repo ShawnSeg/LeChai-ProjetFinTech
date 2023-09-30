@@ -1,34 +1,49 @@
 <div class="partieMobile">
-  <h3>Information commande #</h3>
+  <h3>Information commande #{{commande.id}}</h3>
 <hr>
 <div class="infoMobile">
   <h4>Produit(s) acheté(s)</h4>
   <hr>
-  <app-produit-commande-detail></app-produit-commande-detail>
+  <aside *ngFor="let produit of commande.produitsAchetes">
+    <app-produit-commande-detail [produit]="produit"></app-produit-commande-detail>
+  </aside>
   <h4>Date création de la commande:</h4>
   <hr>
-  <h5>XX-XX-XXXX</h5>
+  <h5>{{commande.dateCreation|date:'short'}}</h5>
   <h4>Prix:</h4>
   <hr>
   <aside class="flex">
-    <label>Avant taxes:</label><p>X</p>
+    <label>Avant taxes:</label><p>{{coutAvantTaxes|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>TPS:</label><p>X</p>
+    <label>TPS:</label><p>{{tps|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>TVQ:</label><p>X</p>
+    <label>TVQ:</label><p>{{tvq|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>Autres taxes:</label><p>X</p>
+    <aside *ngIf="length>0">
+      <label id="autresTaxes">Autres taxes:</label>
+      <ul>
+        <li class="flex" *ngFor="let tax of aggregatedTaxes | keyvalue">
+          <label id="autreTaxeLabelMobile">{{ tax.key }}:</label>
+          <p> {{ tax.value | number:'1.2-2' }}$</p>
+        </li>
+      </ul>
+    </aside>
   </aside>
   <aside class="flex">
-    <label>Total</label><p>X</p>
+    <label>Total</label><p>{{coutTotal|number:'1.2-2'}}$</p>
   </aside>
+
+  <h4>Adresse de livraison:</h4>
+  <hr>
+  <h5>{{commande.no_civique}} {{commande.rue}}, {{commande.ville}} {{commande.code_postal}}</h5>
+
 
   <h4>État de la commandes:</h4>
   <hr>
-  <h5>X</h5>
+  <h5>{{commande.etat}}</h5>
   <h4 class="message">Veuillez nous contacter <a href="">ici</a> pour<br>toutes questions concernant vos commandes</h4>
 
 </div>
@@ -38,36 +53,51 @@
 </div>
 
 <div class="partieWeb">
-  <h1>Information commande #</h1>
+  <h1>Information commande #{{commande.id}}</h1>
 <hr>
 <div class="infoWeb">
   <h2>Produit(s) acheté(s)</h2>
   <hr>
-  <app-produit-commande-detail></app-produit-commande-detail>
+  <aside *ngFor="let produit of commande?.produitsAchetes">
+    <app-produit-commande-detail [produit]="produit"></app-produit-commande-detail>
+  </aside>
+
   <h2>Date création de la commande:</h2>
   <hr>
-  <h3>XX-XX-XXXX</h3>
+  <h3>{{commande.dateCreation|date:'medium'}}</h3>
   <h2>Prix:</h2>
   <hr>
   <aside class="flex">
-    <label>Avant taxes:</label><p>X</p>
+    <label>Avant taxes:</label><p>{{coutAvantTaxes|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>TPS:</label><p>X</p>
+    <label>TPS:</label><p>{{tps|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>TVQ:</label><p>X</p>
+    <label>TVQ:</label><p>{{tvq|number:'1.2-2'}}$</p>
   </aside>
   <aside class="flex">
-    <label>Autres taxes:</label><p>X</p>
+    <aside *ngIf="length>0">
+      <label id="autresTaxes">Autres taxes:</label>
+      <ul class="listeAutreTaxe">
+        <li class="flex" *ngFor="let tax of aggregatedTaxes | keyvalue">
+          <label id="autreTaxeLabel">{{ tax.key }}: </label>
+          <p>{{ tax.value | number:'1.2-2' }}$</p>
+        </li>
+      </ul>
+    </aside>
   </aside>
   <aside class="flex">
-    <label>Total</label><p>X</p>
+    <label>Total</label><p>{{coutTotal|number:'1.2-2'}}$</p>
   </aside>
+
+  <h2>Adresse de livraison:</h2>
+  <hr>
+  <h3>{{commande.no_civique}} {{commande.rue}}, {{commande.ville}} {{commande.code_postal}}</h3>
 
   <h2>État de la commande:</h2>
   <hr>
-  <h3>X</h3>
+  <h3>{{commande.etat}}</h3>
   <h2 class="message">Veuillez nous contacter <a href="">ici</a> pour<br>toutes questions concernant vos commandes</h2>
 
 </div>

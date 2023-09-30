@@ -18,8 +18,21 @@ export interface ProduitPanier{
   quantite_restante:number,
   format:TypeFormat[],
   taxes:Taxes[],
-  cout:number
+  cout:number,
+  image:String
 }
 
+export interface Commandes{
+  id:number,
+  image:String,
+  produitsAchetes:ProduitPanier[],
+  dateCreation:Date,
+  etat:String,
+  no_civique:number,
+  rue:String,
+  ville:String,
+  province:String,
+  code_postal:String
+}
 
 
