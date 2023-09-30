@@ -4,6 +4,7 @@ import { ProduitPanierComponent } from '../produit-panier/produit-panier.compone
 import { ProduitPanier } from 'src/IProduitPanier';
 import { Observable } from 'rxjs';
 import { ProduitsServiceService } from 'src/app/services/produits-service.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-panier',
@@ -26,12 +27,19 @@ export class PanierComponent {
 
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
-  constructor(private paniertService: ProduitsServiceService){
+  constructor(private paniertService: ProduitsServiceService, private footerPosition: FooterPositionService){
 
   }
 
   ngOnInit(){
     this.getProduitsPanier();
+    if (this.produits$ && this.produits$.length < 2) {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
     this.calculateTotalCost();
   }
 
@@ -87,6 +95,12 @@ export class PanierComponent {
         this.produits$[index].quantite = eventData.quantity;
         this.calculateTotalCost(); // Recalculate the total cost
       }
+    }
+    if (this.produits$ && this.produits$.length < 2) {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else{
+      this.footerPosition.setIsAbsolute(false)
     }
   }
 

@@ -6,7 +6,7 @@
   <hr>
 </div>
 
-<div *ngIf="!(produits$ && produits$.length > 0)">
+<div *ngIf="(produits$ && produits$.length > 0)">
   <span *ngFor="let produit of produits$">
     <app-produit-panier [produit]="produit" (removeProduct)="removeProduct($event)" (changeQuantity)="changeQuantity($event)" (changeFormatSelected)="formatChange($event)"></app-produit-panier>
   </span>

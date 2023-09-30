@@ -1,27 +1,31 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {
+export class FooterComponent implements OnDestroy {
   @ViewChild('footer', { static: true }) footer?: ElementRef;
+  private subscription: Subscription;
 
-  ngOnInit() {
-    // Get a reference to the element you want to calculate the offset for
-    const element: HTMLElement = this.footer?.nativeElement as HTMLElement;
+  constructor(private footerPosition: FooterPositionService) {
+    // Subscribe to changes in the isAbsolute property
+    this.subscription = this.footerPosition.isAbsolute$.subscribe(isAbsolute => {
+      if (isAbsolute) {
+        (this.footer?.nativeElement as HTMLElement).classList.add('absolute');
+        (this.footer?.nativeElement as HTMLElement).classList.remove('relative');
+      } else {
+        (this.footer?.nativeElement as HTMLElement).classList.add('relative');
+        (this.footer?.nativeElement as HTMLElement).classList.remove('absolute');
+      }
+    });
+  }
 
-    // Get the element's position relative to the viewport
-    const rect: DOMRect = element.getBoundingClientRect();
-
-    // Calculate the difference between the element's top and the top of the viewport
-    const offset: number = rect.top;
-    if(offset>10)
-    {
-      (this.footer?.nativeElement as HTMLElement).classList.add("absolute")
-    }
-
-    console.log('Offset from top of viewport:', offset);
+  ngOnDestroy() {
+    // Don't forget to unsubscribe to prevent memory leaks
+    this.subscription.unsubscribe();
   }
 }
