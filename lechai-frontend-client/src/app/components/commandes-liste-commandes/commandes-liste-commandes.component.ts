@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Commandes } from 'src/IProduitPanier';
 
 @Component({
   selector: 'app-commandes-liste-commandes',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./commandes-liste-commandes.component.scss']
 })
 export class CommandesListeCommandesComponent {
+  @Input() commande?:Commandes
 
+  public cout = 0;
+
+  calculateCost(){
+    for(let produit of this.commande?.produitsAchetes!)
+    {
+      this.cout+=produit.cout*produit.quantite
+    }
+  }
+
+  ngOnInit()
+  {
+    this.calculateCost();
+  }
 }

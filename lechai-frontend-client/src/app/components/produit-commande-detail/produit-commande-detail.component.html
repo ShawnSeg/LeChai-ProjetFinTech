@@ -1,15 +1,22 @@
 <div class="divProduit">
   <aside class="asideProduit">
-    <img src="" alt="image">
+    <img src="{{produit?.image}}" alt="image">
     <div class="infosProduit">
-      <h3>Nom produit</h3>
+      <h3>{{produit?.nom}}</h3>
       <aside class="flex">
         <label for="">Description:</label>
-        <p>ownowgogoi</p>
+        <p>{{produit?.description}}</p>
       </aside>
+      <aside *ngFor="let typeFormat of produit?.format">
+        <aside class="flex">
+          <label for="">{{typeFormat.nom}}:</label>
+          <p>{{typeFormat.format_selected}}</p>
+        </aside>
+      </aside>
+
       <aside class="flex ">
         <h3 id="cout" >Coût:</h3>
-        <h3>X</h3>
+        <h3>{{produit?.cout|number:'1.2-2'}}$</h3>
       </aside>
 
     </div>

@@ -1,5 +1,5 @@
 
-.titreWeb, #coutSansTaxes, #tps, #tvq, #autresTaxes, #coutTotal, .boutonPaiement{
+.titreWeb, .coutSansTaxes, .tps, .tvq, .autresTaxes, .coutTotal, .boutonPaiement, #coutWeb{
   display:none;
 }
 
@@ -15,6 +15,10 @@
   }
 }
 
+h1{
+  text-align: center;
+}
+
 .divCout{
   border: 2px solid black;
   width:70%;
@@ -23,7 +27,10 @@
   margin-left:13%;
   padding:2%;
   h2{
-    width:90%;
+    font-size: medium;
+    width:30%;
+    margin:0;
+    width:50%;
     text-align: right;
   }
   .boutonPaiementMobile{
@@ -33,6 +40,7 @@
     left:10%;
     font-family: "ADLaMDisplay";
     font-size: large;
+    margin-top:10%;
   }
 
 }
@@ -42,8 +50,19 @@ h2{
   margin-right:24rem;
 }
 
+.prixNom{
+  width:30%;
+}
 
 
+.flex{
+  display: flex;
+  flex-direction: row;
+}
+
+#asideAutresTaxes{
+  width:100%;
+}
 
 
 @media only screen and (min-width: 968px) {
@@ -62,11 +81,11 @@ h2{
   .col-12 {width: 100%;}
 
 
-  .titreMobile, .divCout{
+  .titreMobile, .divCout, .boutonPaiementMobile{
     display:none;
   }
 
-  .titreWeb, #coutSansTaxes, #taxes, #coutTotal, .boutonPaiement, #tps, #tvq, #autresTaxes{
+  .titreWeb, #coutSansTaxes, #taxes, #coutTotal, .boutonPaiement, #tps, #tvq, #autresTaxes, #coutWeb{
     display:block;
   }
 
@@ -82,24 +101,52 @@ h2{
   }
 
   h2{
+    width:15%;
+    margin:0%;
+    margin-bottom:1%;
     text-align: right;
-    margin:1rem;
-    margin-right:24rem;
+    &.autreTaxesCout{
+      width:5%;
+      padding-right: 36%;;
+    }
+
+  }
+  .prix{
+    width:20%
   }
 
-  #coutSansTaxes{
-    margin-top:2%;
-  }
+
 
   .boutonPaiement{
     height:4rem;
     width:13rem;
     position: relative;
-    left:79%;
+    left:43%;
     bottom:-30px;
     font-family: "ADLaMDisplay";
     font-size: large;
 
+  }
+
+
+
+  .prixNom{
+    margin-left:13%;
+  }
+  #coutWeb{
+    margin-top:5%;
+  }
+
+  #asideAutresTaxes{
+    margin-left:-1%;
+    width:100%;
+    h2{
+      width:44%;
+    }
+    ul{}
+  }
+  .autresTaxesTitre{
+    margin-left:30%
   }
 
 

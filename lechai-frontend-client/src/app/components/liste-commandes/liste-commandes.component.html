@@ -6,15 +6,16 @@
 
     <div class="filtre">
       <label for="">Produit acheté</label>
-      <input type="text" name="" id="">
+      <input type="text" name="" id="" #filterProduitMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()" >
     </div>
     <div class="filtre">
       <label for=""># de commande</label>
-      <input type="text" name="" id="">
+      <input type="number" name="" id="" #filterNumeroMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
     </div>
     <div class="filtre">
       <label for="">État de la commande</label>
-      <select name="" id="">
+      <select name="" id="" #filterEtatMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+        <option value="tout">Tout</option>
         <option value="fini">Terminé</option>
         <option value="en_cours">En cours</option>
         <option value="erreur">Erreur</option>
@@ -22,14 +23,23 @@
     </div>
     <div class="filtre">
       <label for="">Date Création</label>
-      <input type="text" name="" id="">
+      <input type="date" name="" id="" #filterDateMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
     </div>
 
 
   </aside>
-  <h3>Historique de commandes</h3>
-  <hr>
-  <app-commandes-liste-commandes></app-commandes-liste-commandes>
+  <div *ngIf="filteredCommandes && filteredCommandes.length > 0">
+    <h3>Historique de commandes</h3>
+    <hr>
+    <aside *ngFor="let commande of filteredCommandes">
+      <app-commandes-liste-commandes [commande]="commande"></app-commandes-liste-commandes>
+    </aside>
+  </div>
+  <div *ngIf="!(filteredCommandes && filteredCommandes.length > 0)">
+      <h1>C'est vide!</h1>
+  </div>
+
+
 
 </div>
 
@@ -42,15 +52,16 @@
 
       <div class="filtre">
         <label for="">Produit acheté</label>
-        <input type="text" name="" id="">
+        <input type="text" name="" id="" #filterProduit (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
       <div class="filtre">
         <label for=""># de commande</label>
-        <input type="text" name="" id="">
+        <input type="number" name="" id="" #filterNumero (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
       <div class="filtre">
         <label for="">État de la commande</label>
-        <select name="" id="">
+        <select name="" id="" #filterEtat (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+          <option value="tout" selected>Tout</option>
           <option value="fini">Terminé</option>
           <option value="en_cours">En cours</option>
           <option value="erreur">Erreur</option>
@@ -58,14 +69,20 @@
       </div>
       <div class="filtre">
         <label for="">Date Création</label>
-        <input type="text" name="" id="">
+        <input type="date" name="" id="" #filterDate (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
 
 
     </aside>
-    <aside class="listeCommandes">
+    <aside class="listeCommandes" *ngIf="filteredCommandes && filteredCommandes.length > 0">
 
-      <app-commandes-liste-commandes></app-commandes-liste-commandes>
+      <aside *ngFor="let commande of filteredCommandes">
+        <app-commandes-liste-commandes [commande]="commande"></app-commandes-liste-commandes>
+      </aside>
+    </aside>
+    <aside class="listeCommandes" *ngIf="!(filteredCommandes && filteredCommandes.length > 0)">
+      <h1>C'est vide!</h1>
+
     </aside>
   </div>
 

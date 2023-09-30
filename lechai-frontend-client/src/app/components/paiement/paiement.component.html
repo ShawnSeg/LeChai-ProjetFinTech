@@ -55,35 +55,43 @@
   </aside>
   <h4 class="marginTop">Article(s) expédié(s)</h4>
   <hr>
-  <aside class="livraison">
-    <p>Produit #1 X1 G</p>
-    <p>Produit #2 X4</p>
-  </aside>
+  <span  *ngFor="let produit of produits$" class="livraison">
+    <p>{{produit.nom}} X{{produit.quantite}}: {{produit.cout*produit.quantite|number:'1.2-2'}}$</p>
+
+    <aside class="flex" *ngFor="let format of produit?.format">
+    <p class="format">-{{format.nom}}:{{format.format_selected}}</p>
+    </aside>
+  </span>
   <h4 class="marginTop">Coût</h4>
   <hr>
   <aside>
     <label for="">Avant taxes:</label>
-    <p>X</p>
+    <p>{{coutAvantTaxes|number:'1.2-2'}}$</p>
   </aside>
   <aside>
     <label for="">TPS:</label>
-    <p>X</p>
+    <p>{{tps|number:'1.2-2'}}$</p>
   </aside>
   <aside>
     <label for="">TVQ:</label>
-    <p>X</p>
+    <p>{{tvq|number:'1.2-2'}}$</p>
   </aside>
-  <aside>
+  <aside class="flex-column">
     <label for="">Autres taxes:</label>
-    <p>X</p>
+    <ul>
+      <li class="autresTaxes flex" *ngFor="let tax of aggregatedTaxes | keyvalue">
+        <label class="autresTaxes">{{ tax.key }}: </label>
+        <p class="autresTaxesCout">{{ tax.value | number:'1.2-2' }}$</p>
+      </li>
+    </ul>
   </aside>
-  <aside>
+  <aside *ngIf="rabais>0">
     <label for="">Rabais:</label>
-    <p>X</p>
+    <p>{{rabais}}</p>
   </aside>
   <aside>
     <label for="">Total:</label>
-    <p>X</p>
+    <p>{{coutTotal|number:'1.2-2'}}$</p>
   </aside>
 
   <button (click)="onCheckout()">Effectuer paiement avec Stripe</button>

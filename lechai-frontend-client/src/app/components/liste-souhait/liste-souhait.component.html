@@ -1,7 +1,19 @@
 <h2>Votre liste de souhait</h2>
 <h1>Votre liste de souhait</h1>
-<hr class="ligneWeb">
-<hr class="ligneMobile">
-<app-produit-liste-souhait></app-produit-liste-souhait>
-<app-produit-liste-souhait></app-produit-liste-souhait>
-<button>Ajouter la liste de souhait au panier</button>
+
+<div *ngIf="produits$ && produits$.length > 0">
+
+  <hr class="ligneWeb">
+  <hr class="ligneMobile">
+  <span *ngFor="let produit of produits$">
+    <app-produit-liste-souhait [produit]="produit" (removeProduct)="removeProduct($event)" (addToPanier)="ajoutProduitPanier($event)"></app-produit-liste-souhait>
+  </span>
+
+  <button (click)="ajouterListePanier()">Ajouter la liste de souhait au panier</button>
+</div>
+
+<div *ngIf="!(produits$ && produits$.length > 0)">
+  <h1>Votre liste de souhait est vide! <br>Cliquer sur les coeurs à côtés des produits pour les rajouter ici!</h1>
+</div>
+
+

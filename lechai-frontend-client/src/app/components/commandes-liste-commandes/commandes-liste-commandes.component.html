@@ -1,17 +1,20 @@
-<h4>Commande #</h4>
+<a [routerLink]="['/commandes', commande?.id]">
+  <h4>Commande #{{commande?.id}}</h4>
 <label for="">Produit(s) acheté(s):</label>
 <div class="produitsAchetes">
-  <p>Produit #1</p>
-  <p>Produit #2</p>
+  <p *ngFor="let produit of commande?.produitsAchetes">{{produit.nom}}</p>
+
 </div>
 <aside class="flex">
   <label for="">Coût:</label>
-  <p>X</p>
+  <p>{{cout|number:'1.2-2'}}$</p>
 </aside>
 <aside class="flex">
   <label for="">Date de création:</label>
-  <p>XX-XX-XXXX</p>
+  <p>{{commande?.dateCreation|date:'short'}}</p>
 </aside>
 <hr>
+</a>
+
 
 

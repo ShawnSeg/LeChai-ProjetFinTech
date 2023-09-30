@@ -6,34 +6,87 @@
   <hr>
 </div>
 
-<span *ngFor="let produit of produits$ ">
-  <app-produit-panier [produit]="produit"></app-produit-panier>
-</span>
+<div *ngIf="(produits$ && produits$.length > 0)">
+  <span *ngFor="let produit of produits$">
+    <app-produit-panier [produit]="produit" (removeProduct)="removeProduct($event)" (changeQuantity)="changeQuantity($event)" (changeFormatSelected)="formatChange($event)"></app-produit-panier>
+  </span>
+  <div id="coutWeb">
+    <aside class="flex">
+      <h2 id="coutSansTaxes" class="prixNom">Coût sans taxes:</h2>
+      <h2 class="prix">{{this.coutAvantTaxes | number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex">
+      <h2 id="tps" class="prixNom">TPS:</h2>
+      <h2 class="prix">{{this.tps| number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex">
+      <h2 id="tvq" class="prixNom">TVQ:</h2>
+      <h2 class="prix">{{this.tvq| number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex" >
+      <aside *ngIf="length>0" id="asideAutresTaxes">
+        <h2>Autres taxes:</h2>
+        <ul>
+          <li class="flex" *ngFor="let tax of aggregatedTaxes | keyvalue">
+            <h2 class="autresTaxesTitre">{{ tax.key }}: </h2>
+            <h2 class="autreTaxesCout">{{ tax.value | number:'1.2-2' }}$</h2>
+          </li>
+        </ul>
+      </aside>
+
+    </aside>
+    <aside class="flex">
+      <h2 id="coutTotal" class="prixNom">Coût total:</h2>
+      <h2 class="prix">{{this.coutTotal| number:'1.2-2'}}$</h2>
+    </aside>
 
 
-<h2 id="coutSansTaxes">Coût sans taxes:{{this.coutAvantTaxes | number:'1.2-2'}}</h2>
-<h2 id="tps">TPS:{{this.tps| number:'1.2-2'}}</h2>
-<h2 id="tvq">TVQ:{{this.tvq| number:'1.2-2'}}</h2>
-<aside *ngIf="length>0">
-  <h2 id="autresTaxes">Autres taxes:</h2>
-  <ul>
-    <li *ngFor="let tax of aggregatedTaxes | keyvalue">
-      <h3>{{ tax.key }}: {{ tax.value | number:'1.2-2' }}</h3>
-    </li>
-  </ul>
-</aside>
+  </div>
 
-<h2 id="coutTotal">Coût total:{{this.coutTotal| number:'1.2-2'}}</h2>
-<a routerLink="/paiement"><button class="boutonPaiementMobile">Procéder au paiement</button></a>
 
-<div class="divCout">
-  <h2 id="coutSansTaxesMobile">Coût sans taxes:{{this.coutAvantTaxes| number:'1.2-2'}}</h2>
-  <h2 id="tpsMobile">TPS:X</h2>
-  <h2 id="tvqMobile">TVQ:X</h2>
-  <h2 id="autresTaxesMobile">Autres Taxes:X</h2>
-  <h2 id="coutTotalMobile">Coût total:X</h2>
-  <a routerLink="/paiement"><button class="boutonPaiementMobile">Procéder au paiement</button></a>
+
+
+
+
+  <a routerLink="/paiement"><button class="boutonPaiement">Procéder au paiement</button></a>
+
+  <div class="divCout">
+    <aside class="flex">
+      <h2 class="coutSansTaxes" class="prixNom">Coût sans taxes:</h2>
+      <h2 class="prix">{{this.coutAvantTaxes | number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex">
+      <h2 class="tps" class="prixNom">TPS:</h2>
+      <h2 class="prix">{{this.tps| number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex">
+      <h2 class="tvq" class="prixNom">TVQ:</h2>
+      <h2 class="prix">{{this.tvq| number:'1.2-2'}}$</h2>
+    </aside>
+    <aside class="flex" >
+      <aside *ngIf="length>0" id="asideAutresTaxes">
+        <h2>Autres taxes:</h2>
+        <ul>
+          <li class="flex" *ngFor="let tax of aggregatedTaxes | keyvalue">
+            <h2 class="autresTaxesTitre">{{ tax.key }}: </h2>
+            <h2 class="autreTaxesCout">{{ tax.value | number:'1.2-2' }}$</h2>
+          </li>
+        </ul>
+      </aside>
+
+    </aside>
+    <aside class="flex">
+      <h2 class="coutTotal" class="prixNom">Coût total:</h2>
+      <h2 class="prix">{{this.coutTotal| number:'1.2-2'}}$</h2>
+    </aside>
+    <a routerLink="/paiement"><button class="boutonPaiementMobile">Procéder au paiement</button></a>
+
+  </div>
+
+
 
 </div>
 
-
+<div *ngIf="!(produits$ && produits$.length > 0)">
+  <h1>Le panier est vide!</h1>
+</div>

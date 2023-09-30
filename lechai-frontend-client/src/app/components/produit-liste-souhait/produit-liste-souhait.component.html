@@ -1,24 +1,27 @@
 <div class="divProduit">
-  <aside class="asideProduit">
-    <img src="" alt="image">
-    <div>
-      <h3>Nom produit</h3>
-      <aside class="flex">
-        <label for="">Description:</label>
-        <p>ownowgogoi</p>
-      </aside>
-      <aside class="flex ">
-        <h3 id="cout" >Coût:</h3>
-        <h3>X</h3>
-      </aside>
+  <a routerLink="/">
+    <aside class="asideProduit">
+      <img src="{{produit?.image}}" alt="image">
+      <div class="detailProduit">
+        <h3>{{produit?.nom}}</h3>
+        <aside class="flex">
+          <label for="">Description:</label>
+          <p>{{produit?.description}}</p>
+        </aside>
+        <aside class="flex ">
+          <h3 id="cout" >Coût:</h3>
+          <h3>{{produit?.cout|number:'1.2-2'}}$</h3>
+        </aside>
 
-    </div>
+      </div>
 
 
-  </aside>
+    </aside>
+  </a>
+
   <div class="flex">
-    <button class="coeur"><img src="assets/image/coeurNoir.png" alt=""></button>
-    <button class="ajoutPanier"><img src="assets/image/ajoutPanier.png" alt=""></button>
+    <button class="coeur" (click)="erase()"><img src="assets/image/coeurNoir.png" alt="favori" ></button>
+    <button class="ajoutPanier" (click)="addProduitPanier()"><img src="assets/image/ajoutPanier.png" alt=""></button>
   </div>
 
 </div>
