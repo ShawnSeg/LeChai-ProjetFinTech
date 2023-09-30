@@ -1,34 +1,36 @@
+
 <section>
   <div class="container_carousel_collab">
-
     <span>
-      <img src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel_collab">
+      <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel_collab">
     </span>
 
+    <div *ngFor="let collaborator of collaborators; let i = index" class="container_carousel_collab" [class.hidden]="i !== currentIndex">
+      <!-- Contenu du collaborateur -->
+      <span class="img_collab">
+        <img [src]="'../assets/image/img temp/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
+      </span>
+      <span class="desc_coll_carousel">
+        <h3>{{ collaborator.prenom + " " + collaborator.nom}}</h3>
+        <p class="hide-mobile">{{ collaborator.description }}</p>
+        <a routerLink="/listeCollaborateurs">Information sur {{ collaborator.prenom }}</a>
+      </span>
+      <span class="res_coll_carousel">
+        <div class="hide-mobile">
+          <p>Liens vers les réseaux sociaux</p>
+
+          <span *ngFor="let socialLink of collaborator.socialLinks" class="collab_lien">
+            <a href="{{ socialLink.url }}" target="_blank">
+              <img src="../assets/image/{{ socialLink.name }}.png" alt="Facebook" class="collab_lienImg">
+              </a>
+          </span>
+
+        </div>
+        <a routerLink="/listeProduits">Voir ces produits</a>
+      </span>
+    </div>
     <span>
-      <img src="../assets/image/img temp/collab1.png" alt="image carousel temporaire" class="img_collab">
+      <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel_collab">
     </span>
-
-
-    <span class="desc_coll_carousel">
-      <h3>ET Appel Maison</h3>
-      <p class="hide-mobile">Description qui affiche seulement tant de caractères shkfjdshjkhskjhkjdshkjfdhkjfkjhdsfjkfdhdfgggggggggggggggggggggggggggggdsfkhsdjkhfs...</p>
-      <p class="hide-mobile">...</p>
-      <a href="#">Informations sur ET</a>
-    </span>
-
-    <span class="res_coll_carousel">
-      <div class="hide-mobile">
-        <p>liens vers les réseaux sociaux</p>
-        <a href="#"><img src="../assets/image/facebook.png" alt="facebook" class="collab_FB"></a>
-        <a href="#"><img src="../assets/image/instagram.png" alt="instagram" class="collab_IG"></a>
-      </div>
-      <a href="#">Voir ces produits</a>
-    </span>
-
-    <span>
-      <img src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel_collab">
-    </span>
-
   </div>
 </section>

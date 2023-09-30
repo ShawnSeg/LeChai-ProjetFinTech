@@ -18,6 +18,12 @@ import { ListeDeProduitsComponent } from './components/liste-de-produits/liste-d
 import { FiltresListeDeProduitsComponent } from './components/filtres-liste-de-produits/filtres-liste-de-produits.component';
 import { DetailsProduitComponent } from './components/details-produit/details-produit.component';
 import { FiltreListeCollaborateursComponent } from './components/filtre-liste-collaborateurs/filtre-liste-collaborateurs.component';
+import { ListeCollaborateursComponent } from './components/liste-collaborateurs/liste-collaborateurs.component';
+import { ConnexionComponent } from './components/connexion/connexion.component';
+import { InscriptionComponent } from './components/inscription/inscription.component';
+import { CompteClientComponent } from './components/compte-client/compte-client.component';
+import { ModifierCompteClientComponent } from './components/modifier-compte-client/modifier-compte-client.component';
+import { ContacteComponent } from './components/contacte/contacte.component';
 
 import { ProduitCommandeDetailComponent } from './components/produit-commande-detail/produit-commande-detail.component';
 import { ListeCommandesComponent } from './components/liste-commandes/liste-commandes.component';
@@ -26,6 +32,9 @@ import { PaiementComponent } from './components/paiement/paiement.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './data.service';
 import { ProduitsServiceService } from './services/produits-service.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
+import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 
 
 
@@ -52,15 +61,22 @@ import { ProduitsServiceService } from './services/produits-service.service';
     ListeDeProduitsComponent,
     FiltresListeDeProduitsComponent,
     DetailsProduitComponent,
-    FiltreListeCollaborateursComponent
+    FiltreListeCollaborateursComponent,
+    ListeCollaborateursComponent,
+    ConnexionComponent,
+    InscriptionComponent,
+    CompteClientComponent,
+    ModifierCompteClientComponent,
+    ContacteComponent,
+    MdpOublierEnvoiComponent,
+    MdpOublierChangementComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(DataService),
-
-
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

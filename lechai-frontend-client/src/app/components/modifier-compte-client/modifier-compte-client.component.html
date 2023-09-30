@@ -1,36 +1,38 @@
 <section class="sectionCompteClient">
-  <div class="form-box">
+  <div  *ngFor="let clnt of client" class="form-box" class="form-box">
       <form>
         <h2 class="title">Information sur le compte</h2>
 
         <span class="nomClient">
-          <input type="text" value="ET Appel">
-          <input type="text" value="Maison">
+          <input type="text" value="{{ clnt.prenom }}">
+          <input type="text" value="{{ clnt.nom }}">
         </span>
 
         <div class="infoD">
           <p>Date de naissance : </p>
-          <input type="date" value="2023-01-10">
+          <input type="date" value="{{ clnt.naissance }}">
         </div>
 
         <span>
           <p class="add">Adresse principale : </p>
           <div class="adresse">
             <span class="rue">
-              <input type="text" value="123 rue Chien">
+              <input type="text" value="{{ clnt.civic }}">
+              <p> </p>
+              <input type="text" value="{{ clnt.rue }}">
               <p>, Apt </p>
-              <input type="text" value="1">
+              <input type="text" value="{{ clnt.apt }}">
             </span>
 
-            <input type="text" value="Sherbrooke">
-            <input type="text" value="Québec">
-            <input type="text" value="j3r 9d2">
+            <input type="text" value="{{ clnt.ville }}">
+            <input type="text" value="{{ clnt.province }}">
+            <input type="text" value="{{ clnt.codePostal }}">
           </div>
         </span>
 
         <div class="infoC">
           <p>Courriel : </p>
-          <input type="text" value="Billie@bidon.com">
+          <input type="text" value="{{ clnt.courriel }}">
         </div>
 
         <div class="infoC">

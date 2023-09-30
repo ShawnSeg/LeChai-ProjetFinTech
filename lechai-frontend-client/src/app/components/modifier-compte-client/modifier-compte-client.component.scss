@@ -91,7 +91,11 @@
       display: flex;
 
       input:first-of-type{
-        width: 77%;
+        width: 20%;
+        margin-right: 0.3em;
+      }
+      input:nth-of-type(2){
+        width: 55%;
         margin-right: 0.3em;
       }
 

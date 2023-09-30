@@ -10,6 +10,7 @@ section{
   border-radius: 10px;
   padding-bottom: 2em;
   padding-top: 2em;
+
 }
 .container_carousel_collab{
   position: relative;
@@ -32,6 +33,7 @@ section{
   z-index: 5;
   top: 50%;
   left: 4%;
+  cursor: pointer;
 }
 
 .droite_carousel_collab{
@@ -40,6 +42,7 @@ section{
   z-index: 5;
   top: 48%;
   left: 90%;
+  cursor: pointer;
 }
 
 .img_collab {
@@ -58,12 +61,11 @@ section{
     margin-bottom: 0.8em;
   }
 }
-
-.res_coll_carousel{
-  margin-top: 0.9em;
+.hide-mobile{
+  display: none;
 }
 
-.hide-mobile{
+.hidden{
   display: none;
 }
 
@@ -108,9 +110,11 @@ section{
   }
 
   .img_collab {
-    width: 80%;
+    width: 200px; /* Définissez la largeur souhaitée */
+    height: 200px; /* Définissez la hauteur souhaitée */
     border-radius: 100%;
-    margin-left: 5em;
+    margin-left: 2em;
+    object-fit: cover;
   }
 
   .desc_coll_carousel{
@@ -124,11 +128,11 @@ section{
       margin-bottom: 0.8em;
     }
 
-    p:last-of-type{
+    p{
       margin-bottom: 2.5em;
     }
-  }
 
+  }
   .res_coll_carousel{
     margin-top: 0.9em;
     text-align: center;
@@ -136,12 +140,12 @@ section{
 
     p:first-of-type{
       margin-top: 1em;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
 
     div{
       margin-top: 2.5em;
-      margin-bottom: 1.4em;
+      margin-bottom: 0.8em;
     }
   }
 
@@ -149,13 +153,15 @@ section{
     display: block;
   }
 
-  .collab_FB{
+  .collab_lienImg{
     width: 8%;
+    margin-top: .5em;
+
   }
 
-  .collab_IG{
-    margin-top: 0.2em;
-    width: 9%;
+  .hidden{
+    display: none;
   }
+
 
 }

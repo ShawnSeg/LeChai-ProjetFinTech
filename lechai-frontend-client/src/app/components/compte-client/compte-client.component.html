@@ -1,35 +1,35 @@
 <section class="sectionCompteClient">
-  <div class="form-box">
+  <div *ngFor="let clnt of client" class="form-box">
       <form>
         <h2 class="title">Information sur le compte</h2>
 
-        <span class="nomClient">
-          <h3>ET Appel</h3>
-          <h3>Maison</h3>
+        <span class="nomClient" >
+          <h3>{{ clnt.prenom }}</h3>
+          <h3>{{ clnt.nom }}</h3>
         </span>
 
         <div class="infoD">
           <p>Date de naissance : </p>
-          <p> 10 janvier 2023</p>
+          <p> {{ clnt.naissance }}</p>
         </div>
 
         <div class="infoC">
           <p>Courriel : </p>
-          <p>Billie@bidon.com</p>
+          <p>{{ clnt.courriel }}</p>
         </div>
 
         <span class="adresse">
           <p>Adresse principale : </p>
           <div>
-            <p> 123 rue Chien, Apt 1</p>
-            <p>Sherbrooke, Québec</p>
-            <p>j3r 9d2</p>
+            <p> {{ clnt.civic + " " + clnt.rue }}, Apt {{ clnt.apt }}</p>
+            <p>{{ clnt.ville }}, {{ clnt.province }}</p>
+            <p>{{ clnt.codePostal }}</p>
           </div>
         </span>
 
         <span class="btn">
-          <button type="submit" class="log-btn">Voir l'historique de commandes</button>
-          <button type="submit" class="log-btn">Modifier le compte</button>
+          <button type="submit" class="log-btn" routerLink="/anciennesCommandes">Voir l'historique de commandes</button>
+          <button type="submit" class="log-btn"  routerLink="/modifierCompteClient">Modifier le compte</button>
         </span>
 
       </form>

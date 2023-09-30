@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Collaborateurs } from 'src/ameInterfaces';
 
 @Component({
   selector: 'app-carousel-collaborateur-accueil',
@@ -7,4 +8,68 @@ import { Component } from '@angular/core';
 })
 export class CarouselCollaborateurAccueilComponent {
 
+  collaborators: Collaborateurs[] = [
+    {
+      id:1,
+      image: 'collab1.png',
+      prenom:'ET Appel',
+      nom: 'Maison',
+      description: 'Description qui affiche seulement tant de caractères shkfjdshjkhskjhkjdshkjfdhkjfkjhdsfjkfdhdfgggggggggggggggggggggggggggggdsfkhsdjkhfs',
+      socialLinks: [
+        { name: 'facebook', url: 'https://www.facebook.com/' },
+        { name: 'instagram', url: 'https://www.instagram.com/' }
+      ],
+    },
+    {
+      id:2,
+      image: 'prod1.png',
+      prenom:'Collaborateur',
+      nom: '2',
+      description: 'scription qui affiche seulement tant de caractères shkfjdshjkhsk',
+      socialLinks: [
+        { name: 'facebook', url: 'https://www.facebook.com/' },
+        { name: 'instagram', url: 'https://www.instagram.com/' }
+      ],
+    },
+    // Ajoutez d'autres collaborateurs ici
+  ];
+
+  currentIndex: number = 0;
+  intervalId: any;
+  timeInterval: number = 0;
+
+  ngOnInit(): void {
+    this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
+  }
+
+  // Méthode pour changer d'image
+  changeImg(increment: number): void {
+    this.currentIndex = (this.currentIndex + increment + this.collaborators.length) % this.collaborators.length;
+  }
+
+  // Méthode pour démarrer le carrousel automatique
+  startCarousel(): void {
+    this.intervalId = setInterval(() => {
+      this.changeImg(1); // Change l'image automatiquement
+    }, 2000);
+  }
+
+  // Méthode pour arrêter le carrousel automatique
+  stopCarousel(): void {
+    clearInterval(this.intervalId);
+  }
+
+  // Méthode pour gérer le clic sur la flèche gauche
+  onLeftArrowClick(): void {
+    this.changeImg(-1); // Change l'image vers la gauche
+    this.stopCarousel();
+    this.startCarousel(); // Redémarre le carrousel automatique
+  }
+
+  // Méthode pour gérer le clic sur la flèche droite
+  onRightArrowClick(): void {
+    this.changeImg(1); // Change l'image vers la droite
+    this.stopCarousel();
+    this.startCarousel(); // Redémarre le carrousel automatique
+  }
 }
