@@ -28,25 +28,36 @@
   }
 
   h3{
-    margin-left: 1em;
     margin-top: 2em;
     font-size: 18px;
-    margin-bottom: 0.8em;
+    margin-bottom: 1em;
+  }
+
+  .entete{
+    margin-left: 2em;
+    display: block;
+
   }
 
   .lienCollab{
-    margin-left: 3em;
-    margin-bottom: 0.8em;
+
+    display: inline;
+    margin-left: 1.5em;
     img{
       width: 15%;
-      margin-right: 0.5em;
+
     }
+
+
   }
 
   .lienProduits{
+    display: block;
     font-size: 14px;
+    margin-left: 1em;
     color: black;
-    margin-left: 1.8em;
+    margin-top: 1em;
+
   }
 }
 
@@ -80,7 +91,6 @@
     }
 
     .lienCollab{
-
       img{
         width: 8%;
         margin-bottom: 1.5em;
@@ -89,7 +99,7 @@
 
     .lienProduits{
       font-size: 17px;
-      margin-left: 2.5em;
+      margin-left: 1.5em;
     }
   }
 }

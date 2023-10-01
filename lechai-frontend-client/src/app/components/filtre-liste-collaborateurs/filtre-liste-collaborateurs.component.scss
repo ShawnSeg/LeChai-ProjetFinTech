@@ -113,6 +113,14 @@
   display:none;
 }
 
+.aucunFiltre{
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
 @media only screen and (min-width: 968px) {
   /* For desktop: */
   .col-1 {width: 8.33%;}
@@ -185,6 +193,16 @@
   .listeCommandes{
     margin-left:33%;
     width:67%;
+
+    h2{
+      font-size: 35px;
+    }
   }
 
+  .aucunFiltre{
+    display: flex;
+    justify-content: center;
+    margin-top: 8em;
+    margin-left: 48%;
+  }
 }

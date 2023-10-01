@@ -7,27 +7,34 @@
 
       <div class="filtre">
         <label for="nomC">Nom du collaborateur</label>
-        <input type="text" name="nomC" id="nomC">
+        <input type="text" name="nomC" id="nomC" #filterNomMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()" >
       </div>
-      <div class="filtre">
-        <label for="categorieP">Compagnie du collaborateur</label>
-        <select name="categorieP" id="categorieP">
-          <option value="fini">Indépendant</option>
+      <div class="filtre" >
+        <label for="compagnie">Compagnie du collaborateur</label>
+        <select #filterCompagnieMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+          <option value="0">Toutes les compagnie</option>
+          <option *ngFor="let compagnie of compagnies" [value]="compagnie.id">{{ compagnie.nom }}</option>
         </select>
       </div>
-      <div class="filtre">
-        <label for="categorieP">Produit de ce collaborateur</label>
-        <select name="categorieP" id="categorieP">
-          <option value="fini">Prod 1</option>
-          <option value="fini">Prod 2</option>
-          <option value="fini">Prod 3</option>
-        </select>
-      </div>
-
-
     </aside>
-    <app-liste-collaborateurs></app-liste-collaborateurs>
 
+
+    <div *ngIf="filteredCollabs && filteredCollabs.length > 0">
+      <h2>Nos collaborateurs</h2>
+
+      <div *ngFor="let compagnie of compagnies" class=" container_carousel_collab compagnieCollab">
+        <h2 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h2>
+
+        <aside *ngFor="let collab of filteredCollabs">
+          <aside *ngIf="collab.compagnie == compagnie.id" >
+            <app-liste-collaborateurs [collab]="collab"></app-liste-collaborateurs>
+          </aside>
+        </aside>
+      </div>
+    </div>
+    <div *ngIf="!(filteredCollabs && filteredCollabs.length > 0)" class="aucunFiltre">
+        <h1>Aucun collaborateurs ne correspond à votre recherche</h1>
+    </div>
   </div>
 
   <div class="web">
@@ -37,28 +44,34 @@
 
         <div class="filtre">
           <label for="nomC">Nom du collaborateur</label>
-          <input type="text" name="nomC" id="nomC">
+          <input type="text" name="nomC" id="nomC" #filterNom (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
         </div>
         <div class="filtre">
-          <label for="categorieP">Compagnie du collaborateur</label>
-          <select name="categorieP" id="categorieP">
-            <option value="fini">Indépendant</option>
-          </select>
-        </div>
-        <div class="filtre">
-          <label for="categorieP">Produit de ce collaborateur</label>
-          <select name="categorieP" id="categorieP">
-            <option value="fini">Prod 1</option>
-            <option value="fini">Prod 2</option>
-            <option value="fini">Prod 3</option>
+          <label for="compagnie">Compagnie du collaborateur</label>
+          <select #filterCompagnie (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+            <option value="0">Toutes les compagnie</option>
+            <option *ngFor="let compagnie of compagnies" [value]="compagnie.id">{{ compagnie.nom }}</option>
           </select>
         </div>
 
 
       </aside>
-      <aside class="listeCommandes">
+      <aside class="listeCommandes" *ngIf="filteredCollabs && filteredCollabs.length > 0">
+        <h2>Nos collaborateurs</h2>
 
-        <app-liste-collaborateurs></app-liste-collaborateurs>
+        <div *ngFor="let compagnie of compagnies" class=" container_carousel_collab compagnieCollab">
+          <h2 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h2>
+
+
+        <aside *ngFor="let collab of filteredCollabs">
+          <aside *ngIf="collab.compagnie == compagnie.id">
+            <app-liste-collaborateurs [collab]="collab"></app-liste-collaborateurs>
+          </aside>
+        </aside>
+      </div>
+      </aside>
+      <aside *ngIf="!(filteredCollabs && filteredCollabs.length > 0)" class="aucunFiltre">
+          <h1>Aucun collaborateurs ne correspond à votre recherche</h1>
       </aside>
     </div>
 

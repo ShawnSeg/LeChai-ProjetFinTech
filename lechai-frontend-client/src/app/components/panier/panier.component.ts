@@ -8,6 +8,7 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-panier',
   templateUrl: './panier.component.html',
@@ -29,7 +30,9 @@ export class PanierComponent {
 
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
+
   constructor(private routingService: RoutingService, private footerPosition: FooterPositionService, private toast:ToastService, private router:Router){
+
 
   }
 

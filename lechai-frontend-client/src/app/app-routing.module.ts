@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'commandes/:id', component: CommandesDetailsComponent },
   {path: "paiement", component:PaiementComponent},
   {path: "listeProduits", component:FiltresListeDeProduitsComponent},
-  {path: "detailsProduit", component:DetailsProduitComponent},
+  {path: "detailsProduit/:id", component:DetailsProduitComponent},
   {path: "listeCollaborateurs", component:FiltreListeCollaborateursComponent},
   {path: "connexion", component:ConnexionComponent},
   {path: "inscription", component:InscriptionComponent},

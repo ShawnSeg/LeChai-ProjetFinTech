@@ -1,4 +1,4 @@
-<section>
+
   <div class="mobile">
     <button #filtreButton ngModel class="filtreButton" (click)="toggleButton()">Filtrer <img src="assets/image/filtre.png" alt=""></button>
     <aside #filtreForm ngModel class="filtreForm hide">
@@ -7,29 +7,46 @@
 
       <div class="filtre">
         <label for="nomP">Nom du produit</label>
-        <input type="text" name="nomP" id="nomP">
+        <input type="text" name="nomP" id="nomP" #filterNomMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
       </div>
+
       <div class="filtre">
         <label for="categorieP">Ctégorie du produit</label>
-        <select name="categorieP" id="categorieP">
-          <option value="fini">Thé</option>
-          <option value="en_cours">Marchandise</option>
-          <option value="erreur">Objet</option>
+        <select name="categorieP" id="categorieP" #filterCategorieMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+          <option value="0">Toutes les compagnie</option>
+          <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
         </select>
       </div>
-      <div class="filtre">
+
+     <!--  <div class="filtre">
         <label for="prixP">Prix</label>
         <span class="filtrePrix">
-          <input type="text" name="prixP" id="prixPmin" placeholder="min">
-          <input type="text" name="prixP" id="prixPmax" placeholder="max">
+          <input type="text" name="prixP" id="prixPmin" placeholder="min" #filterPrixMinMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+          <input type="text" name="prixP" id="prixPmax" placeholder="max" #filterPrixMaxMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
         </span>
-      </div>
-
+      </div> -->
 
     </aside>
-    <app-liste-de-produits></app-liste-de-produits>
 
-  </div>
+    <div *ngIf="filteredProduit && filteredProduit.length > 0">
+
+      <div *ngFor="let categorie of categories" class="divTitreCat">
+        <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
+
+
+        <aside *ngFor="let prod of filteredProduit">
+          <aside >
+            <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+          </aside>
+        </aside>
+
+      </div>
+
+      <div *ngIf="!(filteredProduit && filteredProduit.length > 0)" class="aucunFiltre">
+        <h1>Aucun produit ne correspond à votre recherche</h1>
+      </div>
+    </div>
+
 
   <div class="web">
     <div class="flex">
@@ -38,34 +55,54 @@
 
         <div class="filtre">
           <label for="nomP">Nom du produit</label>
-          <input type="text" name="nomP" id="nomP">
+          <input type="text" name="nomP" id="nomP" #filterNom (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
         </div>
+
         <div class="filtre">
-          <label for="categorieP">Ctégorie du produit</label>
-          <select name="categorieP" id="categorieP">
-            <option value="fini">Thé</option>
-            <option value="en_cours">Marchandise</option>
-            <option value="erreur">Objet</option>
+
+          <label for="categorieP">Catégorie du produit</label>
+
+          <select name="categorieP" id="categorieP" #filterCategorie (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+            <option value="0">Toutes les compagnie</option>
+            <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
           </select>
+
         </div>
-        <div class="filtre">
+
+        <!-- <div class="filtre">
           <label for="prixP">Prix</label>
+
           <span class="filtrePrix">
-            <input type="text" name="prixP" id="prixPminWeb" placeholder="min">
-            <input type="text" name="prixP" id="prixPmaxWeb" placeholder="max">
+            <input type="number" name="prixP" id="prixPminWeb" placeholder="min" #filterPrixMin (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+            <input type="number" name="prixP" id="prixPmaxWeb" placeholder="max" #filterPrixMax (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
           </span>
-        </div>
 
+        </div> -->
 
       </aside>
-      <aside class="listeCommandes">
 
-        <app-liste-de-produits></app-liste-de-produits>
+
+      <aside *ngIf="filteredProduit && filteredProduit.length > 0" class="listeCommandes">
+
+          <div *ngFor="let categorie of categories" class="divTitreCat">
+            <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
+
+
+            <aside *ngFor="let prod of filteredProduit">
+              <aside >
+               <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+              </aside>
+            </aside>
+          </div>
+
+          <div *ngIf="!(filteredProduit && filteredProduit.length > 0)" class="aucunFiltre">
+            <h1>Aucun produit ne correspond à votre recherche</h1>
+          </div>
+
       </aside>
+
+
     </div>
-
-
-
   </div>
-</section>
+
 

@@ -10,6 +10,7 @@ export interface Collaborateurs{
   image:string,
   prenom:string,
   nom:string,
+  compagnie:number,
   description:string,
   socialLinks:socialLinks[],
 }
@@ -39,15 +40,26 @@ export interface Client{
   codePostal?:string,
 }
 
-export interface produit{
+export interface Produit{
   id:number,
   image: string[],
   nom: string,
-  icon: string,
-  prix: string,
-  quantité?: string,
+  icon?: string,
+  prix: number,
+  quantite?: number,
   grandeur?:string[],
   couleur?: string[],
-  ingrédiant?:string,
+  ingrediant?:string,
   description?: string,
+  categorie: number,
+}
+
+export interface Compagnie{
+  id:number,
+  nom: string,
+}
+
+export interface Categorie{
+  id:number,
+  nom: string,
 }
