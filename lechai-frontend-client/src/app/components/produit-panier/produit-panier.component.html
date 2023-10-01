@@ -11,11 +11,11 @@
 
       <aside class="flex">
         <label for="">Quantité:</label>
-        <input type="number" class="selectQuantite" value="{{produit?.quantite}}" (change)="changeProductQuantity()" ngModel #quantiteProduit>
+        <input type="number" class="selectQuantite" value="{{produit?.quantite_restante}}" (change)="changeProductQuantity()"  #quantiteProduit>
       </aside>
       <aside class="flex" *ngFor="let formatType of produit?.format">
         <label #formatTypeLabel for="">{{formatType.nom}}:</label>
-        <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected ngModel (change)="changeProductFormatSelected(changeFormatSelected.value, formatTypeLabel.innerText)">
+        <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected  (change)="changeProductFormatSelected(changeFormatSelected.value, formatTypeLabel.innerText)">
           <ng-container *ngFor="let format of formatType.format">
             <option [value]="format"  [selected]="format === formatType.format_selected">{{format}}</option>
           </ng-container>

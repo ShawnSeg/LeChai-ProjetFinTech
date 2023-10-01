@@ -48,7 +48,7 @@
 
 
 
-  <a routerLink="/paiement"><button class="boutonPaiement">Procéder au paiement</button></a>
+  <button (click)="confirmNavigation()" class="boutonPaiement">Procéder au paiement</button>
 
   <div class="divCout">
     <aside class="flex">
@@ -79,7 +79,7 @@
       <h2 class="coutTotal" class="prixNom">Coût total:</h2>
       <h2 class="prix">{{this.coutTotal| number:'1.2-2'}}$</h2>
     </aside>
-    <a routerLink="/paiement"><button class="boutonPaiementMobile">Procéder au paiement</button></a>
+    <button (click)="confirmNavigation()" class="boutonPaiementMobile">Procéder au paiement</button>
 
   </div>
 
@@ -88,5 +88,5 @@
 </div>
 
 <div *ngIf="!(produits$ && produits$.length > 0)">
-  <h1>Le panier est vide!</h1>
+  <h1>Le panier est vide! <br> Vous pouvez y ajouter des produits en cliquant sur l'image de panier à côté du produit désiré!</h1>
 </div>

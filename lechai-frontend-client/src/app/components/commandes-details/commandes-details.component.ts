@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Commandes } from 'src/IProduitPanier';
+import { Commandes } from 'src/shawnInterface';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-commandes-details',
@@ -9,10 +10,12 @@ import { Commandes } from 'src/IProduitPanier';
 })
 export class CommandesDetailsComponent {
 
-  public commande:Commandes= {id:1, image:"test.png", produitsAchetes:[  {"id":1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-                                                                                  {"id":2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-                                                                                  {"id":3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-                                                                                  {"id":4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"}], dateCreation:new Date("2023-09-29"), etat:"Livré", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", province:"Québec", code_postal:"J8L0G1"}
+  public commande:Commandes= {id:1, image:"test.png", produitsAchetes:[
+      {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
+      {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+      {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+      {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+  ], dateCreation:new Date("2023-09-29"), etat:"Livré", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", province:"Québec", code_postal:"J8L0G1"}
 
 
   public coutAvantTaxes =0;
@@ -24,7 +27,7 @@ export class CommandesDetailsComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private routingService:RoutingService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -32,6 +35,8 @@ export class CommandesDetailsComponent {
       // Now you can fetch the corresponding 'commande' using the 'commandeId'
       this.calculateTotalCost();
     });
+
+    this.getCommandeDetail();
   }
 
   calculateTotalCost() {
@@ -75,7 +80,7 @@ export class CommandesDetailsComponent {
 
 
   getCommandeDetail(){
-    //Requête pour chercher commande
+    this.routingService.getCommandesDetail(this.commande.id).subscribe(commande =>this.commande=commande)
   }
 
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProduitPanier } from 'src/IProduitPanier';
+import { ProduitPanier } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-produit-commande-detail',

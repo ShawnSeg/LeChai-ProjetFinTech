@@ -11,6 +11,8 @@ interface Taxes{
 
 
 export interface ProduitPanier{
+  id_commande:number,
+  id_produit:number,
   id:number,
   nom:string,
   description:string,
@@ -33,6 +35,13 @@ export interface Commandes{
   ville:String,
   province:String,
   code_postal:String
+}
+
+export interface AdresseLivraison{
+  no_civique:number,
+  rue:String,
+  ville:String,
+  province:String
 }
 
 

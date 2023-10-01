@@ -9,7 +9,7 @@ import { CarouselAccueilComponent } from './components/accueil/carousel-accueil/
 import { CarouselCollaborateurAccueilComponent } from './components/accueil/carousel-collaborateur-accueil/carousel-collaborateur-accueil.component';
 import { PanierComponent } from './components/panier/panier.component';
 import { ProduitPanierComponent } from './components/produit-panier/produit-panier.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ListeSouhaitComponent } from './components/liste-souhait/liste-souhait.component';
 import { CommandesDetailsComponent } from './components/commandes-details/commandes-details.component';
 import { ProduitListeSouhaitComponent } from './components/produit-liste-souhait/produit-liste-souhait.component';
@@ -24,14 +24,10 @@ import { InscriptionComponent } from './components/inscription/inscription.compo
 import { CompteClientComponent } from './components/compte-client/compte-client.component';
 import { ModifierCompteClientComponent } from './components/modifier-compte-client/modifier-compte-client.component';
 import { ContacteComponent } from './components/contacte/contacte.component';
-
 import { ProduitCommandeDetailComponent } from './components/produit-commande-detail/produit-commande-detail.component';
 import { ListeCommandesComponent } from './components/liste-commandes/liste-commandes.component';
 import { CommandesListeCommandesComponent } from './components/commandes-liste-commandes/commandes-liste-commandes.component';
 import { PaiementComponent } from './components/paiement/paiement.component';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { DataService } from './data.service';
-import { ProduitsServiceService } from './services/produits-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';

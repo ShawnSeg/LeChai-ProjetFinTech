@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { ProduitPanier } from 'src/IProduitPanier';
+import { ProduitPanier } from 'src/shawnInterface';
 
 // Create a custom event payload object
 export interface QuantityChangeEvent {
@@ -22,6 +22,8 @@ export class ProduitPanierComponent {
 
 
   @Input() produit?: ProduitPanier;
+
+
   @Output() removeProduct = new EventEmitter<number>(); // Event emitter for removing the product
   @Output() changeQuantity = new EventEmitter<QuantityChangeEvent>(); // Event emitter for removing the product
   @Output() changeFormatSelected = new EventEmitter<SelectedFormatChangeEvent>(); // Event emitter for removing the product

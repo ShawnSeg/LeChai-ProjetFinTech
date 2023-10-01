@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ProduitPanier } from 'src/IProduitPanier';
+import { ProduitPanier } from 'src/shawnInterface';
 
 
 @Component({

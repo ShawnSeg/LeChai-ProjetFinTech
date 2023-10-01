@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Commandes } from 'src/IProduitPanier';
+import { Commandes } from 'src/shawnInterface';
+
 
 @Component({
   selector: 'app-commandes-liste-commandes',

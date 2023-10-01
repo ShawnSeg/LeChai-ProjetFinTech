@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ProduitPanier } from 'src/IProduitPanier';
+import { ProduitPanier } from 'src/shawnInterface';
+import { ToastService } from 'src/app/services/toast.service';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-liste-souhait',
@@ -8,13 +10,22 @@ import { ProduitPanier } from 'src/IProduitPanier';
 })
 export class ListeSouhaitComponent {
   public produits$?: ProduitPanier[] =[
-    {"id":1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-    {"id":2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {"id":3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {"id":4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+    {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
+    {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+    {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
+    {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
   ];
 
   public length = this.produits$?.length;
+
+  constructor(private toastService:ToastService, private routingService: RoutingService)
+  {
+
+  }
+
+  ngOnInit(){
+    this.getListeSouhait();
+  }
 
   // Function to remove a product from the array
   removeProduct(productId: number): void {
@@ -24,18 +35,24 @@ export class ListeSouhaitComponent {
     // If the product is found (index is not -1), remove it from the array
     if (index !== -1&& typeof index === 'number') {
       this.produits$?.splice(index, 1);
-
+      this.routingService.deleteProduitListeSouhait(productId);
+      this.toastService.showToast("success", "Le produit a été effacé de la liste de souhait avec succès!", "bottom-center", 3000)
     }
   }
 
   ajoutProduitPanier(productId:number):void{
     alert(productId)
-    //Requête pour ajouter au panier
-    //Toast "Produit ajouté au panier avec succès!"
+    this.routingService.postProduitDansPanier(productId);
+    this.toastService.showToast("success", "Le produit a été ajouté au panier avec succès!", "bottom-center", 3000)
+
   }
 
   ajouterListePanier(){
-    //Requête pour ajouter Liste au panier
-    //Toast "Liste de souhait ajouté au panier avec succès!"
+    this.routingService.postListetDansPanier(this.produits$!);
+    this.toastService.showToast("success", "La liste de souhait a été ajouté au panier avec succès!", "bottom-center", 3000)
+  }
+
+  getListeSouhait(){
+    this.routingService.getProduitsListeSouhait().subscribe(listeSouhait=>this.produits$=listeSouhait);
   }
 }
