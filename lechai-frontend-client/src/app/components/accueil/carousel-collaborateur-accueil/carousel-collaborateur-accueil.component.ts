@@ -14,6 +14,7 @@ export class CarouselCollaborateurAccueilComponent {
       image: 'collab1.png',
       prenom:'ET Appel',
       nom: 'Maison',
+      compagnie: 1,
       description: 'Description qui affiche seulement tant de caractères shkfjdshjkhskjhkjdshkjfdhkjfkjhdsfjkfdhdfgggggggggggggggggggggggggggggdsfkhsdjkhfs',
       socialLinks: [
         { name: 'facebook', url: 'https://www.facebook.com/' },
@@ -25,6 +26,7 @@ export class CarouselCollaborateurAccueilComponent {
       image: 'prod1.png',
       prenom:'Collaborateur',
       nom: '2',
+      compagnie: 1,
       description: 'scription qui affiche seulement tant de caractères shkfjdshjkhsk',
       socialLinks: [
         { name: 'facebook', url: 'https://www.facebook.com/' },

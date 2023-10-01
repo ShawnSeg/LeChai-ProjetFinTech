@@ -109,6 +109,13 @@
     };
   }
 }
+
+.divTitreCat{
+  margin-left: 2em;
+  margin-bottom: 2em;
+  border-bottom: 3px black solid;
+}
+
 .hide{
   display:none;
 }
@@ -128,13 +135,14 @@
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
-  .mobile{
-    display:none;
-  }
 
   .web{
     display:block;
 
+  }
+
+  .divTitreCat{
+    font-size: 22px;
   }
 
   .filtreFormWeb{

@@ -5,12 +5,6 @@
   z-index: 0;
 }
 
-.divTitreCat{
-  margin-left: 2em;
-  margin-bottom: 2em;
-  border-bottom: 3px black solid;
-}
-
 .flex{
   display: flex;
   flex-wrap: wrap;
@@ -45,10 +39,6 @@
 
 @media only screen and (min-width: 968px){
   /* ================================ WEB ======================================== */
-
-  .divTitreCat{
-    font-size: 22px;
-  }
 
   .listeProduits{
     max-width: 30%;

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Produit } from 'src/ameInterfaces';
 
 @Component({
   selector: 'app-liste-de-produits',
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./liste-de-produits.component.scss']
 })
 export class ListeDeProduitsComponent {
-
+  @Input() prod?:Produit
 
 }
 

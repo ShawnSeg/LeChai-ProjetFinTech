@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input  } from '@angular/core';
+import { Collaborateurs } from 'src/ameInterfaces';
 
 @Component({
   selector: 'app-liste-collaborateurs',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./liste-collaborateurs.component.scss']
 })
 export class ListeCollaborateursComponent {
+  @Input() collab?:Collaborateurs
 
 }
