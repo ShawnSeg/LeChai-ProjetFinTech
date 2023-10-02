@@ -19,11 +19,13 @@
     </aside>
 
 
-    <div *ngIf="filteredCollabs && filteredCollabs.length > 0">
+    <div *ngIf="filteredCollabs && filteredCollabs.length > 0" class="collab">
       <h2>Nos collaborateurs</h2>
 
-      <div *ngFor="let compagnie of compagnies" class=" container_carousel_collab compagnieCollab">
-        <h2 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h2>
+      <div *ngFor="let compagnie of compagnies" >
+        <div class="compagnieCollab">
+          <h3 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h3>
+        </div>
 
         <aside *ngFor="let collab of filteredCollabs">
           <aside *ngIf="collab.compagnie == compagnie.id" >
@@ -60,8 +62,9 @@
         <h2>Nos collaborateurs</h2>
 
         <div *ngFor="let compagnie of compagnies" class=" container_carousel_collab compagnieCollab">
-          <h2 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h2>
-
+          <div class="compagnieBar">
+            <h3 *ngIf="belongsToCompagnie(compagnie.id)">{{ compagnie.nom }}</h3>
+          </div>
 
         <aside *ngFor="let collab of filteredCollabs">
           <aside *ngIf="collab.compagnie == compagnie.id">

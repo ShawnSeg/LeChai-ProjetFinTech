@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "angular-in-memory-web-api": "^0.16.0"
+    "angular-in-memory-web-api": "^0.16.0",
+    "ngx-cookie-service": "^16.0.1"
   }
 }

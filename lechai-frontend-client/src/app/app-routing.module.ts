@@ -19,7 +19,7 @@ import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oub
 
 
 const routes: Routes = [
-  {path: 'accueil', component: AccueilComponent},
+  {path: '', component: AccueilComponent},
   {path: 'panier', component:PanierComponent},
   {path: "listeSouhait", component:ListeSouhaitComponent},
   { path: 'commandes', component: ListeCommandesComponent },

@@ -27,18 +27,22 @@
       </div> -->
 
     </aside>
+  </div>
 
     <div *ngIf="filteredProduit && filteredProduit.length > 0">
 
       <div *ngFor="let categorie of categories" class="divTitreCat">
-        <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
+        <div class="divTitreCatB">
+          <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
+        </div>
 
-
-        <aside *ngFor="let prod of filteredProduit">
-          <aside >
-            <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
-          </aside>
-        </aside>
+        <div class="flex">
+          <div  class="listeProduits" *ngFor="let prod of filteredProduit">
+            <aside >
+              <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+            </aside>
+          </div>
+        </div>
 
       </div>
 
@@ -49,7 +53,7 @@
 
 
   <div class="web">
-    <div class="flex">
+    <div class="flexFiltre">
       <aside class="filtreFormWeb">
         <h2>Filtres </h2>
 
@@ -87,12 +91,13 @@
           <div *ngFor="let categorie of categories" class="divTitreCat">
             <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
 
-
-            <aside *ngFor="let prod of filteredProduit">
-              <aside >
-               <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+            <div class="flex">
+              <aside class="listeProduits" *ngFor="let prod of filteredProduit">
+                <aside >
+                <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+                </aside>
               </aside>
-            </aside>
+            </div>
           </div>
 
           <div *ngIf="!(filteredProduit && filteredProduit.length > 0)" class="aucunFiltre">
@@ -102,7 +107,7 @@
       </aside>
 
 
-    </div>
+
   </div>
 
 

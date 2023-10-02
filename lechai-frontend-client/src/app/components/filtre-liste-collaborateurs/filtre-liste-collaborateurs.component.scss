@@ -121,6 +121,19 @@
   margin-right: 2em;
 }
 
+.collab{
+  margin: 0em 0em 0em 2em;
+  h2{
+    margin-bottom: 1em;
+  }
+
+  .compagnieCollab
+  {
+    border-bottom: 3px solid black;
+    margin-bottom: 2em;
+  }
+}
+
 @media only screen and (min-width: 968px) {
   /* For desktop: */
   .col-1 {width: 8.33%;}
@@ -196,6 +209,7 @@
 
     h2{
       font-size: 35px;
+      margin-bottom: 1em;
     }
   }
 
@@ -204,5 +218,14 @@
     justify-content: center;
     margin-top: 8em;
     margin-left: 48%;
+  }
+
+  .compagnieBar
+  {
+    border-bottom: solid black 4px;
+    margin-bottom: 2em;
+    h3{
+      font-size: 25px;
+    }
   }
 }

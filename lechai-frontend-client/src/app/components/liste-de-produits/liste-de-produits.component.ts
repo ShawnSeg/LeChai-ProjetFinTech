@@ -9,5 +9,7 @@ import { Produit } from 'src/ameInterfaces';
 export class ListeDeProduitsComponent {
   @Input() prod?:Produit
 
+  currentIndex: number = 0;
+
 }
 

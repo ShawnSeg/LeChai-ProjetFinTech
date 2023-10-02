@@ -98,6 +98,7 @@ export class FiltresListeDeProduitsComponent {
   public filtrePrixMax: number | undefined;
   public filteredProduit?: Produit[];
 
+
   ngOnInit() {
     this.filteredProduit = this.produits;
   }

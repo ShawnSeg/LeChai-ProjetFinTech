@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
+
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -39,6 +40,10 @@ export class ConnexionComponent implements OnInit{
   onLogin(){
     if(this.loginForm.valid)
     {
+      let token: String = "tokenTEMP";
+
+/*       this.cookie.set("User token", "token:-"+token) /* deuxieme "" la route pour get le token */
+
       console.log(this.loginForm.value)
       // envoyer à la base de données
       this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);

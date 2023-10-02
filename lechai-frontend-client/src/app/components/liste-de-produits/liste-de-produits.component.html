@@ -1,9 +1,9 @@
 
 
-    <div class="flex">
+    <div class="flex conteneur-produit">
       <div class="listeProduits">
         <img src="../assets/image/coeur_vide.svg" alt="coeur vide" class = "hide">
-        <img [src]="'../assets/image/' + prod?.image" alt="image produit" class="imgProd">
+        <img *ngFor="let img of prod?.image; let i = index" [src]="'../assets/image/' + img + '.png'" alt="image produit" class="imgProd" [class.hidden]="i !== currentIndex">
         <img src="../assets/image/ajoutPanier.png" alt="icone panier" class="iconePanier">
         <p>{{prod?.nom}}</p>
         <p>{{prod?.prix}}$</p>

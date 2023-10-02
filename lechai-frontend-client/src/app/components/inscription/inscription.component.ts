@@ -68,7 +68,7 @@ export class InscriptionComponent {
     {
       console.log(this.signupForm.value)
       // envoyer à la base de données
-      this.toast.showToast("success", "L'inscription Réussi", "bottom-center", 1000);
+      this.toast.showToast("success", "L'inscription réussi, un courriel de validation vous à été envoyer.", "bottom-center", 6000);
       this.signupForm.reset();
       this.router.navigate(['connexion'] );
 

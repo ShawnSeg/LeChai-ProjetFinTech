@@ -107,17 +107,18 @@ export class FiltreListeCollaborateursComponent {
     return this.collaborators?.some(collab => collab.compagnie === compagnieId);
   }
 
-  applyFilterNom(valueP:String, valueN:String) {
-    this.filtrePrenom=valueP
-    this.filtreNom=valueN
+  applyFilterNom(valueNom: string) {
+
+    this.filtreNom = valueNom;
 
     const filteredCollabs = this.filteredCollabs?.filter((collab) => {
-      // Filter logic based on product name (you can modify this)
-      return (
-        collab.prenom.toLowerCase().includes(this.filtrePrenom.toLowerCase()),
-        collab.nom.toLowerCase().includes(this.filtreNom.toLowerCase())
-      );
-    });
+    // Filter logic based on both first name and last name
+    const prenomMatch = collab.prenom.toLowerCase().includes(this.filtreNom.toLowerCase());
+    const nomMatch = collab.nom.toLowerCase().includes(this.filtreNom.toLowerCase());
+
+    // Return true if either first name or last name matches
+    return prenomMatch || nomMatch;
+  });
 
     // Update the list with filtered commandes
     this.filteredCollabs = filteredCollabs;
@@ -143,28 +144,24 @@ export class FiltreListeCollaborateursComponent {
   }
 
   applyAllFilters(){
-    const filterPrenom = (this.filterPrenom?.nativeElement as HTMLInputElement).value;
     const filterNom = (this.filterNom?.nativeElement as HTMLInputElement).value;
     const filterCompagnie = (this.filterCompagnie?.nativeElement as HTMLSelectElement).value;
 
     this.filteredCollabs=this.collaborators
 
-    this.applyFilterNom(filterPrenom, filterNom);
+    this.applyFilterNom(filterNom);
     this.applyCompagnieFilter(filterCompagnie);
   }
 
   applyChangeToFormWeb(){
-    const filterPrenomMobile = (this.filterPrenomMobile?.nativeElement as HTMLInputElement).value;
     const filterNomMobile = (this.filterNomMobile?.nativeElement as HTMLInputElement).value;
     const filterCompagnieMobile = (this.filterCompagnieMobile?.nativeElement as HTMLInputElement).value;
 
-    (this.filterPrenom?.nativeElement as HTMLInputElement).value = filterPrenomMobile;
     (this.filterNom?.nativeElement as HTMLInputElement).value = filterNomMobile;
     (this.filterCompagnie?.nativeElement as HTMLSelectElement).value = filterCompagnieMobile;
   }
 
   applyChangeToForMobile(){
-    (this.filterPrenomMobile?.nativeElement as HTMLInputElement).value =(this.filterPrenom?.nativeElement as HTMLInputElement).value;
     (this.filterNomMobile?.nativeElement as HTMLInputElement).value =(this.filterNom?.nativeElement as HTMLInputElement).value;
     (this.filterCompagnieMobile?.nativeElement as HTMLInputElement).value=(this.filterCompagnie?.nativeElement as HTMLSelectElement).value;
 

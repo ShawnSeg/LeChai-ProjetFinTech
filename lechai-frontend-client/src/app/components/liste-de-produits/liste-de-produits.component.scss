@@ -16,15 +16,14 @@
 
 .listeProduits{
   position: relative;
-  max-width: 40%;
-  margin-left: 2.5em;
+  margin-left: 2em;
   margin-bottom: 2em;
-  font-size: 10px;
+  font-size: 15px;
   text-align: center;
-  z-index: 1;
+
 
   .imgProd{
-    width: 50%;
+    width: 100%;
     margin-bottom: 1em;
   }
 
@@ -37,8 +36,20 @@
 
 }
 
+.conteneur-produit{
+  width: 100%;
+}
+
+.hidden{
+  display: none;
+}
+
 @media only screen and (min-width: 968px){
   /* ================================ WEB ======================================== */
+
+  .divTitreCat{
+    font-size: 22px;
+  }
 
   .listeProduits{
     max-width: 30%;
