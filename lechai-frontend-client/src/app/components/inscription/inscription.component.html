@@ -37,7 +37,7 @@
 
         <div class="log-inputbox">
           <span (click)="hideShowPassV()" class="fa eye-slash {{eyeIconV}}"></span>
-          <input formControlName="validation" placeholder="Mot de passe" [type]="passType" class="log-input" required>
+          <input formControlName="validation" placeholder="Mot de passe" [type]="passTypeV" class="log-input" required>
         </div>
         <small *ngIf="signupForm.controls['validation'].dirty && signupForm.hasError('required', 'validation')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
         <small *ngIf="signupForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>

@@ -9,6 +9,13 @@
   margin-bottom: 5em;
 }
 
+input{
+  border: none;
+  border-bottom:  1px solid gray;
+  background-color: transparent;
+  padding: .5em 0;
+}
+
 .form-box{
   position: relative;
   width: auto;
@@ -55,6 +62,7 @@
   }
 
   .infoC{
+    margin-bottom: 2em;
     .mdpMin{
       margin-top: 0.2em;
       p{
@@ -72,7 +80,7 @@
 
     padding-top: 2em;
     margin-top: 2em;
-    border-top: 1px solid black;
+    border-top: 3px solid black;
     input{
       width: 100%;
     }
@@ -80,7 +88,7 @@
 
   .adresse{
     padding-bottom: 2em;
-    border-bottom: solid black 1px;
+    border-bottom: solid black 3px;
     margin-bottom: 2em;
 
     .add{
@@ -124,6 +132,31 @@
     button:first-of-type{
       margin-right: 1em;
     }
+  }
+
+  .log-inputboxErr {
+    border-bottom: 2px solid red;
+  }
+  .errorSignup{
+    margin-top: -15px;
+    color: red;
+  }
+
+  .prenom{
+    position: absolute;
+    margin-right: 14em;
+  }
+
+  .nom{
+    position: absolute;
+    margin-left: 13em;
+  }
+
+  .eye-slash{
+    position: absolute;
+    margin-left: 32em;
+    margin-top: .5em;
+    cursor: pointer;
   }
 }
 

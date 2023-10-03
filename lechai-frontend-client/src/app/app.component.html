@@ -15,10 +15,18 @@
 }">
   <span class="closeToast" (click)="closeToast()">X</span>
   <div class = "toast-content">
-    <span class="iconToast" *ngIf="toastType == 'success'">✓</span>
-    <span class="iconToast" *ngIf="toastType == 'error'">X</span>
-    <span class="iconToast" *ngIf="toastType == 'warn'">!</span>
-    <span class="iconToast" *ngIf="toastType == 'info'">i</span>
+    <span class="iconToast" *ngIf="toastType == 'success'"><p>✓</p>
+      <h3>Succès</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'error'"><p>X</p>
+      <h3>Erreur</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'warn'"><p>!</p>
+      <h3>Attention!</h3>
+    </span>
+    <span class="iconToast" *ngIf="toastType == 'info'"><p>i</p>
+      <h3>Information</h3>
+    </span>
     <span>{{ toastMsg }}</span>
   </div>
 </div>
