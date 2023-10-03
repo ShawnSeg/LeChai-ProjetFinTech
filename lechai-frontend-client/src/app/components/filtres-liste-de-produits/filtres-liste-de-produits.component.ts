@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Produit } from 'src/ameInterfaces';
 import { Categorie } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -92,15 +93,33 @@ export class FiltresListeDeProduitsComponent {
     },
   ];
 
+  public categorizedProducts: { [key: string]: Produit[] } = {};
+  public filteredCategoryList:{[key:string]:Produit[]}={};
+
+  public filteredCat:string[]=[]
+
+  public isEmpty:boolean = false;
+
   public filtreNom: String = '';
   public filtreCategorie:String = '';
-  public filtrePrixMin: number | undefined;
-  public filtrePrixMax: number | undefined;
   public filteredProduit?: Produit[];
 
+  constructor(private routingService:RoutingService){
+
+  }
 
   ngOnInit() {
     this.filteredProduit = this.produits;
+    this.groupProductsByCategory();
+    this.filteredCategoryList = this.categorizedProducts;
+    this.filteredCat=Object.keys(this.filteredCategoryList)
+  }
+
+  groupProductsByCategory() {
+    this.categories.forEach((category) => {
+      const productsInCategory = this.produits.filter((prod) => prod.categorie === category.id);
+      this.categorizedProducts[category.nom] = productsInCategory;
+    });
   }
 
   toggleButton():void{
@@ -127,60 +146,38 @@ export class FiltresListeDeProduitsComponent {
     }
   }
 
-  belongsToCategorie(categorieId: number): boolean {
-    return this.produits?.some(prod => prod.categorie === categorieId);
+  belongsToCategorie(categorieId: number, prod:Produit): boolean {
+    return prod.categorie==categorieId;
   }
 
   applyFilterNom(value:String) {
-    this.filtreNom=value
-    const filteredProduit = this.filteredProduit?.filter((prod) => {
-      // Filter logic based on product name (you can modify this)
-      return (
-        prod.nom.toLowerCase().includes(this.filtreNom.toLowerCase())
-      );
-    });
+    this.filtreNom = value; // Store the filter value in the component property
 
-    // Update the list with filtered commandes
-    this.filteredProduit = filteredProduit;
+    // Apply the filter to each category
+    Object.keys(this.filteredCategoryList).forEach((categoryName) => {
+      this.filteredCategoryList[categoryName] = this.filteredCategoryList[categoryName].filter((prod) => {
+        return prod.nom.toLowerCase().includes(this.filtreNom.toLowerCase());
+      });
+    });
   }
 
   applyCategorieFilter(value:string){
-    const valueInt = parseInt(value, 10);
-    if (valueInt == 0) {
+
+    if (value == "tout") {
 
     }
     else
     {
-      // Perform filtering logic here
-      const filteredProduit = this.filteredProduit?.filter((prod) => {
-          // Check if the `id` of the `Commande` matches the provided `parsedValue`
-
-        return prod.categorie === valueInt;
-        // Update the list with filtered commandes
-
-      });
-      this.filteredProduit = filteredProduit;
+      for (const key in this.filteredCategoryList) {
+        if (this.filteredCategoryList.hasOwnProperty(key) && key !== value) {
+          // Check if the category name is not equal to "Thé"
+          delete this.filteredCategoryList[key]; // Remove the category
+        }
+      }
     }
   }
 
- /*  applyFilterPrix(valueMinS: string, valueMaxS: string) {
 
-    let valueMin = parseInt(valueMinS, 10);
-    let valueMax = parseInt(valueMaxS, 10);
-    // Appliquez ensuite le filtre de prix
-    let filteredProduit = this.filteredProduit; // Initialisez la variable ici pour éviter des problèmes de portée
-
-    if (valueMin !== undefined && valueMax !== undefined) {
-      const filteredProduit = this.filteredProduit?.filter((prod) => {
-        // Insérez votre logique pour comparer le prix du produit avec les valeurs minimales et maximales ici
-        // Par exemple, supposons que le prix du produit est stocké dans prod.prix
-        return prod.prix >= valueMin && prod.prix <= valueMax;
-      });
-    }
-
-    // Mettez à jour la liste filtrée
-    this.filteredProduit = filteredProduit;
-  } */
 
   applyAllFilters(){
     const filterNom = (this.filterNom?.nativeElement as HTMLInputElement).value;
@@ -188,21 +185,21 @@ export class FiltresListeDeProduitsComponent {
     /* const filterPrixMin = (this.filterPrixMin?.nativeElement as HTMLSelectElement).value;
     const filterPrixMax = (this.filterPrixMax?.nativeElement as HTMLSelectElement).value; */
 
-    this.filteredProduit=this.produits
+    this.filteredCategoryList={ ...this.categorizedProducts };
 
     this.applyFilterNom(filterNom);
     this.applyCategorieFilter(filterCategorie);
+    this.filteredCat=Object.keys(this.filteredCategoryList)
+    this.NoShownProducts()
     /* this.applyFilterPrix(filterPrixMin, filterPrixMax); */
   }
 
   applyChangeToFormWeb(){
-    const filterNomMobile = (this.filterNomMobile?.nativeElement as HTMLInputElement).value;
-    const filterCategorieMobile = (this.filterCategorieMobile?.nativeElement as HTMLInputElement).value;
+
     /* const filterPrixMinMobile = (this.filterPrixMinMobile?.nativeElement as HTMLSelectElement).value;
     const filterPrixMaxMobile = (this.filterPrixMaxMobile?.nativeElement as HTMLSelectElement).value; */
-
-    (this.filterNom?.nativeElement as HTMLInputElement).value = filterNomMobile;
-    (this.filterCategorie?.nativeElement as HTMLSelectElement).value = filterCategorieMobile;
+    (this.filterNom?.nativeElement as HTMLInputElement).value = (this.filterNomMobile?.nativeElement as HTMLInputElement).value;
+    (this.filterCategorie?.nativeElement as HTMLSelectElement).value = (this.filterCategorieMobile?.nativeElement as HTMLInputElement).value;
     /* (this.filterPrixMin?.nativeElement as HTMLSelectElement).value = filterPrixMinMobile;
     (this.filterPrixMax?.nativeElement as HTMLSelectElement).value = filterPrixMaxMobile; */
 
@@ -214,6 +211,17 @@ export class FiltresListeDeProduitsComponent {
     /* (this.filterPrixMinMobile?.nativeElement as HTMLSelectElement).value = (this.filterPrixMin?.nativeElement as HTMLInputElement).value;
     (this.filterPrixMaxMobile?.nativeElement as HTMLSelectElement).value = (this.filterPrixMax?.nativeElement as HTMLInputElement).value; */
 
+  }
+
+  NoShownProducts()
+  {
+    this.isEmpty = Object.keys(this.filteredCategoryList).every((key) => {
+      return this.filteredCategoryList[key].length === 0;
+    });
+  }
+
+  getAllProduit(){
+    this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
   }
 
 }

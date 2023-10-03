@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-compte-client',
@@ -8,7 +9,7 @@ import { Client } from 'src/ameInterfaces';
 })
 export class CompteClientComponent {
 
-  client: Client[] = [
+  client: Client =
     {
       id:1,
       prenom: 'Et Appel',
@@ -22,7 +23,21 @@ export class CompteClientComponent {
       ville:'sherbrooke',
       province:'Quebec',
       codePostal:'J2B J4H',
-    },
-  ];
+    };
+
+  constructor(private routingService : RoutingService)
+  {
+
+  }
+
+  ngOnInit()
+  {
+    this.getClientInfo();
+  }
+
+  getClientInfo()
+  {
+    this.routingService.getClientInfo().subscribe(client =>this.client = client);
+  }
 
 }

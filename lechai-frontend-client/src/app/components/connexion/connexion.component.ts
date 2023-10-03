@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { RoutingService } from 'src/app/services/routing.service';
+import { ApiResponse } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-connexion',
@@ -16,10 +18,12 @@ export class ConnexionComponent implements OnInit{
   passType: string = "password";
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash";
+  showForm = false;
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router){
+
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingSevice:RoutingService){
 
   }
 
@@ -66,6 +70,19 @@ export class ConnexionComponent implements OnInit{
       this.toast.showToast("error", "La connexion n'a pas fonctionner", "bottom-center", 4000);
     }
 
+  }
+
+
+
+  toggleForm(){
+    if(this.showForm)
+    {
+      this.showForm=false;
+    }
+    else
+    {
+      this.showForm=true;
+    }
   }
 
 

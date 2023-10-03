@@ -147,11 +147,12 @@ h3{
   }
 
   .filtreFormWeb{
-    background-color: rgb(255,250,234);
+    border-bottom: 8px #FFE649 solid;
+    border-right: 8px #FFE649 solid;
+    border-radius: 10px;
     margin-left: 2%;
     margin-right: 2%;
     width:25%;
-    border-radius: 30px;
     padding:2%;
     position: fixed;
     bottom:25%;

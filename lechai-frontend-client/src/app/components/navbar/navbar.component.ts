@@ -9,6 +9,8 @@ export class NavbarComponent {
   @ViewChild('burger', { static: true }) burger?: ElementRef;
   @ViewChild('menuMobile', { static: true }) menuMobile?: ElementRef;
 
+  public estConnecter:boolean = true;
+
   toggleButton():void{
     const burger = this.burger?.nativeElement as HTMLElement;
     const menuMobile = this.menuMobile?.nativeElement as HTMLElement;
@@ -23,5 +25,10 @@ export class NavbarComponent {
       burger.classList.add("active")
       menuMobile.classList.remove("hide")
     }
+  }
+
+  deconnecter()
+  {
+    this.estConnecter = !this.estConnecter
   }
 }

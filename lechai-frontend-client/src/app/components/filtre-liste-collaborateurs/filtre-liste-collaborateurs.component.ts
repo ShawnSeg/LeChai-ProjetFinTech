@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Collaborateurs } from 'src/ameInterfaces';
 import { Compagnie } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-filtre-liste-collaborateurs',
@@ -73,7 +74,9 @@ export class FiltreListeCollaborateursComponent {
   public filtreCompagnie:String = '';
   public filteredCollabs?: Collaborateurs[];
 
+  constructor(private routingService:RoutingService){
 
+  }
 
   ngOnInit() {
     this.filteredCollabs = this.collaborators;
@@ -165,6 +168,9 @@ export class FiltreListeCollaborateursComponent {
     (this.filterNomMobile?.nativeElement as HTMLInputElement).value =(this.filterNom?.nativeElement as HTMLInputElement).value;
     (this.filterCompagnieMobile?.nativeElement as HTMLInputElement).value=(this.filterCompagnie?.nativeElement as HTMLSelectElement).value;
 
+  }
+  getCollaborateurs(){
+    this.routingService.getCollaborateur().subscribe(collaborateurs=>this.collaborators=collaborateurs)
   }
 }
 

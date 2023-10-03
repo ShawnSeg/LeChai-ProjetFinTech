@@ -23,16 +23,16 @@
           <p class="add">Adresse principale : </p>
           <div class="adresse">
             <span class="rue">
-              <input type="text" value="{{ clnt.civic }}">
+              <input type="text" value="{{ clnt.civic }}" [(ngModel)]="no_civique">
               <p> </p>
-              <input type="text" value="{{ clnt.rue }}">
+              <input type="text" value="{{ clnt.rue }}" [(ngModel)]="rue">
               <p>, Apt </p>
-              <input type="text" value="{{ clnt.apt }}">
+              <input type="text" value="{{ clnt.apt }}" [(ngModel)]="prenom">
             </span>
 
-            <input type="text" value="{{ clnt.ville }}">
-            <input type="text" value="{{ clnt.province }}">
-            <input type="text" value="{{ clnt.codePostal }}">
+            <input type="text" value="{{ clnt.ville }}"[(ngModel)]="ville">
+            <input type="text" value="{{ clnt.province }}" [(ngModel)]="province">
+            <input type="text" value="{{ clnt.codePostal }}" [(ngModel)]="codePostal">
           </div>
         </span>
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { ToastService } from 'src/app/services/toast.service';
 import { Client } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-modifier-compte-client',
@@ -29,6 +30,18 @@ export class ModifierCompteClientComponent {
     },
   ];
 
+  public prenom:String = "";
+  public nom:String = "";
+  public dateNaissance:Date = new Date();
+  public no_civique:String = "";
+  public rue:String = "";
+  public ville:String = "";
+  public province:String = "";
+  public codePostal:String = "";
+
+
+
+
   passType: string = "password";
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash";
@@ -44,7 +57,7 @@ export class ModifierCompteClientComponent {
   modCompteClntForm!: FormGroup;
   clientInfo = this.client[0];
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router){
+  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService){
 
   }
 
