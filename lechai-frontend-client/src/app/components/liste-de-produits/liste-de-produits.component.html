@@ -5,7 +5,7 @@
         <img src="../assets/image/coeur_vide.svg" alt="coeur vide" class = "hide">
         <img *ngFor="let img of prod?.image; let i = index" [src]="'../assets/image/' + img + '.png'" alt="image produit" class="imgProd" [class.hidden]="i !== currentIndex">
         <img src="../assets/image/ajoutPanier.png" alt="icone panier" class="iconePanier">
-        <p>{{prod?.nom}}</p>
+        <p><a routerLink="detailsProduit/{{prod?.id}}"></a>{{prod?.nom}}</p>
         <p>{{prod?.prix}}$</p>
       </div>
 

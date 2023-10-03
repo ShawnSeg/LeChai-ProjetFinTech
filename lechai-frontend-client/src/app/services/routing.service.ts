@@ -66,6 +66,10 @@ export class RoutingService {
     return this.http.get<Client>("https://localhost7247/getClientInfo/1");
   }
 
+  connexion(courriel:String, mdp:String)
+  {
+    return this.http.get<String>("https://localhost7247/getClientInfo/owneiwini");
+  }
 
 
   updateChangementQuantiteProduitPanier(productId:number, newQuantity:number){

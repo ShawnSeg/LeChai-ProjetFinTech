@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ApiResponse } from 'src/shawnInterface';
+import { group } from '@angular/animations';
 
 @Component({
   selector: 'app-connexion',
@@ -44,43 +45,16 @@ export class ConnexionComponent implements OnInit{
   onLogin(){
     if(this.loginForm.valid)
     {
-      let token: String = "tokenTEMP";
+      let token: String="";
+      this.routingSevice.connexion(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe(newToken=>token=newToken)
 
-       this.cookie.set("token", ""+token);
+
        localStorage.setItem('token', token.toString());
 
 
-       /* get cookie!
-       dans le TS d'un component metre une variable:
-       token:any;
 
-       dans le constructeur ajouter
-       private cookie:CookieService
-       et l'exporter
 
-       pour le recupérer le cookie
-       this.token = this.cookie.get('token')
 
-       token contiendra e token on peut maintenant lafficher ou le transmetre au besoin
-       */
-
-       /* delete un cookie a la deconnexion
-
-       sur le bouton deconnexion dans le nav html
-
-       (click)="deleteCookie()"
-
-       dans le TS
-
-       deleteCookie()
-       {
-        this.cookie.deleteALL();
-        this.token = "";
-       }
-
-       */
-
-      console.log(this.loginForm.value)
       // envoyer à la base de données
       this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);
       this.loginForm.reset();
