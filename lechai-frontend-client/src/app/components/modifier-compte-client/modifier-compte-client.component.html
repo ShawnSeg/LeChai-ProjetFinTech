@@ -1,16 +1,22 @@
 <section class="sectionCompteClient">
   <div  *ngFor="let clnt of client" class="form-box" class="form-box">
-      <form>
+      <form [formGroup]="modCompteClntForm">
         <h2 class="title">Information sur le compte</h2>
 
         <span class="nomClient">
-          <input type="text" value="{{ clnt.prenom }}">
-          <input type="text" value="{{ clnt.nom }}">
+          <input formControlName="prenom" type="text" value="{{ clnt.prenom }}" required>
+          <small *ngIf="modCompteClntForm.controls['prenom'].dirty && modCompteClntForm.hasError('required', 'prenom')" class="errorSignup prenom">*Le Prénom n'est pas valide!</small>
+
+          <input formControlName="nom" type="text" value="{{ clnt.nom }}" required>
+          <small *ngIf="modCompteClntForm.controls['nom'].dirty && modCompteClntForm.hasError('required', 'nom')" class="errorSignup nom">*Le nom n'est pas valide!</small>
+
         </span>
 
         <div class="infoD">
           <p>Date de naissance : </p>
-          <input type="date" value="{{ clnt.naissance }}">
+          <input formControlName="date" type="date" value="{{ clnt.naissance }}" required>
+          <small *ngIf="modCompteClntForm.controls['date'].dirty && modCompteClntForm.hasError('required', 'date')" class="errorSignup">*La date de naissance n'est pas valide!</small>
+          <small *ngIf="modCompteClntForm.controls['date'].dirty && modCompteClntForm.hasError('pattern', 'date')" class="errorSignup">*La date de naissance doit être une date valide!</small>
         </div>
 
         <span>
@@ -32,17 +38,18 @@
 
         <div class="infoC">
           <p>Courriel : </p>
-          <input type="text" value="{{ clnt.courriel }}">
+          <input formControlName="courriel" type="text" value="{{ clnt.courriel }}" required>
+          <small *ngIf="modCompteClntForm.controls['courriel'].dirty && modCompteClntForm.hasError('required', 'courriel')" class="errorSignup">*Le Courriel n'est pas valide!</small>
+          <small *ngIf="modCompteClntForm.controls['courriel'].dirty && modCompteClntForm.hasError('pattern', 'courriel')" class="errorSignup">*Le Courriel n'est pas valide!</small>
         </div>
 
         <div class="infoC">
           <p>Nouveau mot de passe : </p>
-          <input type="text" placeholder="Nouveau mot de passe">
-        </div>
+          <span (click)="hideShowPass()" class="fa eye-slash {{eyeIcon}}"></span>
+          <input formControlName="password" [type]="passType" placeholder="Nouveau mot de passe" required>
+          <small *ngIf="modCompteClntForm.controls['password'].dirty && modCompteClntForm.hasError('required', 'password')" class="errorSignup mdp">*Le mot de passe n'est pas valide!</small>
+          <small *ngIf="modCompteClntForm.controls['password'].dirty && modCompteClntForm.hasError('pattern', 'password')" class="errorSignup mdp">*Le mot de passe ne correspond pas au minimum demander</small>
 
-        <div class="infoC">
-          <p>Vérification mot de passe</p>
-          <input type="text" placeholder="Nouveau mot de passe">
           <div class="mdpMin">
             <p>Le mot de passe doit contenir :</p>
             <p>- 8 caractères de long</p>
@@ -51,15 +58,29 @@
           </div>
         </div>
 
+
+        <div class="infoC">
+          <p>Vérification mot de passe</p>
+          <span (click)="hideShowPassV()" class="fa eye-slash {{eyeIconV}}"></span>
+          <input formControlName="validation" [type]="passTypeV" placeholder="Nouveau mot de passe" required>
+        </div>
+        <small *ngIf="modCompteClntForm.controls['validation'].dirty && modCompteClntForm.hasError('required', 'validation')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
+        <small *ngIf="modCompteClntForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
+
+
         <div class="mdpActu">
           <p>Mot de passe actuel*</p>
-          <input type="text" placeholder="Mot de passe atuel">
+          <span (click)="hideShowPassA()" class="fa eye-slash {{eyeIconA}}"></span>
+          <input formControlName="validationActuel" [type]="passTypeA" placeholder="Mot de passe atuel" required>
+          <small *ngIf="modCompteClntForm.controls['validationActuel'].dirty && modCompteClntForm.hasError('required', 'validationActuel')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
+          <small *ngIf="modCompteClntForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
+
         </div>
 
 
         <span class="btn">
-          <button type="submit" class="log-btn">Enregistrer les modifications</button>
-          <button type="submit" class="log-btn">Annuler les modifications</button>
+          <button (click)="onChange()" type="submit" class="log-btn">Enregistrer les modifications</button>
+          <button (click)="annuler()" type="submit" class="log-btn">Annuler les modifications</button>
         </span>
 
       </form>

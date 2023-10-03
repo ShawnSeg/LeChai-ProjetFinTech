@@ -16,25 +16,26 @@ import { ListeCommandesComponent } from './components/liste-commandes/liste-comm
 import { PaiementComponent } from './components/paiement/paiement.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
+import { authGuard } from './auth.guard';
 
 
 const routes: Routes = [
   {path: '', component: AccueilComponent},
-  {path: 'panier', component:PanierComponent},
-  {path: "listeSouhait", component:ListeSouhaitComponent},
-  { path: 'commandes', component: ListeCommandesComponent },
-  { path: 'commandes/:id', component: CommandesDetailsComponent },
-  {path: "paiement", component:PaiementComponent},
+  {path: 'panier', component:PanierComponent, canActivate: [authGuard]},
+  {path: "listeSouhait", component:ListeSouhaitComponent, canActivate: [authGuard]},
+  { path: 'commandes', component: ListeCommandesComponent, canActivate: [authGuard]},
+  { path: 'commandes/:id', component: CommandesDetailsComponent, canActivate: [authGuard]},
+  {path: "paiement", component:PaiementComponent, canActivate: [authGuard]},
   {path: "listeProduits", component:FiltresListeDeProduitsComponent},
   {path: "detailsProduit/:id", component:DetailsProduitComponent},
   {path: "listeCollaborateurs", component:FiltreListeCollaborateursComponent},
   {path: "connexion", component:ConnexionComponent},
   {path: "inscription", component:InscriptionComponent},
-  {path: "compteClient", component:CompteClientComponent},
-  {path: "modifierCompteClient", component:ModifierCompteClientComponent},
-  {path: "nousContacter", component:ContacteComponent},
-  {path: "mdpOublierChangement", component:MdpOublierChangementComponent},
-  {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent},
+  {path: "compteClient", component:CompteClientComponent, canActivate: [authGuard]},
+  {path: "modifierCompteClient", component:ModifierCompteClientComponent, canActivate: [authGuard]},
+  {path: "nousContacter", component:ContacteComponent, canActivate: [authGuard]},
+  {path: "mdpOublierChangement", component:MdpOublierChangementComponent, canActivate: [authGuard]},
+  {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
 
 ];
 
