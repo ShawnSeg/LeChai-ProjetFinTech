@@ -62,7 +62,7 @@
   }
   }
 
-.flexFiltre{
+.flex{
   display: flex;
   flex-direction: row;
   button{
@@ -119,34 +119,14 @@
   }
 }
 
-/* -------------------------------------------------- */
-
-.flex{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .divTitreCat{
-  margin-top: 6em;
   margin-left: 2em;
-  margin-bottom: 2em;
-  margin-right: 2em;
-}
-
-.divTitreCatB{
-  border-bottom: 3px black solid;
 
 }
 
 .categoryName{
   border-bottom:2px solid black;
   margin-bottom:5%;
-}
-
-.listeProduits {
-  width: calc(50% - 10px); /* Ajustez la largeur en fonction de la marge souhaitée */
-    margin-bottom: 20px; /* Espacement entre les produits */
 }
 
 .hide{
@@ -181,9 +161,6 @@
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
-  .mobile{
-    display:none;
-  }
 
   .web{
     display:block;
@@ -252,9 +229,6 @@
     width:67%;
   }
 
-  .listeProduits {
-    width: 33.33%; /* Pour afficher 3 produits par ligne */
-  }
   .row {
     display: flex;
     flex-direction: row;

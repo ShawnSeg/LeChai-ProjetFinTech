@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -25,7 +25,7 @@ export class ConnexionComponent implements OnInit{
   loginForm!: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private cookie: CookieService,  private routingSevice:RoutingService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService){
 
   }
 
