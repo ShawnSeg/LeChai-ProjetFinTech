@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-inscription',
@@ -22,7 +23,7 @@ export class InscriptionComponent {
 
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService){
 
   }
 
@@ -88,5 +89,9 @@ export class InscriptionComponent {
       ValidationInput.validationInput(this.signupForm);
       this.toast.showToast("error", "L'inscription n'a pas fonctionner", "bottom-center", 4000);
     }
+  }
+
+  sendInfo(prenom:string, nom:string, date:Date, courrie:string, password:string){
+    this.routingService.inscription(prenom, nom, date, courrie, password);
   }
 }

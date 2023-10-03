@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
   selector: 'app-modifier-compte-client',
@@ -24,4 +25,20 @@ export class ModifierCompteClientComponent {
       codePostal:'J2B J4H',
     },
   ];
+
+  public prenom:String = "";
+  public nom:String = "";
+  public dateNaissance:Date = new Date();
+  public no_civique:String = "";
+  public rue:String = "";
+  public ville:String = "";
+  public province:String = "";
+  public codePostal:String = "";
+
+  constructor(private routingService:RoutingService)
+  {
+
+  }
+
+
 }

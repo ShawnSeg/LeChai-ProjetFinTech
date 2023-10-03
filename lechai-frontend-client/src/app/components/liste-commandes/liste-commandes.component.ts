@@ -179,10 +179,7 @@ export class ListeCommandesComponent {
     const filterEtat = (this.filterEtat?.nativeElement as HTMLSelectElement).value;
     const filterDate = (this.filterDate?.nativeElement as HTMLInputElement).value;
 
-    alert(filterProduit)
-    alert(filterNumero)
-    alert(filterEtat)
-    alert(filterDate)
+
 
     this.filteredCommandes=this.listeCommande
 

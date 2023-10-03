@@ -11,10 +11,10 @@
       </div>
 
       <div class="filtre">
-        <label for="categorieP">Ctégorie du produit</label>
+        <label for="categorieP">Catégorie du produit</label>
         <select name="categorieP" id="categorieP" #filterCategorieMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
-          <option value="0">Toutes les compagnie</option>
-          <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
+          <option value="tout">Toutes les catégorie</option>
+          <option *ngFor="let categorie of categories" [value]="categorie.nom">{{ categorie.nom }}</option>
         </select>
       </div>
 
@@ -28,32 +28,32 @@
 
     </aside>
   </div>
+    <div *ngFor="let categorie of filteredCat" class="divTitreCat">
+      <aside *ngIf="filteredCategoryList[categorie].length>0">
+        <h2 class="categoryName" >{{ categorie}}</h2>
 
-    <div *ngIf="filteredProduit && filteredProduit.length > 0">
 
-      <div *ngFor="let categorie of categories" class="divTitreCat">
-        <div class="divTitreCatB">
-          <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
-        </div>
 
-        <div class="flex">
-          <div  class="listeProduits" *ngFor="let prod of filteredProduit">
-            <aside >
-              <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
-            </aside>
-          </div>
-        </div>
+        <aside class="row">
+          <aside *ngFor="let prod of filteredCategoryList[categorie]" class="conteneur">
+            <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+          </aside>
+        </aside>
+      </aside>
 
-      </div>
 
-      <div *ngIf="!(filteredProduit && filteredProduit.length > 0)" class="aucunFiltre">
-        <h1>Aucun produit ne correspond à votre recherche</h1>
-      </div>
+    </div>
+    <div *ngIf="isEmpty">
+      <h2 class="vide">C'est vide!</h2>
     </div>
 
 
+
+
   <div class="web">
-    <div class="flexFiltre">
+
+    <div class="flex ">
+
       <aside class="filtreFormWeb">
         <h2>Filtres </h2>
 
@@ -67,8 +67,8 @@
           <label for="categorieP">Catégorie du produit</label>
 
           <select name="categorieP" id="categorieP" #filterCategorie (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
-            <option value="0">Toutes les compagnie</option>
-            <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.nom }}</option>
+            <option value="tout">Toutes les catégorie</option>
+            <option *ngFor="let categorie of categories" [value]="categorie.nom">{{ categorie.nom }}</option>
           </select>
 
         </div>
@@ -84,29 +84,32 @@
         </div> -->
 
       </aside>
+      <aside class="conteneurCategorie">
+        <div *ngFor="let categorie of filteredCat" class="divTitreCat">
+          <aside *ngIf="filteredCategoryList[categorie].length>0">
+            <h2 class="categoryName" >{{ categorie}}</h2>
 
 
-      <aside *ngIf="filteredProduit && filteredProduit.length > 0" class="listeCommandes">
 
-          <div *ngFor="let categorie of categories" class="divTitreCat">
-            <h2 *ngIf="belongsToCategorie(categorie.id)">{{ categorie.nom }}</h2>
-
-            <div class="flex">
-              <aside class="listeProduits" *ngFor="let prod of filteredProduit">
-                <aside >
+            <aside class="row">
+              <aside *ngFor="let prod of filteredCategoryList[categorie]" class="conteneur">
                 <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
-                </aside>
               </aside>
-            </div>
-          </div>
+            </aside>
+          </aside>
 
-          <div *ngIf="!(filteredProduit && filteredProduit.length > 0)" class="aucunFiltre">
-            <h1>Aucun produit ne correspond à votre recherche</h1>
-          </div>
 
+        </div>
+        <div *ngIf="isEmpty">
+          <h2 class="vide">C'est vide!</h2>
+        </div>
       </aside>
 
 
+
+
+
+    </div>
 
   </div>
 

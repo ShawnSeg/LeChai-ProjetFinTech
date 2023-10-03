@@ -3,6 +3,7 @@ import { Produit } from 'src/ameInterfaces';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
+import { RoutingService } from 'src/app/services/routing.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class DetailsProduitComponent implements OnInit{
 
-  produits: Produit[] = [
+  produits: Produit=
     {
       id:1,
       image: [
@@ -32,45 +33,7 @@ export class DetailsProduitComponent implements OnInit{
       d’un gout authentique et d’une texture remarquable. Fait avec un mélange d’épices bien choisis et en équilibre.
       Une petite touche piquante qui ne laissera pas tes sens indifférents. Du début à la fin un réconfort dans la bouche!`,
       categorie: 1,
-    },
-    {
-      id:2,
-      image: [
-        'dirtyChai/dirtyFront',
-        'dirtyChai/dirtyTop',
-        'dirtyChai/dirtyBottom'
-      ],
-      nom: 'Dirty Chai',
-      icon: 'img temp/pepper.svg',
-      prix: 21.00,
-      quantite: 200,
-      ingrediant:'The noir, cannelle, muscade, cardamome, gingembre, anis etoiler, clou girofle, piment cayenne,cafe,sucre',
-      description: `C’est la version de Le Chai mélangé avec les délicieux attributs de la caféine.
-      La touché caféiné développe des notes plus boisées, grillés et de cacao.
-      Pourquoi pas essayer le meilleur de ces deux mondes.`,
-      categorie: 1,
-    },
-    {
-      id:3,
-      image: [
-        'chandail/chaiShirtFront',
-        'chandail/chaiShirtBack'
-      ],
-      nom: 'Chandail du Chai',
-      prix: 32.00,
-      grandeur:[
-        'S',
-        'M',
-        'L',
-        'XL'
-      ],
-      couleur: [
-        'Noir'
-      ],
-      description: `shaaiuhfkjfiuaqhuhdadh Description du chandail sdhfoidshfsoihfsiodhiodhisf`,
-      categorie: 2,
-    },
-  ];
+    };
 
   produitAafficher: Produit | undefined;
   currentIndex: number = 0;
@@ -79,7 +42,7 @@ export class DetailsProduitComponent implements OnInit{
   selectedGrandeur: string = '';
   selectedCouleur: string = '';
 
-  constructor(private route: ActivatedRoute, private toast: ToastService) { }
+  constructor(private route: ActivatedRoute, private toast: ToastService, private routingService:RoutingService) { }
 
   ngOnInit() {
     // Récupérer le paramètre d'URL 'id'
@@ -90,7 +53,7 @@ export class DetailsProduitComponent implements OnInit{
       console.log('ID du produit :', productId);
 
       // Vous pouvez charger le produit correspondant à l'aide de 'productId'
-      this.produitAafficher = this.produits.find(produit => produit.id === productId);
+      this.produitAafficher = this.produits;
       // Par exemple, en appelant un service qui récupère les détails du produit.
 
 
@@ -99,8 +62,9 @@ export class DetailsProduitComponent implements OnInit{
         console.log(`Aucun produit trouvé avec l'ID ${productId}`);
       }
 
-
+      this.getProduit(params['id'])
     });
+
   }
 
   // Méthode pour changer d'image
@@ -134,6 +98,10 @@ export class DetailsProduitComponent implements OnInit{
 
   addPanier(): void{
     this.toast.showToast("succes", "Le produit à bien été ajouter au panier", "bottom-center", 3000);
+  }
+
+  getProduit(id:number){
+    this.routingService.getProduitDetail(id).subscribe(produit=>this.produits=produit)
   }
 
 }

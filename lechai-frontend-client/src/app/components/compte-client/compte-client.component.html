@@ -1,29 +1,29 @@
 <section class="sectionCompteClient">
-  <div *ngFor="let clnt of client" class="form-box">
+  <div  class="form-box">
       <form>
         <h2 class="title">Information sur le compte</h2>
 
         <span class="nomClient" >
-          <h3>{{ clnt.prenom }}</h3>
-          <h3>{{ clnt.nom }}</h3>
+          <h3>{{ client.prenom }}</h3>
+          <h3>{{ client.nom }}</h3>
         </span>
 
         <div class="infoD">
           <p>Date de naissance : </p>
-          <p> {{ clnt.naissance }}</p>
+          <p> {{ client.naissance }}</p>
         </div>
 
         <div class="infoC">
           <p>Courriel : </p>
-          <p>{{ clnt.courriel }}</p>
+          <p>{{ client.courriel }}</p>
         </div>
 
         <span class="adresse">
           <p>Adresse principale : </p>
           <div>
-            <p> {{ clnt.civic + " " + clnt.rue }}, Apt {{ clnt.apt }}</p>
-            <p>{{ clnt.ville }}, {{ clnt.province }}</p>
-            <p>{{ clnt.codePostal }}</p>
+            <p> {{ client.civic + " " + client.rue }}, Apt {{ client.apt }}</p>
+            <p>{{ client.ville }}, {{ client.province }}</p>
+            <p>{{ client.codePostal }}</p>
           </div>
         </span>
 

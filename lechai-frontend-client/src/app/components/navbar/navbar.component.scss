@@ -6,6 +6,11 @@ $headerHeight:3rem;
   z-index: 1;
 }
 
+a{
+  color:black;
+  text-decoration: none;
+}
+
 :root{
   --bar-width:60px;
   --bar-height:8px;
@@ -53,7 +58,7 @@ $headerHeight:3rem;
     list-style: none;
     li{
       width:100%;
-      height:calc(20rem/6);
+      height:calc(20rem/5);
       border-top:3px solid white;
       border-bottom:3px solid white;
 
@@ -293,7 +298,7 @@ $headerHeight:3rem;
     top:80px;
     margin-top:0px;
 
-    ul{
+    .menuHorizontal{
 
       z-index: 1;
       background-color: white;
@@ -330,6 +335,18 @@ $headerHeight:3rem;
   #menuMobile, .panierMobile, #burger{
     display:none;
   }
+
+  .menuConnecter{
+    width:25%;
+    li{
+      width:200%;
+    }
+  }
+
+  .liConnecter{
+    width:200%;
+  }
+
 
 }
 

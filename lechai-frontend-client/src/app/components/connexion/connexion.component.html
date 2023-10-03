@@ -16,7 +16,7 @@
         <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')" class="errorLogin">*Le mot de passe n'est pas valide!</small>
 
         <div class="log-forget">
-          <a class="log-forget-a" routerLink="/mdpOublierEnvoi">Mot de passe oublier</a>
+          <a class="log-forget-a" (click)="toggleForm()">Mot de passe oublier</a>
         </div>
 
         <button (click)="onLogin()" type="submit" class="log-btn">Se connecter</button>
@@ -29,7 +29,6 @@
   </div>
 </section>
 
-
-
+<app-mdp-oublier-envoi *ngIf="showForm" (hideForm)="toggleForm()"></app-mdp-oublier-envoi>
 <!-- [disabled]="loginForm.invalid" -->
 
