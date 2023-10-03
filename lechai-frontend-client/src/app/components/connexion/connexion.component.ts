@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -20,7 +19,7 @@ export class ConnexionComponent implements OnInit{
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private cookie: CookieService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router){
 
   }
 
@@ -42,39 +41,7 @@ export class ConnexionComponent implements OnInit{
     {
       let token: String = "tokenTEMP";
 
-       this.cookie.set("token", ""+token);
        localStorage.setItem('token', token.toString());
-
-
-       /* get cookie!
-       dans le TS d'un component metre une variable:
-       token:any;
-
-       dans le constructeur ajouter
-       private cookie:CookieService
-       et l'exporter
-
-       pour le recupérer le cookie
-       this.token = this.cookie.get('token')
-
-       token contiendra e token on peut maintenant lafficher ou le transmetre au besoin
-       */
-
-       /* delete un cookie a la deconnexion
-
-       sur le bouton deconnexion dans le nav html
-
-       (click)="deleteCookie()"
-
-       dans le TS
-
-       deleteCookie()
-       {
-        this.cookie.deleteALL();
-        this.token = "";
-       }
-
-       */
 
       console.log(this.loginForm.value)
       // envoyer à la base de données
