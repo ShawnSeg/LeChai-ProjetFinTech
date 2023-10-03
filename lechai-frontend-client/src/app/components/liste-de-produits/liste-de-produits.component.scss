@@ -3,7 +3,12 @@
 
 *{
   z-index: 0;
+  width:100%;
+
 }
+
+
+
 
 .flex{
   display: flex;
@@ -18,10 +23,10 @@
   position: relative;
   max-width: 40%;
   margin-left: 2.5em;
-  margin-bottom: 2em;
+  margin-bottom: 10em;
   font-size: 10px;
   text-align: center;
-  z-index: 1;
+
 
   .imgProd{
     width: 50%;
@@ -29,7 +34,7 @@
   }
 
   .iconePanier{
-    width: 14%;
+    width: 60%;
     position: absolute;
     margin-top: 6.5em;
     margin-left: -1em;
@@ -37,16 +42,66 @@
 
 }
 
-@media only screen and (min-width: 968px){
+@media only screen and (min-width: 1024px){
   /* ================================ WEB ======================================== */
 
   .listeProduits{
-    max-width: 30%;
-    margin-bottom: 5em;
-
+    max-width: 100%;
+    margin-bottom: 60%;
+    font-size: large;
+    .imgProd{
+      border:2px solid black;
+      width: 100px;
+      height:100px;
+    }
     .iconePanier{
-      margin-top: 13em;
-      margin-left: -1.5em;
+      margin-top: 50%;
+      margin-left: 0;
+      width:50%;
+    }
+
+    transition: transform 0.3s ease-in-out;
+
+  }
+
+  .listeProduits:hover{
+    transform: scale(1.2);
+
+    .hide{
+      display: block;
+      position: absolute;
+      width: 10%;
+      height: 13%;
+      margin-left: 20em;
+      margin-top: -1em;
+      background-color: white;
+      padding: 2%;
+      border: 1px black solid;
+      border-radius: 100%;
+      z-index: 2;
+
+    }
+  }
+
+}
+
+
+@media only screen and (min-width: 1400px){
+  /* ================================ WEB ======================================== */
+
+  .listeProduits{
+    max-width: 100%;
+    margin-bottom: 50%;
+    font-size: large;
+    .imgProd{
+      border:2px solid black;
+      width: 100px;
+      height:100px;
+    }
+    .iconePanier{
+      margin-top: 10%;
+      margin-left: 0;
+      width:25%;
     }
 
     transition: transform 0.3s ease-in-out;

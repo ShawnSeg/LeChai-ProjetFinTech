@@ -45,3 +45,6 @@ export interface AdresseLivraison{
 }
 
 
+export interface ApiResponse {
+  message: string;
+}

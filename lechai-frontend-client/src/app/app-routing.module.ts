@@ -22,8 +22,8 @@ const routes: Routes = [
   {path: 'accueil', component: AccueilComponent},
   {path: 'panier', component:PanierComponent},
   {path: "listeSouhait", component:ListeSouhaitComponent},
-  { path: 'commandes', component: ListeCommandesComponent },
-  { path: 'commandes/:id', component: CommandesDetailsComponent },
+  {path: 'commandes', component: ListeCommandesComponent },
+  {path: 'commandes/:id', component: CommandesDetailsComponent },
   {path: "paiement", component:PaiementComponent},
   {path: "listeProduits", component:FiltresListeDeProduitsComponent},
   {path: "detailsProduit/:id", component:DetailsProduitComponent},
@@ -35,7 +35,8 @@ const routes: Routes = [
   {path: "nousContacter", component:ContacteComponent},
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent},
-
+  {path: '', redirectTo: '/accueil', pathMatch: 'full' }, // Default route
+  {path: '**', component: AccueilComponent } // Wildcard route for 404
 ];
 
 @NgModule({

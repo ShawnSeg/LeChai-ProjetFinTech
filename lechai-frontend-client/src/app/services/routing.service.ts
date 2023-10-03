@@ -4,6 +4,11 @@ import { ProduitPanier } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
+import { ApiResponse } from 'src/shawnInterface';
+import { Client } from 'src/ameInterfaces';
+import { FormGroup } from '@angular/forms';
+import { Produit } from 'src/ameInterfaces';
+import { Collaborateurs } from 'src/ameInterfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +22,15 @@ export class RoutingService {
 
   //Voir avec amélie comment elle stock le id client
 
-
+  testAPI() {
+    return this.http.get<ApiResponse>("https://localhost:7247/testProduit");
+  }
   getRoutesPermisesClients(): void{
     //Store les routes que les clients pourront utiliser
+  }
+
+  getProduitDetail(produitId:number):Observable<Produit>{
+    return this.http.get<Produit>("https://localhost:7247/testProduit/"+produitId.toString)
   }
 
   getProduitsPanier(): Observable<ProduitPanier[]>{
@@ -30,8 +41,16 @@ export class RoutingService {
     return this.http.get<ProduitPanier[]>("https://localhost:7247/testProduit");
   }
 
+  getAllProduit():Observable<Produit[]>{
+    return this.http.get<Produit[]>("https://localhost:7247/testProduit")
+  }
+
   getListeCommandes(): Observable<Commandes[]>{
     return this.http.get<Commandes[]>("https://localhost:7247/testProduit");
+  }
+
+  getCollaborateur():Observable<Collaborateurs[]>{
+    return this.http.get<Collaborateurs[]>("https://localhost:7247/getCollaborateur");
   }
 
   getCommandesDetail(commandeId:number): Observable<Commandes>{
@@ -43,13 +62,19 @@ export class RoutingService {
     return this.http.get<AdresseLivraison[]>("https://localhost:7247/testProduit");
   }
 
+  getClientInfo():Observable<Client>{
+    return this.http.get<Client>("https://localhost7247/getClientInfo/1");
+  }
+
 
 
   updateChangementQuantiteProduitPanier(productId:number, newQuantity:number){
 
     let appelApi = "https://localhost:7247/changementQuantite/"+productId.toString
     const requestBody = {
-      quantity:newQuantity
+      productId:productId,
+      quantity:newQuantity,
+      clientId:1
     }
 
     return this.http.post(appelApi, requestBody)
@@ -87,6 +112,41 @@ export class RoutingService {
 
   }
 
+  postChangementMDP(mdp:String)
+  {
+    const url ='https://your-backend-api-url/changemdp';
+    const body = {
+      idClient: 1,
+      newMDP:mdp
+    }
+
+    return this.http.post(url, body)
+  }
+
+  envoiCourriel(sujet:String, message:String, adresseCourriel:String)
+  {
+    const url = 'https://your-backend-api-url/envoiCourriel';
+
+    // Create a request body with the product ID to send to the backend
+    const body = { sujet:sujet, contenu:message, courrielClient: adresseCourriel};
+
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.post(url, body);
+
+  }
+
+  inscription(prenom:string, nom:string, date:Date, courrie:string, password:string){
+    const url = 'https://your-backend-api-url/inscription';
+    const body = {
+      prenomClient:prenom,
+      nomClient:nom,
+      dateNaissance:date,
+      adresseCourriel:courrie,
+      mdp:password
+    }
+    return this.http.post(url, body);
+  }
+
 
 
   deleteProduitDePanier(productId:number){
@@ -110,5 +170,15 @@ export class RoutingService {
         sessionId: res.id
       })
     })
+  }
+
+  changeMDP(email:string){
+    const url = 'https://your-backend-api-url/changemdp';
+
+    // Create a request body with the product ID to send to the backend
+    const body = { clientEmail: email };
+
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.post(url, body);
   }
 }

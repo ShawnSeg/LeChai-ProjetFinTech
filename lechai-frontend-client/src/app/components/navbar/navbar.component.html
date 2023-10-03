@@ -4,7 +4,7 @@
   <img src="assets/image/devany chai (1).png" id="titre" alt="Titre">
 
   <div id="cercle">
-    <a href="">
+    <a routerLink="accueil">
       <img id="logo"src="assets/image/logo.png" alt="logo">
     </a>
     <a routerLink="/panier">
@@ -15,25 +15,35 @@
 
         <ul >
           <li>
-            <a href="">Nos Produits</a>
+            <a routerLink="/listeProduits">Nos Produits</a>
           </li>
 
           <li>
-            <a href="">Collaborateurs</a>
+            <a routerLink="/listeCollaborateurs">Collaborateurs</a>
           </li>
           <li>
-            <a href="">Nous rejoindre</a>
+            <a routerLink="/nousContacter">Nous rejoindre</a>
           </li>
 
           <li>
             <a routerLink="/listeSouhait">Liste de Souhait</a>
           </li>
-          <li>
-            <a href="">Votre compte</a>
+          <li *ngIf="estConnecter == false">
+            <a routerLink="/connexion">Se connecter</a>
           </li>
-          <li>
-            <a href="">Se connecter</a>
-          </li>
+
+          <ng-container *ngIf="estConnecter">
+            <ul class="menuConnecter">
+              <li class="liConnecter">
+                <a routerLink="compteClient">Votre compte</a>
+              </li>
+              <li class="liConnecter">
+                <a (click)="deconnecter()">Se déconnecter</a>
+              </li>
+            </ul>
+
+          </ng-container>
+
         </ul>
       </div>
     </aside>
@@ -73,10 +83,30 @@
 
 </div>
 <nav id="menuDesktop">
-  <ul>
-    <li>Nos Produit</li>
-    <li>Collaborateurs</li>
-    <li>Nous joindre</li>
-    <li>Se connecter</li>
+  <ul class="menuHorizontal">
+    <li>
+      <a routerLink="/listeProduits">Nos produits</a>
+    </li>
+    <li>
+      <a routerLink="/listeCollaborateurs">Collaborateurs</a>
+    </li>
+    <li>
+      <a routerLink="/nousContacter">Nous rejoindre</a>
+    </li>
+    <li *ngIf="estConnecter == false">
+      <a routerLink="/connexion">Se connecter</a>
+    </li>
+    <ng-container *ngIf="estConnecter">
+      <ul class="menuConnecter">
+        <li class="liConnecter">
+          <a routerLink="compteClient">Votre compte</a>
+        </li>
+        <li class="liConnecter">
+          <a (click)="deconnecter()">Se déconnecter</a>
+        </li>
+      </ul>
+
+    </ng-container>
+
   </ul>
 </nav>
