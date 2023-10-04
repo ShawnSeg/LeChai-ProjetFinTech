@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -87,17 +88,42 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addWishList(): void{
-    this.isWish = !this.isWish;
-    this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
-    this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
+
+
+    this.routingService.postProduitDansPanier(this.produits.id).subscribe(
+      (data: any) => {
+        // Handle successful response here
+        this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
+        this.isWish = !this.isWish;
+        this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
+
+      },
+      (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+      }
+    );
   }
 
   acheterMaintenant(): void{
-    this.toast.showToast("error", "Tu achète le produit", "bottom-center", 3000);
+
   }
 
   addPanier(): void{
-    this.toast.showToast("info", "Le produit à bien été ajouter au panier", "bottom-center", 3000);
+
+    this.routingService.postProduitDansPanier(this.produits.id).subscribe(
+      (data: any) => {
+        // Handle successful response here
+        this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
+
+      },
+      (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+      }
+    );
   }
 
   getProduit(id:number){

@@ -27,7 +27,6 @@
       </div> -->
 
     </aside>
-  </div>
     <div *ngFor="let categorie of filteredCat" class="divTitreCat">
       <aside *ngIf="filteredCategoryList[categorie].length>0">
         <h2 class="categoryName" >{{ categorie}}</h2>
@@ -47,12 +46,14 @@
       <h2 class="vide">C'est vide!</h2>
     </div>
 
+  </div>
+
 
 
 
   <div class="web">
 
-    <div class="flex ">
+    <div class="flex conteneur-web">
 
       <aside class="filtreFormWeb">
         <h2>Filtres </h2>
@@ -93,7 +94,7 @@
 
             <aside class="row">
               <aside *ngFor="let prod of filteredCategoryList[categorie]" class="conteneur">
-                <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+                <app-liste-de-produits (listeSouhait)="ajoutLS($event)" (panier)="ajoutPanier($event)"  [prod]="prod"></app-liste-de-produits>
               </aside>
             </aside>
           </aside>

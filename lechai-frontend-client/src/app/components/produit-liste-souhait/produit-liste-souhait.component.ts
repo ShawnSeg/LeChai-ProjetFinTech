@@ -21,6 +21,6 @@ export class ProduitListeSouhaitComponent {
   }
 
   addProduitPanier(){
-    this.addToPanier.emit(this.produit?.id||0)
+    this.addToPanier.emit(this.produit?.id_produit||0)
   }
 }

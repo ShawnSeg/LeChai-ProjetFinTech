@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { ProduitPanier } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
@@ -34,11 +34,19 @@ export class RoutingService {
   }
 
   getProduitsPanier(): Observable<ProduitPanier[]>{
-    return this.http.get<ProduitPanier[]>("https://localhost:7247/testProduit");
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ProduitPanier[]>("https://localhost:7247/testProduit", {headers:headers});
   }
 
   getProduitsListeSouhait(): Observable<ProduitPanier[]>{
-    return this.http.get<ProduitPanier[]>("https://localhost:7247/testProduit");
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ProduitPanier[]>("https://localhost:7247/testProduit", {headers:headers});
   }
 
   getAllProduit():Observable<Produit[]>{
@@ -46,7 +54,11 @@ export class RoutingService {
   }
 
   getListeCommandes(): Observable<Commandes[]>{
-    return this.http.get<Commandes[]>("https://localhost:7247/testProduit");
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<Commandes[]>("https://localhost:7247/testProduit", {headers:headers});
   }
 
   getCollaborateur():Observable<Collaborateurs[]>{
@@ -54,21 +66,57 @@ export class RoutingService {
   }
 
   getCommandesDetail(commandeId:number): Observable<Commandes>{
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     const appelApi = "https://localhost:7247/testProduit/"+commandeId.toString
-    return this.http.get<Commandes>(appelApi);
+    return this.http.get<Commandes>(appelApi, {headers:headers});
   }
 
   getAdresseLivraisonPassee(): Observable<AdresseLivraison[]>{
-    return this.http.get<AdresseLivraison[]>("https://localhost:7247/testProduit");
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<AdresseLivraison[]>("https://localhost:7247/testProduit", {headers:headers});
   }
 
   getClientInfo():Observable<Client>{
-    return this.http.get<Client>("https://localhost7247/getClientInfo/1");
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<Client>("https://localhost7247/getClientInfo", {headers:headers});
   }
 
-  connexion(courriel:String, mdp:String)
+  connexion(courriel:string, mdp:string)
   {
-    return this.http.get<String>("https://localhost7247/getClientInfo/owneiwini");
+    const url = "https://localhost:7247/Clients/ConnexionStepOne";
+
+    const body = {
+      Email: "shawn4seg@gmail.com",
+      Password:"test123"
+    }
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post(url, body, httpOptions);
+  }
+
+  checkToken(token:String){
+    const url = "https://localhost:7247/Clients/ConnexionStepTwo";
+
+    const body = {
+      Token: token,
+
+    }
+
+    return this.http.post(url, body);
   }
 
 
@@ -81,8 +129,14 @@ export class RoutingService {
       clientId:1
     }
 
-    return this.http.post(appelApi, requestBody)
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(appelApi, requestBody, {headers:headers})
   }
+
 
   updateChangementFormatChoisiProduitPanier(productId:number, formatChoisi:String, typeFormat:String){
     let appelApi = "https://localhost:7247/changementFormat/"+productId.toString
@@ -91,9 +145,13 @@ export class RoutingService {
       type_format:typeFormat
     }
 
-    return this.http.post(appelApi, requestBody)
-  }
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
 
+    return this.http.post(appelApi, requestBody, {headers:headers})
+  }
 
 
 
@@ -104,8 +162,13 @@ export class RoutingService {
     // Create a request body with the product ID to send to the backend
     const body = { productId: productId };
 
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
     // Make an HTTP POST request to add the product to the panier
-    return this.http.post(url, body);
+    return this.http.post(url, body,{headers:headers});
   }
 
   postListetDansPanier(liste:ProduitPanier[]){
@@ -116,26 +179,36 @@ export class RoutingService {
 
   }
 
+
   postChangementMDP(mdp:String)
   {
     const url ='https://your-backend-api-url/changemdp';
     const body = {
-      idClient: 1,
       newMDP:mdp
     }
 
-    return this.http.post(url, body)
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(url, body, {headers:headers})
   }
 
-  envoiCourriel(sujet:String, message:String, adresseCourriel:String)
+  envoiCourriel(sujet:String, message:String)
   {
     const url = 'https://your-backend-api-url/envoiCourriel';
 
     // Create a request body with the product ID to send to the backend
-    const body = { sujet:sujet, contenu:message, courrielClient: adresseCourriel};
+    const body = { sujet:sujet, contenu:message};
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
 
     // Make an HTTP POST request to add the product to the panier
-    return this.http.post(url, body);
+    return this.http.post(url, body, {headers:headers});
 
   }
 
@@ -155,20 +228,38 @@ export class RoutingService {
 
   deleteProduitDePanier(productId:number){
     const url = `https://your-backend-url/delete-product/${productId}`; // Replace with your actual backend API endpoint for deleting a product
-    return this.http.delete(url);
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete(url,{headers:headers});
   }
 
   deleteProduitListeSouhait(productId:number){
     const url = `https://your-backend-url/delete-product/${productId}`; // Replace with your actual backend API endpoint for deleting a product
-    return this.http.delete(url);
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(url,{headers:headers});
   }
 
 
 
+
   onCheckout(produits$:ProduitPanier[]){
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
     this.http.post("http://localhost:4242/checkout", {
       produits: produits$
-    }).subscribe(async(res:any)=>{
+    }, {headers:headers}).subscribe(async(res:any)=>{
       let stripe = await loadStripe("pk_test_51NuEUwHpVTFwinL2GsdbSaNKqJs9htvKjE5onIUE1uzxJeL83khsXqRaFBCEHxBUL1aiExj6bqPGFgNChGGXupWz00ZQ2fGI1Y")
       stripe?.redirectToCheckout({
         sessionId: res.id
@@ -182,7 +273,26 @@ export class RoutingService {
     // Create a request body with the product ID to send to the backend
     const body = { clientEmail: email };
 
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
     // Make an HTTP POST request to add the product to the panier
-    return this.http.post(url, body);
+    return this.http.post(url, body, {headers:headers});
+  }
+
+  addProduitListeSouhait(produitId:number)
+  {
+    const url = 'https://your-backend-api-url/changemdp';
+
+    // Create a request body with the product ID to send to the backend
+    const body = { product: produitId };
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.post(url, body, {headers:headers});
   }
 }

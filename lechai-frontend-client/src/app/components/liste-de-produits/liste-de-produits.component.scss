@@ -39,8 +39,8 @@
   .iconePanier{
     width: 60%;
     position: absolute;
-    margin-top: 6.5em;
-    margin-left: -1em;
+    left:80%;
+    top:50%;
   }
 
 }
@@ -71,8 +71,8 @@
       height:100px;
     }
     .iconePanier{
-      margin-top: 50%;
-      margin-left: 0;
+      top: 20%;
+      left: 90%;
       width:50%;
     }
 
@@ -115,8 +115,9 @@
       height:100px;
     }
     .iconePanier{
-      margin-top: 10%;
-      margin-left: 0;
+      top: 20%;
+      left: 70%;
+
       width:25%;
     }
 
@@ -132,7 +133,7 @@
       position: absolute;
       width: 10%;
       height: 13%;
-      margin-left: 20em;
+      left:-50%;
       margin-top: -1em;
       background-color: white;
       padding: 2%;

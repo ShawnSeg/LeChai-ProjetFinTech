@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Commandes } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-commandes-details',
@@ -27,7 +28,7 @@ export class CommandesDetailsComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private route: ActivatedRoute, private routingService:RoutingService) {}
+  constructor(private route: ActivatedRoute, private routingService:RoutingService, private toast:ToastService, private router:Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -80,7 +81,20 @@ export class CommandesDetailsComponent {
 
 
   getCommandeDetail(){
-    this.routingService.getCommandesDetail(this.commande.id).subscribe(commande =>this.commande=commande)
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      if (id) {
+        // Do something with the 'courriel' parameter
+
+        this.routingService.getCommandesDetail(id).subscribe(commande =>this.commande=commande)
+      }
+      else
+      {
+        this.toast.showToast("error", "Erreur: Produit inexistant", "bottom-center", 4000);
+        this.router.navigate([``]);
+      }
+    });
+
   }
 
 

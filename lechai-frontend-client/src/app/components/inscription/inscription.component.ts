@@ -5,6 +5,7 @@ import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-inscription',
@@ -68,10 +69,23 @@ export class InscriptionComponent {
     if(this.signupForm.valid)
     {
       console.log(this.signupForm.value)
+
+      this.routingService.inscription(this.signupForm.get('prenom')!.value, this.signupForm.get('nom')!.value,this.signupForm.get('date')!.value,this.signupForm.get('courriel')!.value,this.signupForm.get('password')!.value).subscribe(
+        (data: any) => {
+          // Handle successful response here
+          this.toast.showToast("success", "L'inscription réussi, un courriel de validation vous à été envoyer.", "bottom-center", 6000);
+          this.signupForm.reset();
+          this.router.navigate(['connexion'] );
+        },
+        (error: HttpErrorResponse) => {
+          // Handle error response here
+          ValidationInput.validationInput(this.signupForm);
+          this.toast.showToast("error", "L'inscription n'a pas fonctionner", "bottom-center", 4000);
+          console.error('Status code:', error.status);
+        }
+      );
       // envoyer à la base de données
-      this.toast.showToast("success", "L'inscription réussi, un courriel de validation vous à été envoyer.", "bottom-center", 6000);
-      this.signupForm.reset();
-      this.router.navigate(['connexion'] );
+
 
       /* this.auth.login(this.loginForm.value)
       .subscribe({

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 import { Produit } from 'src/ameInterfaces';
+import { Output } from '@angular/core';
 
 @Component({
   selector: 'app-liste-de-produits',
@@ -8,8 +9,20 @@ import { Produit } from 'src/ameInterfaces';
 })
 export class ListeDeProduitsComponent {
   @Input() prod?:Produit
+  @Output() panier = new EventEmitter<number>(); // Event emitter for removing the product
+  @Output() listeSouhait = new EventEmitter<number>(); // Event emitter for removing the product
 
   currentIndex: number = 0;
+
+  ajoutPanier()
+  {
+    this.panier.emit(this.prod?.id)
+  }
+
+  ajoutLS()
+  {
+    this.listeSouhait.emit(this.prod?.id)
+  }
 
 }
 

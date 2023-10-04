@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Produit } from 'src/ameInterfaces';
 import { Categorie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
+import { ToastService } from 'src/app/services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -104,11 +106,12 @@ export class FiltresListeDeProduitsComponent {
   public filtreCategorie:String = '';
   public filteredProduit?: Produit[];
 
-  constructor(private routingService:RoutingService){
+  constructor(private routingService:RoutingService, private toast: ToastService){
 
   }
 
   ngOnInit() {
+    this.getAllProduit();
     this.filteredProduit = this.produits;
     this.groupProductsByCategory();
     this.filteredCategoryList = this.categorizedProducts;
@@ -221,7 +224,39 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllProduit(){
-    this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+    //this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+  }
+
+  ajoutPanier(eventData:number)
+  {
+    this.routingService.postProduitDansPanier(eventData).subscribe(
+      (data: any) => {
+        // Handle successful response here
+        this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
+
+      },
+      (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+      }
+    );
+  }
+
+  ajoutLS(eventData:number)
+  {
+    this.routingService.addProduitListeSouhait(eventData).subscribe(
+      (data: any) => {
+        // Handle successful response here
+        this.toast.showToast("success", "le produit a été ajouté à la liste de souhait avec succès!", "bottom-center", 4000);
+
+      },
+      (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+      }
+    );
   }
 
 }

@@ -96,6 +96,7 @@
       <a routerLink="/nousContacter">Nous rejoindre</a>
     </li>
 
+
     <ng-container *ngIf="connecter; else notConnected">
       <li class="liConnecter deroulant">
           <a routerLink="/compteClient">Votre compte</a>
@@ -109,6 +110,8 @@
         </div>
       </li>
     </ng-container>
+
+
 
     <ng-template #notConnected>
       <!-- Utilisateur non connecté -->

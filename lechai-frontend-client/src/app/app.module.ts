@@ -34,6 +34,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 import { Page404Component } from './components/page404/page404.component';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 
 
@@ -70,6 +71,7 @@ import { Page404Component } from './components/page404/page404.component';
     MdpOublierEnvoiComponent,
     MdpOublierChangementComponent,
     Page404Component,
+    VerifyUserComponent,
   ],
   imports: [
     BrowserModule,
