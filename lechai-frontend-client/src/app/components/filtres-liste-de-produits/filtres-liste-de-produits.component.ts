@@ -109,6 +109,7 @@ export class FiltresListeDeProduitsComponent {
   }
 
   ngOnInit() {
+    this.getAllProduit();
     this.filteredProduit = this.produits;
     this.groupProductsByCategory();
     this.filteredCategoryList = this.categorizedProducts;

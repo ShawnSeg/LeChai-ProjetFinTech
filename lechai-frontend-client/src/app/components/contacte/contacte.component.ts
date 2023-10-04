@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} f
 import { ToastService } from 'src/app/services/toast.service';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { RoutingService } from 'src/app/services/routing.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-contacte',
@@ -34,7 +35,7 @@ export class ContacteComponent {
     },
   ];
 
-  constructor(private fb: FormBuilder, private toast: ToastService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService){
 
   }
 
@@ -48,10 +49,21 @@ export class ContacteComponent {
   onContact() {
     if(this.contactForm.valid)
     {
-      console.log(this.contactForm.value)
+      this.routingService.envoiCourriel(this.contactForm.get('courriel')!.value, this.contactForm.get('password')!.value).subscribe(
+        (data: any) => {
+          // Handle successful response here
+          this.toast.showToast("success", "Le message  " + this.sujet + " a été envoyé avec succès!", "bottom-center", 4000);
+          this.contactForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'Le message n\a pas pu être envoyé... Veuillez essayer plus tard.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+        }
+      );
       // envoyer à la base de données
-      this.toast.showToast("success", "message au sujet de " + this.sujet + " à été envoyer!", "bottom-center", 2000);
-      this.contactForm.reset();
+
+
 
       /* this.auth.login(this.loginForm.value)
       .subscribe({

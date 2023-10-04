@@ -79,6 +79,7 @@ export class FiltreListeCollaborateursComponent {
   }
 
   ngOnInit() {
+    this.getCollaborateurs();
     this.filteredCollabs = this.collaborators;
   }
 

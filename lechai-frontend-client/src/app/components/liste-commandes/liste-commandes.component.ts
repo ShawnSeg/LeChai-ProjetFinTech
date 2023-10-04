@@ -47,8 +47,8 @@ export class ListeCommandesComponent {
 
 
   ngOnInit() {
-    this.filteredCommandes = this.listeCommande;
     this.getListeCommande();
+    this.filteredCommandes = this.listeCommande;
   }
 
   toggleButton():void{

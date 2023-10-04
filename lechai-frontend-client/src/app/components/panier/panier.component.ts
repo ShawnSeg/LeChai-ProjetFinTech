@@ -37,7 +37,7 @@ export class PanierComponent {
   }
 
   ngOnInit(){
-    //this.getProduitsPanier();
+    this.getProduitsPanier();
     this.footerPosCheck()
     this.calculateTotalCost();
   }

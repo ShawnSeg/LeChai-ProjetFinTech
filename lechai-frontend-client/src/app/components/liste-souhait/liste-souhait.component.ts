@@ -41,7 +41,6 @@ export class ListeSouhaitComponent {
   }
 
   ajoutProduitPanier(productId:number):void{
-    alert(productId)
     this.routingService.postProduitDansPanier(productId);
     this.toastService.showToast("success", "Le produit a été ajouté au panier avec succès!", "bottom-center", 3000)
 
