@@ -18,7 +18,7 @@ export class RoutingService {
   private routesPermises:String[] = []
 
 
-  constructor(private http: HttpClient, private header:HttpHeaders) { }
+  constructor(private http: HttpClient) { }
 
   //Voir avec amélie comment elle stock le id client
 
@@ -92,7 +92,7 @@ export class RoutingService {
 
   connexion(courriel:String, mdp:String)
   {
-    const url = "https://localhost7247/getClientInfo";
+    const url = "https://localhost7247/connexionStepOne";
 
     const body = {
       courrielClient: courriel,
@@ -103,7 +103,7 @@ export class RoutingService {
   }
 
   checkToken(token:String){
-    const url = "https://localhost7247/checkToken";
+    const url = "https://localhost7247/connexionStepTwo";
 
     const body = {
       tokenClient: token,
@@ -131,6 +131,7 @@ export class RoutingService {
     return this.http.post(appelApi, requestBody, {headers:headers})
   }
 
+
   updateChangementFormatChoisiProduitPanier(productId:number, formatChoisi:String, typeFormat:String){
     let appelApi = "https://localhost:7247/changementFormat/"+productId.toString
     const requestBody = {
@@ -145,7 +146,6 @@ export class RoutingService {
 
     return this.http.post(appelApi, requestBody, {headers:headers})
   }
-
 
 
 
@@ -172,6 +172,7 @@ export class RoutingService {
     }
 
   }
+
 
   postChangementMDP(mdp:String)
   {
@@ -242,6 +243,7 @@ export class RoutingService {
 
 
 
+
   onCheckout(produits$:ProduitPanier[]){
 
     const token = localStorage.getItem("token");
@@ -264,6 +266,21 @@ export class RoutingService {
 
     // Create a request body with the product ID to send to the backend
     const body = { clientEmail: email };
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.post(url, body, {headers:headers});
+  }
+
+  addProduitListeSouhait(produitId:number)
+  {
+    const url = 'https://your-backend-api-url/changemdp';
+
+    // Create a request body with the product ID to send to the backend
+    const body = { product: produitId };
 
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({

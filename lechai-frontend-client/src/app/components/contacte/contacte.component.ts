@@ -49,7 +49,7 @@ export class ContacteComponent {
   onContact() {
     if(this.contactForm.valid)
     {
-      this.routingService.envoiCourriel(this.contactForm.get('courriel')!.value, this.contactForm.get('password')!.value).subscribe(
+      this.routingService.envoiCourriel(this.contactForm.get('sujet')!.value, this.contactForm.get('message')!.value).subscribe(
         (data: any) => {
           // Handle successful response here
           this.toast.showToast("success", "Le message  " + this.sujet + " a été envoyé avec succès!", "bottom-center", 4000);

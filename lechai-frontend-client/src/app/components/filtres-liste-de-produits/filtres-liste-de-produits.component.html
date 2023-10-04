@@ -94,7 +94,7 @@
 
             <aside class="row">
               <aside *ngFor="let prod of filteredCategoryList[categorie]" class="conteneur">
-                <app-liste-de-produits [prod]="prod"></app-liste-de-produits>
+                <app-liste-de-produits (listeSouhait)="ajoutLS($event)" (panier)="ajoutPanier($event)"  [prod]="prod"></app-liste-de-produits>
               </aside>
             </aside>
           </aside>
