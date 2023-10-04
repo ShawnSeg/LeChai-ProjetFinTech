@@ -90,20 +90,26 @@ export class RoutingService {
     return this.http.get<Client>("https://localhost7247/getClientInfo", {headers:headers});
   }
 
-  connexion(courriel:String, mdp:String)
+  connexion(courriel:string, mdp:string)
   {
-    const url = "https://localhost7247/Clients/ConnexionStepOne";
+    const url = "https://localhost:7247/Clients/ConnexionStepOne";
 
     const body = {
-      Email: courriel,
-      Password:mdp
+      Email: "shawn4seg@gmail.com",
+      Password:"test123"
     }
 
-    return this.http.post(url, body);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post(url, body, httpOptions);
   }
 
   checkToken(token:String){
-    const url = "https://localhost7247/connexionStepTwo";
+    const url = "https://localhost:7247/Clients/ConnexionStepTwo";
 
     const body = {
       Token: token,
