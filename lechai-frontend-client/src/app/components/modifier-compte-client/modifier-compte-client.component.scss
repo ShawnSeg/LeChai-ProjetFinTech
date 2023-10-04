@@ -14,6 +14,7 @@ input{
   border-bottom:  1px solid gray;
   background-color: transparent;
   padding: .5em 0;
+  font-size: 15px;
 }
 
 .form-box{
@@ -111,6 +112,11 @@ input{
         margin-left: 0.2em;
         width: 10%;
       }
+
+      p{
+        margin-top: .5em;
+        margin-right: 0.5em;
+      }
     }
 
     input{
@@ -154,9 +160,13 @@ input{
 
   .eye-slash{
     position: absolute;
-    margin-left: 32em;
+    margin-left: 24em;
     margin-top: .5em;
     cursor: pointer;
+  }
+
+  .mdpActuP{
+    font-size:x-small;
   }
 }
 
@@ -166,6 +176,12 @@ input{
   .infoC{
     .mdpMin{
       margin-left: 30%;
+    }
+  }
+
+  .form-box{
+    .eye-slash{
+      margin-left: 36em;
     }
   }
 }

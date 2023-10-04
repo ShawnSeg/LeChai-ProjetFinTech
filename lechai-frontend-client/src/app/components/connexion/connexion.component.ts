@@ -2,7 +2,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
-
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -24,8 +23,8 @@ export class ConnexionComponent implements OnInit{
 
   loginForm!: FormGroup;
 
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingSevice:RoutingService){
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService){
 
   }
 
@@ -45,32 +44,25 @@ export class ConnexionComponent implements OnInit{
   onLogin(){
     if(this.loginForm.valid)
     {
+
       let token: String="";
+
       this.routingSevice.connexion(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe(newToken=>token=newToken)
 
+      if(token)
+      {
+        this.auth.setToken(token.toString())
 
-       localStorage.setItem('token', token.toString());
-
-
-
-
-
-      // envoyer à la base de données
-      this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);
-      this.loginForm.reset();
-      this.router.navigate([''] );
-
-      /* this.auth.login(this.loginForm.value)
-      .subscribe({
-        next:(res)=>{
-          this.toast.showToast("success", res.message, "bottom-center", 1000);
-          this.loginForm.reset();
-          this.router.navigate(['dashboard']);
-        },
-        error:(err)=>{
-          this.toast.showToast("error", err?.error.message, "top-center", 5000);
-        }
-      }) */
+        console.log(this.loginForm.value)
+        // envoyer à la base de données
+        this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);
+        this.loginForm.reset();
+        this.router.navigate([''] );
+      }
+      else
+      {
+        this.toast.showToast("error", "La connexion n'a pas fonctionner", "bottom-center", 4000);
+      }
     }
     else{
       ValidationInput.validationInput(this.loginForm);
