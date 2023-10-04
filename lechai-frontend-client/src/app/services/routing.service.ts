@@ -92,11 +92,11 @@ export class RoutingService {
 
   connexion(courriel:String, mdp:String)
   {
-    const url = "https://localhost7247/connexionStepOne";
+    const url = "https://localhost7247/Clients/ConnexionStepOne";
 
     const body = {
-      courrielClient: courriel,
-      password:mdp
+      Email: courriel,
+      Password:mdp
     }
 
     return this.http.post(url, body);
@@ -106,7 +106,7 @@ export class RoutingService {
     const url = "https://localhost7247/connexionStepTwo";
 
     const body = {
-      tokenClient: token,
+      Token: token,
 
     }
 

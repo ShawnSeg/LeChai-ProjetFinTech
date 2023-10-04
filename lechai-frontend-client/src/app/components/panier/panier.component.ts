@@ -7,6 +7,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -103,7 +104,18 @@ export class PanierComponent {
       if (index !== -1) {
         this.produits$[index].quantite = eventData.quantity;
         this.calculateTotalCost(); // Recalculate the total cost
-        this.routingService.updateChangementQuantiteProduitPanier(eventData.productId, eventData.quantity);
+        this.routingService.updateChangementQuantiteProduitPanier(eventData.productId, eventData.quantity).subscribe(
+          (data: any) => {
+            // Handle successful response here
+
+            this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+          },
+          (error: HttpErrorResponse) => {
+            // Handle error response here
+            this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+            console.error('Status code:', error.status);
+          }
+        );;
       }
     }
 
@@ -125,7 +137,18 @@ export class PanierComponent {
 
         // Recalculate the total cost
         this.calculateTotalCost();
-        this.routingService.updateChangementFormatChoisiProduitPanier(eventData.productId,eventData.selected_format, eventData.formatType);
+        this.routingService.updateChangementFormatChoisiProduitPanier(eventData.productId,eventData.selected_format, eventData.formatType).subscribe(
+          (data: any) => {
+            // Handle successful response here
+
+            this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+          },
+          (error: HttpErrorResponse) => {
+            // Handle error response here
+            this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+            console.error('Status code:', error.status);
+          }
+        );;
       }
     }
 
@@ -139,12 +162,24 @@ export class PanierComponent {
 
     // If the product is found (index is not -1), remove it from the array
     if (index !== -1&& typeof index === 'number') {
-      this.produits$?.splice(index, 1);
+
       this.calculateTotalCost(); // Recalculate the total cost
       this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
 
       this.footerPosCheck();
-      this.routingService.deleteProduitDePanier(productId);
+      this.routingService.deleteProduitDePanier(productId).subscribe(
+        (data: any) => {
+          // Handle successful response here
+          this.produits$?.splice(index, 1);
+          this.calculateTotalCost(); // Recalculate the total cost
+          this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+        },
+        (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+        }
+      );
     }
   }
 

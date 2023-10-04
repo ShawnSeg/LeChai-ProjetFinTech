@@ -88,13 +88,14 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addWishList(): void{
-    this.isWish = !this.isWish;
-    this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
+
 
     this.routingService.postProduitDansPanier(this.produits.id).subscribe(
       (data: any) => {
         // Handle successful response here
         this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
+        this.isWish = !this.isWish;
+        this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
 
       },
       (error: HttpErrorResponse) => {
@@ -110,7 +111,7 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addPanier(): void{
-    this.toast.showToast("info", "Le produit à bien été ajouter au panier", "bottom-center", 3000);
+
     this.routingService.postProduitDansPanier(this.produits.id).subscribe(
       (data: any) => {
         // Handle successful response here

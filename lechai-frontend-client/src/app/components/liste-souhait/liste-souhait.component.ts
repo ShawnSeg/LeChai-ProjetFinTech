@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProduitPanier } from 'src/shawnInterface';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-liste-souhait',
@@ -34,15 +35,37 @@ export class ListeSouhaitComponent {
 
     // If the product is found (index is not -1), remove it from the array
     if (index !== -1&& typeof index === 'number') {
-      this.produits$?.splice(index, 1);
-      this.routingService.deleteProduitListeSouhait(productId);
-      this.toastService.showToast("success", "Le produit a été effacé de la liste de souhait avec succès!", "bottom-center", 3000)
+
+      this.routingService.deleteProduitListeSouhait(productId).subscribe(
+        (data: any) => {
+          // Handle successful response here
+          this.toastService.showToast("success", "le produit a été enlevé de la liste de souhait avec succès!", "bottom-center", 4000);
+          this.produits$?.splice(index, 1);
+        },
+        (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toastService.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+        }
+      );
+
     }
   }
 
   ajoutProduitPanier(productId:number):void{
-    this.routingService.postProduitDansPanier(productId);
-    this.toastService.showToast("success", "Le produit a été ajouté au panier avec succès!", "bottom-center", 3000)
+    this.routingService.postProduitDansPanier(productId).subscribe(
+      (data: any) => {
+        // Handle successful response here
+        this.toastService.showToast("success", "Le produit a été ajouté au panier avec succès!", "bottom-center", 3000)
+
+      },
+      (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toastService.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+      }
+    );
+
 
   }
 
