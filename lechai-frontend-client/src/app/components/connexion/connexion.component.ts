@@ -25,7 +25,7 @@ export class ConnexionComponent implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingSevice:RoutingService){
+
 
 
   constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService, private http:HttpClient){
