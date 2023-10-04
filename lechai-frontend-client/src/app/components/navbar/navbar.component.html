@@ -32,17 +32,6 @@
             <a routerLink="/connexion">Se connecter</a>
           </li>
 
-          <ng-container *ngIf="estConnecter">
-            <ul class="menuConnecter">
-              <li class="liConnecter">
-                <a routerLink="compteClient">Votre compte</a>
-              </li>
-              <li class="liConnecter">
-                <a (click)="deconnecter()">Se déconnecter</a>
-              </li>
-            </ul>
-
-          </ng-container>
 
         </ul>
       </div>
@@ -93,20 +82,10 @@
     <li>
       <a routerLink="/nousContacter">Nous rejoindre</a>
     </li>
-    <li *ngIf="estConnecter == false">
+    <li >
       <a routerLink="/connexion">Se connecter</a>
     </li>
-    <ng-container *ngIf="estConnecter">
-      <ul class="menuConnecter">
-        <li class="liConnecter">
-          <a routerLink="compteClient">Votre compte</a>
-        </li>
-        <li class="liConnecter">
-          <a (click)="deconnecter()">Se déconnecter</a>
-        </li>
-      </ul>
 
-    </ng-container>
 
   </ul>
 </nav>

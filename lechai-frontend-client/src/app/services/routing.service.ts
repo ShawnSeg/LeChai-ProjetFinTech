@@ -68,7 +68,25 @@ export class RoutingService {
 
   connexion(courriel:String, mdp:String)
   {
-    return this.http.get<String>("https://localhost7247/getClientInfo/owneiwini");
+    const url = "https://localhost7247/getClientInfo";
+
+    const body = {
+      courrielClient: courriel,
+      password:mdp
+    }
+
+    return this.http.post(url, body);
+  }
+
+  checkToken(token:String){
+    const url = "https://localhost7247/checkToken";
+
+    const body = {
+      tokenClient: token,
+
+    }
+
+    return this.http.post(url, body);
   }
 
 

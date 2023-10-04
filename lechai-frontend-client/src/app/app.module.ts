@@ -33,6 +33,7 @@ import { PaiementComponent } from './components/paiement/paiement.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 
 
@@ -68,6 +69,7 @@ import { MdpOublierChangementComponent } from './components/mdp-oublier-changeme
     ContacteComponent,
     MdpOublierEnvoiComponent,
     MdpOublierChangementComponent,
+    VerifyUserComponent,
   ],
   imports: [
     BrowserModule,

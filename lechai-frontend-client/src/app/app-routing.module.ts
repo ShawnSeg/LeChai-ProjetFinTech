@@ -17,14 +17,15 @@ import { PaiementComponent } from './components/paiement/paiement.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
 import { authGuard } from './auth.guard';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 
 const routes: Routes = [
   {path: '', component: AccueilComponent},
   {path: 'panier', component:PanierComponent, canActivate: [authGuard]},
   {path: "listeSouhait", component:ListeSouhaitComponent, canActivate: [authGuard]},
-  { path: 'commandes', component: ListeCommandesComponent, canActivate: [authGuard]},
-  { path: 'commandes/:id', component: CommandesDetailsComponent, canActivate: [authGuard]},
+  {path: 'commandes', component: ListeCommandesComponent, canActivate: [authGuard]},
+  {path: 'commandes/:id', component: CommandesDetailsComponent, canActivate: [authGuard]},
   {path: "paiement", component:PaiementComponent, canActivate: [authGuard]},
   {path: "listeProduits", component:FiltresListeDeProduitsComponent},
   {path: "detailsProduit/:id", component:DetailsProduitComponent},
@@ -36,7 +37,7 @@ const routes: Routes = [
   {path: "nousContacter", component:ContacteComponent, canActivate: [authGuard]},
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent, canActivate: [authGuard]},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
-
+  {path: "checkClient", component:VerifyUserComponent}
 ];
 
 @NgModule({
