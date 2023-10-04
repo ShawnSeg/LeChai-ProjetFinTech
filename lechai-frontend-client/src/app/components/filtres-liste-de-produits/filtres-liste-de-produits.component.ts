@@ -222,7 +222,7 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllProduit(){
-    this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+    //this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
   }
 
 }
