@@ -17,6 +17,7 @@ import { PaiementComponent } from './components/paiement/paiement.component';
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oublier-envoi.component';
 import { authGuard } from './auth.guard';
+import { Page404Component } from './components/page404/page404.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,7 @@ const routes: Routes = [
   {path: "nousContacter", component:ContacteComponent, canActivate: [authGuard]},
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent, canActivate: [authGuard]},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
-
+  {path: '**', component: Page404Component},
 ];
 
 @NgModule({

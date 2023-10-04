@@ -45,7 +45,7 @@ export class ConnexionComponent implements OnInit{
     if(this.loginForm.valid)
     {
 
-      let token: String="";
+      let token: String="TokenTemp"; /* a changer avec la base de donnee */
 
       this.routingSevice.connexion(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe(newToken=>token=newToken)
 
