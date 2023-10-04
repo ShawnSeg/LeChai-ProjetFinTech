@@ -184,7 +184,40 @@ a{
 
 }
 
+.hidden
+{
+  display: none;
+}
 
+.deroulant:hover .hidden{
+  display: block;
+}
+
+
+.derouleC{
+  z-index:9999999;
+  background-color: white;
+  position: absolute;
+  margin-top: 1.5em;
+  margin-left: -12em;
+
+
+  a{
+    cursor: pointer;
+  }
+}
+
+.derouleD{
+  z-index:9999999;
+  background-color: white;
+  position: absolute;
+  margin-top: 4.2em;
+  margin-left: -12em;
+
+  a{
+    cursor: pointer;
+  }
+}
 
 
 @media only screen and (min-width: 968px) {
@@ -209,7 +242,7 @@ a{
     background-color: #FFCFDF;
     padding:0;
     height:4rem;
-    span{
+    /* span{
 
       color:blue;
       display: inline-block;
@@ -217,16 +250,18 @@ a{
       height:$headerHeight;
       text-align: center;
       line-height: $headerHeight;
-    }
+    } */
 
   }
 
-  #connexion{
+  /* #connexion{
     display:block;
     position:absolute;
     top: 1.2rem;
     right:18%;
-  }
+  } */
+
+
 
   #menu_haut{
     display:flex;
@@ -238,17 +273,20 @@ a{
     list-style: none;
     li{
       width:33%;
-      a{
-        display:inline-block;
-        line-height:80px;
-        img{
-          width:35px;
-          transition:width 0.3s ease;
-          &:hover{
-            width:45px;
+        a:first-of-type{
+          margin-left: 3em;
+        }
+        a{
+          display:inline-block;
+          line-height:80px;
+          img{
+            width:35px;
+            transition:width 0.3s ease;
+              &:hover{
+                width:45px;
+              }
           }
         }
-      }
 
     }
   }
@@ -304,9 +342,11 @@ a{
       background-color: white;
       display: flex;
       flex-direction: row;
-      width:100%;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      max-width:100vw;
       list-style-type: none;
-      padding: 0%;
+
       li{
 
         display: inline-block;
@@ -323,7 +363,7 @@ a{
         }
       }
 
-    };
+    }
     img{
       position:sticky;
     }
@@ -336,16 +376,16 @@ a{
     display:none;
   }
 
-  .menuConnecter{
+  /* .menuConnecter{
     width:25%;
     li{
       width:200%;
     }
-  }
+  } */
 
-  .liConnecter{
+/*   .liConnecter{
     width:200%;
-  }
+  } */
 
 
 }

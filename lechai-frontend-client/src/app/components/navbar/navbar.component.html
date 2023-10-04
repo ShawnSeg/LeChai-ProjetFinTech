@@ -28,21 +28,23 @@
           <li>
             <a routerLink="/listeSouhait">Liste de Souhait</a>
           </li>
-          <li *ngIf="estConnecter == false">
-            <a routerLink="/connexion">Se connecter</a>
-          </li>
 
-          <ng-container *ngIf="estConnecter">
-            <ul class="menuConnecter">
-              <li class="liConnecter">
-                <a routerLink="compteClient">Votre compte</a>
-              </li>
-              <li class="liConnecter">
-                <a (click)="deconnecter()">Se déconnecter</a>
-              </li>
-            </ul>
+          <ng-container *ngIf="connecter; else notConnected">
+            <li class="liConnecter">
+              <a routerLink="compteClient">Votre compte</a>
+            </li>
+            <li class="liConnecter">
+              <a (click)="deconnecter()">Se déconnecter</a>
+            </li>
 
           </ng-container>
+
+          <ng-template #notConnected>
+            <!-- Utilisateur non connecté -->
+            <li *ngIf="!connecter">
+              <a routerLink="/connexion">Se connecter</a>
+            </li>
+          </ng-template>
 
         </ul>
       </div>
@@ -93,20 +95,27 @@
     <li>
       <a routerLink="/nousContacter">Nous rejoindre</a>
     </li>
-    <li *ngIf="estConnecter == false">
-      <a routerLink="/connexion">Se connecter</a>
-    </li>
-    <ng-container *ngIf="estConnecter">
-      <ul class="menuConnecter">
-        <li class="liConnecter">
-          <a routerLink="compteClient">Votre compte</a>
-        </li>
-        <li class="liConnecter">
-          <a (click)="deconnecter()">Se déconnecter</a>
-        </li>
-      </ul>
 
+    <ng-container *ngIf="connecter; else notConnected">
+      <li class="liConnecter deroulant">
+          <a routerLink="/compteClient">Votre compte</a>
+        <div class="hidden">
+          <li class="derouleC">
+            <a routerLink="/commandes">Historique de commandes</a>
+          </li>
+          <li class="derouleD">
+            <a (click)="deconnecter()">Se déconnecter</a>
+          </li>
+        </div>
+      </li>
     </ng-container>
+
+    <ng-template #notConnected>
+      <!-- Utilisateur non connecté -->
+      <li *ngIf="!connecter">
+        <a routerLink="/connexion">Se connecter</a>
+      </li>
+    </ng-template>
 
   </ul>
 </nav>

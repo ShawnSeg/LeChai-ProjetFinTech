@@ -23,16 +23,15 @@
           <p class="add">Adresse principale : </p>
           <div class="adresse">
             <span class="rue">
-              <input type="text" value="{{ clnt.civic }}" [(ngModel)]="no_civique">
-              <p> </p>
-              <input type="text" value="{{ clnt.rue }}" [(ngModel)]="rue">
+              <input type="text" formControlName="civic">
+              <input type="text" formControlName="rue">
               <p>, Apt </p>
-              <input type="text" value="{{ clnt.apt }}" [(ngModel)]="prenom">
+              <input type="text" formControlName="apt">
             </span>
 
-            <input type="text" value="{{ clnt.ville }}"[(ngModel)]="ville">
-            <input type="text" value="{{ clnt.province }}" [(ngModel)]="province">
-            <input type="text" value="{{ clnt.codePostal }}" [(ngModel)]="codePostal">
+            <input type="text" formControlName="ville">
+            <input type="text" formControlName="province">
+            <input type="text" formControlName="codePostal">
           </div>
         </span>
 
@@ -63,18 +62,19 @@
           <p>Vérification mot de passe</p>
           <span (click)="hideShowPassV()" class="fa eye-slash {{eyeIconV}}"></span>
           <input formControlName="validation" [type]="passTypeV" placeholder="Nouveau mot de passe" required>
+          <small *ngIf="modCompteClntForm.controls['validation'].dirty && modCompteClntForm.hasError('required', 'validation')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
+          <small *ngIf="modCompteClntForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
         </div>
-        <small *ngIf="modCompteClntForm.controls['validation'].dirty && modCompteClntForm.hasError('required', 'validation')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
-        <small *ngIf="modCompteClntForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
+
 
 
         <div class="mdpActu">
           <p>Mot de passe actuel*</p>
           <span (click)="hideShowPassA()" class="fa eye-slash {{eyeIconA}}"></span>
           <input formControlName="validationActuel" [type]="passTypeA" placeholder="Mot de passe atuel" required>
-          <small *ngIf="modCompteClntForm.controls['validationActuel'].dirty && modCompteClntForm.hasError('required', 'validationActuel')" class="errorSignup">*La validation de mot de passe n'est pas valide!</small>
-          <small *ngIf="modCompteClntForm.hasError('mismatch')" class="errorSignup">*Les mots de passe ne correspondent pas!</small>
-
+          <div class="mdpActuP">
+            <p>*Pour enregistrer des modification à votre compte veuillez entrer votre mot de passe actuel.</p>
+          </div>
         </div>
 
 

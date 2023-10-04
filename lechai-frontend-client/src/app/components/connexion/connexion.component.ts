@@ -43,27 +43,24 @@ export class ConnexionComponent implements OnInit{
   onLogin(){
     if(this.loginForm.valid)
     {
+      //get le token de la BD
       let token: String = "tokenTEMP";
 
-       localStorage.setItem('token', token.toString());
+      if(token)
+      {
+        this.auth.setToken(token.toString())
 
-      console.log(this.loginForm.value)
-      // envoyer à la base de données
-      this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);
-      this.loginForm.reset();
-      this.router.navigate([''] );
+        console.log(this.loginForm.value)
+        // envoyer à la base de données
+        this.toast.showToast("success", "Connexion Réussi", "bottom-center", 1000);
+        this.loginForm.reset();
+        this.router.navigate([''] );
+      }
+      else
+      {
+        this.toast.showToast("error", "La connexion n'a pas fonctionner", "bottom-center", 4000);
+      }
 
-      /* this.auth.login(this.loginForm.value)
-      .subscribe({
-        next:(res)=>{
-          this.toast.showToast("success", res.message, "bottom-center", 1000);
-          this.loginForm.reset();
-          this.router.navigate(['dashboard']);
-        },
-        error:(err)=>{
-          this.toast.showToast("error", err?.error.message, "top-center", 5000);
-        }
-      }) */
     }
     else{
       ValidationInput.validationInput(this.loginForm);

@@ -20,7 +20,7 @@ export class ModifierCompteClientComponent {
       nom: 'Maison',
       naissance: '2021-01-28',
       courriel: 'ET@bidon.com',
-      mdp:'ioiweiroewirew74dkjhs',
+      mdp:'BillieChien1!',
       civic:123,
       rue:"rue Chien",
       apt:1,
@@ -38,9 +38,6 @@ export class ModifierCompteClientComponent {
   public ville:String = "";
   public province:String = "";
   public codePostal:String = "";
-
-
-
 
   passType: string = "password";
   isText: boolean = false;
@@ -63,16 +60,24 @@ export class ModifierCompteClientComponent {
 
   ngOnInit(): void{
 
+    console.log(this.clientInfo);
+
     this.modCompteClntForm = this.fb.group({
       prenom: [this.clientInfo.prenom, Validators.required],
       nom: [this.clientInfo.nom, Validators.required],
       date: [this.clientInfo.naissance, Validators.required],
+      civic: [this.clientInfo.civic],
+      rue: [this.clientInfo.rue],
+      apt: [this.clientInfo.apt],
+      ville: [this.clientInfo.ville],
+      province: [this.clientInfo.province],
+      codePostal: [this.clientInfo.codePostal],
       courriel: [this.clientInfo.courriel, [Validators.required, Validators.pattern(/^.+@.+\..+$/)]],
       password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d<>@!#$%^&*()_+\[\]{}?:;|',./~.`\-=/]{8,}$/)]],
       validation: ['', Validators.required],
       validationActuel: ['', Validators.required],
     }, {
-      validator: [this.passwordMatchValidator, this.passwordMatchValidatorActuel], // Fonction de validation personnalisée
+      validators: [this.passwordMatchValidator],
     });
   }
 
@@ -89,11 +94,11 @@ export class ModifierCompteClientComponent {
   }
 
   passwordMatchValidatorActuel(group: FormGroup) {
-    const password = group.get('validationActuel')!.value; /* !!!!!!!!!!!!!!changer pour le mdp de la BD!!!!! */
-    const validation = group.get('validationActuel')!.value;
+    const passwordActuel = this.clientInfo.mdp;
+    const validationActuel = group.get('validationActuel')!.value;
 
     // Comparez les valeurs des champs "password" et "validation"
-    if (password === validation) {
+    if (passwordActuel === validationActuel) {
       return null; // Correspondance, pas d'erreur de validation
     } else {
       return { mismatch: true }; // Pas de correspondance, retourne une erreur de validation
@@ -119,29 +124,26 @@ export class ModifierCompteClientComponent {
   }
 
   onChange(){
+    if(this.modCompteClntForm.get('password')!.value === ""){
+      this.modCompteClntForm.get('password')?.setValue(this.clientInfo.mdp);
+      this.modCompteClntForm.get('validation')?.setValue(this.clientInfo.mdp);
+    }
 
     if(this.modCompteClntForm.valid)
     {
       this.toast.showToast("success", "Les informations de votre compte ont été changer", "bottom-center", 4000);
+      this.router.navigate(['compteClient'] );
     }
     else
     {
       this.toast.showToast("error", "Les informations n'ont pas pu être changer", "bottom-center", 4000);
+      this.modCompteClntForm.get('password')?.setValue('');
+      this.modCompteClntForm.get('validation')?.setValue('');
     }
   }
 
   annuler(){
-
-    this.modCompteClntForm = this.fb.group({
-      prenom: this.clientInfo.prenom,
-      nom: this.clientInfo.nom,
-      date: this.clientInfo.naissance,
-      courriel: this.clientInfo.courriel,
-      password: '',
-      validation: '',
-      validationActuel: '',
-    });
-
     this.toast.showToast("info", "Les valeur initial ont été replacer", "bottom-center", 4000);
+    this.router.navigate(['compteClient'] );
   }
 }
