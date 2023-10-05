@@ -42,5 +42,6 @@ export class NavbarComponent {
   deconnecter()
   {
     this.auth.setToken("");
+    localStorage.removeItem("token")
   }
 }

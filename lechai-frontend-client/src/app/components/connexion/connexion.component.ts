@@ -62,8 +62,7 @@ export class ConnexionComponent implements OnInit {
           // Handle error response here
           this.toast.showToast("error", 'il n\'existe pas de compte avec ce courriel et ce mot de passe.', "bottom-center", 4000);
           console.error('Status code:', error.status);
-          alert(this.loginForm.get('courriel')!.value)
-          alert(this.loginForm.get('password')!.value)
+
         }
       });
 

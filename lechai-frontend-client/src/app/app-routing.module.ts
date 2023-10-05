@@ -38,8 +38,10 @@ const routes: Routes = [
   {path: "nousContacter", component:ContacteComponent, canActivate: [authGuard]},
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent, canActivate: [authGuard]},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
+  {path: "checkClient", component:VerifyUserComponent},
+
+
   {path: '**', component: Page404Component},
-  {path: "checkClient", component:VerifyUserComponent}
 ];
 
 @NgModule({

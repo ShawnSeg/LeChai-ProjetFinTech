@@ -31,20 +31,22 @@ export class VerifyUserComponent {
 
 
   checkToken(){
-    this.routingService.checkToken(this.token).subscribe(
-      (data: any) => {
+
+    this.routingService.checkToken(this.token).subscribe({
+      next: (data: any) => {
         // Handle successful response here
         this.toast.showToast("success", 'Vous êtes connecté!', "bottom-center", 4000);
         localStorage.setItem("token", data)
         this.router.navigate([``]);
-
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         // Handle error response here
         this.toast.showToast("error", 'Le code fourni ne correspond pas à celui envoyé au courriel.', "bottom-center", 4000);
         console.error('Status code:', error.status);
+
       }
-    );
+    });
+
   }
 
 

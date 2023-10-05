@@ -4,6 +4,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ProduitPanier } from 'src/shawnInterface';
 import { AdresseLivraison } from 'src/shawnInterface';
+import { ToastService } from 'src/app/services/toast.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-paiement',
@@ -19,6 +21,18 @@ export class PaiementComponent {
     {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
   ];
 
+  public prenom:String = ""
+  public nom:String = ""
+  public no_civique:String = ""
+  public rue:String = ""
+  public ville:String = ""
+  public province:String = ""
+  public code_postal:String = ""
+  public promotion:String = ""
+
+  public promoIsValide:boolean = false;
+
+
   public adresse_livraison$:AdresseLivraison[] = [];
 
   public coutAvantTaxes =0;
@@ -31,7 +45,7 @@ export class PaiementComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private http:HttpClient, private routingService: RoutingService){
+  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService){
 
   }
 
@@ -92,6 +106,41 @@ export class PaiementComponent {
   }
 
   onCheckout():void{
-    this.routingService.onCheckout(this.produits$!)
+    this.validerPromotion();
+    if(this.validerForm())
+    {
+      this.routingService.onCheckout(this.produits$!)
+    }
+    else{
+      this.toast.showToast("error", "Veuillez entrer toutes les entrées du formulaire", "bottom-center", 4000)
+      this.promoIsValide = false;
+    }
+
+  }
+
+  validerForm(){
+    return (this.nom!="" && this.prenom!="" && this.no_civique!=""&& this.rue!=""&& this.ville!="" && this.code_postal!="" && this.promoIsValide)
+  }
+
+  validerPromotion(){
+    if(this.promotion != "")
+    {
+      this.routingService.checkPromotionPaiement(this.promotion).subscribe({
+        next: (data: any) => {
+          // Handle successful response here
+          this.promoIsValide = true;
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.promoIsValide = false;
+          console.error('Status code:', error.status);
+
+        }
+      })
+    }
+    else{
+      this.promoIsValide = true;
+    }
+
   }
 }
