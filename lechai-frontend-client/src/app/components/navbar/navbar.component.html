@@ -4,7 +4,7 @@
   <img src="assets/image/devany chai (1).png" id="titre" alt="Titre">
 
   <div id="cercle">
-    <a routerLink="accueil">
+    <a routerLink="">
       <img id="logo"src="assets/image/logo.png" alt="logo">
     </a>
     <a routerLink="/panier">
@@ -14,9 +14,9 @@
       <div #menuMobile ngModel id="menuMobile" class="hide">
 
         <ul >
-          <li>
-            <a routerLink="/listeProduits">Nos Produits</a>
-          </li>
+
+            <a routerLink="/listeProduits"><li>Nos Produits</li></a>
+
 
           <li>
             <a routerLink="/listeCollaborateurs">Collaborateurs</a>
@@ -33,7 +33,7 @@
             <li class="liConnecter">
               <a routerLink="compteClient">Votre compte</a>
             </li>
-            <li class="liConnecter">
+            <li class="liConnecter deco">
               <a (click)="deconnecter()">Se déconnecter</a>
             </li>
 

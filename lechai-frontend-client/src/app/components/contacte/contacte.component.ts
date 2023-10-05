@@ -5,6 +5,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contacte',
@@ -15,6 +17,8 @@ export class ContacteComponent {
 
   sujet: string = "";
   message: string = "";
+  connecter:boolean = false;
+  token$!: Observable<string | null>;
 
   contactForm!: FormGroup;
 
@@ -35,7 +39,7 @@ export class ContacteComponent {
     },
   ];
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService, private auth: AuthService){
 
   }
 
@@ -43,7 +47,12 @@ export class ContacteComponent {
     this.contactForm = this.fb.group({
       sujet: ['', Validators.required],
       message: ['', Validators.required]
-    })
+    });
+
+    this.token$ = this.auth.token$;
+    this.token$.subscribe((token) => {
+      this.connecter = !!token; // Met à jour la variable "connecter" en fonction du token
+    });
   }
 
   onContact() {

@@ -95,13 +95,16 @@ export class RoutingService {
     const url = "https://localhost:7247/Clients/ConnexionStepOne";
 
     const body = {
-      Email: "shawn4seg@gmail.com",
-      Password:"test123"
+      Email: courriel,
+      Password:mdp
     }
+
+    let token = ""
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer#`
       })
     };
 

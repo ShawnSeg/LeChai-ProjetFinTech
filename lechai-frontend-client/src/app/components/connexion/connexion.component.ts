@@ -50,7 +50,9 @@ export class ConnexionComponent implements OnInit {
     if(this.loginForm.valid)
     {
 
-
+      /* this.toast.showToast("success", "Connexion réussi.", "bottom-center", 4000);
+      this.auth.setToken("tokenTemp");
+      this.router.navigate([""]); */
 
       this.routingSevice.connexion(this.loginForm.get('courriel')!.value, this.loginForm.get('password')!.value).subscribe({
         next: (data: any) => {
