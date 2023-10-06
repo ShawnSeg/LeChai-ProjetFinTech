@@ -22,9 +22,9 @@
 .droite_carousel{
   width: 4%;
   position: absolute;
-
-  top: 48%;
-  left: 23em;
+  z-index: 5;
+  top: 50%;
+  right: 2%;
   cursor: pointer;
 }
 
@@ -70,10 +70,7 @@
 
   .droite_carousel{
     width: 2%;
-    position: absolute;
-
-    top: 48%;
-    left: 95%;
+    right: 4%;
   }
 
   .img_carousel {

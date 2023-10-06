@@ -1,24 +1,29 @@
 <section>
   <div>
-    <form [formGroup]="contactForm">
-      <p>*Vous pouvez nous envoyer un courriel au <b>LeChai@gmail.com</b> ou utiliser le formulaire ci-dessous.</p>
-      <h2 class="log-title">Nous contacter</h2>
+    <ng-container *ngIf="connecter; else notConnected">
+      <form [formGroup]="contactForm">
+        <p>*Vous pouvez nous envoyer un courriel au <b>LeChai@gmail.com</b> ou utiliser le formulaire ci-dessous.</p>
+        <h2 class="log-title">Nous contacter</h2>
 
-      <div class="log-inputbox" [class.log-inputboxErr]="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')">
-        <input placeholder="Sujet" formControlName="sujet" type="text" class="log-input" required>
-      </div>
-      <small *ngIf="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')" class="errorLogin">*Vous devez entrer le sujet de votre message!</small>
+        <div class="log-inputbox" [class.log-inputboxErr]="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')">
+          <input placeholder="Sujet" formControlName="sujet" type="text" class="log-input" required>
+        </div>
+        <small *ngIf="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')" class="errorLogin">*Vous devez entrer le sujet de votre message!</small>
 
-      <div class="text" [class.log-inputboxErr]="contactForm.controls['message'].dirty && contactForm.hasError('required', 'message')">
-        <textarea formControlName="message" id="message" cols="30" rows="10" placeholder="Votre message" required [(ngModel)]="message"></textarea>
-      </div>
-      <small *ngIf="contactForm.controls['message'].dirty && contactForm.hasError('required', 'message')" class="errorLogin">*Vous devez entrer un message!</small>
+        <div class="text" [class.log-inputboxErr]="contactForm.controls['message'].dirty && contactForm.hasError('required', 'message')">
+          <textarea formControlName="message" id="message" cols="30" rows="10" placeholder="Votre message" required [(ngModel)]="message"></textarea>
+        </div>
+        <small *ngIf="contactForm.controls['message'].dirty && contactForm.hasError('required', 'message')" class="errorLogin">*Vous devez entrer un message!</small>
 
-      <div class="log-btn">
-        <button (click)="onContact()" type="submit" >Envoyer</button>
-      </div>
+        <div class="log-btn">
+          <button (click)="onContact()" type="submit" >Envoyer</button>
+        </div>
+      </form>
+    </ng-container>
 
-    </form>
+    <ng-template #notConnected>
+      <p class = "decoP">*Vous pouvez nous envoyer un courriel au <b>LeChai@gmail.com</b> ou vous connectez poour avoir accès au formulaire d'envoi de messages.</p>
+    </ng-template>
   </div>
 </section>
 

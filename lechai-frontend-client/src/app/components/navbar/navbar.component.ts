@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit  } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +16,7 @@ export class NavbarComponent {
   connecter:boolean = false;
   token$!: Observable<string | null>;
 
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthService, private router: Router, private toast: ToastService){}
 
   ngOnInit() {
     this.token$ = this.auth.token$;
@@ -43,5 +45,7 @@ export class NavbarComponent {
   {
     this.auth.setToken("");
     localStorage.removeItem("token")
+    this.router.navigate([""]);
+    this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
   }
 }

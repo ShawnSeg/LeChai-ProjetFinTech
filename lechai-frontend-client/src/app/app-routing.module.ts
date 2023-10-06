@@ -35,12 +35,10 @@ const routes: Routes = [
   {path: "inscription", component:InscriptionComponent},
   {path: "compteClient", component:CompteClientComponent, canActivate: [authGuard]},
   {path: "modifierCompteClient", component:ModifierCompteClientComponent, canActivate: [authGuard]},
-  {path: "nousContacter", component:ContacteComponent, canActivate: [authGuard]},
+  {path: "nousContacter", component:ContacteComponent},
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent, canActivate: [authGuard]},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
   {path: "checkClient", component:VerifyUserComponent},
-
-
   {path: '**', component: Page404Component},
 ];
 
