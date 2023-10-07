@@ -27,6 +27,7 @@ export class CarouselAccueilComponent implements OnInit {
 
   ngOnInit(): void {
     this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
+    localStorage.setItem("token", "2")
   }
 
   // Méthode pour changer d'image

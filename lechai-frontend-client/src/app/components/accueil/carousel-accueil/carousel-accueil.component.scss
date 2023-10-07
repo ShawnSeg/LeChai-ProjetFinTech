@@ -13,7 +13,7 @@
 .gauche_carousel{
   width: 4%;
   position: absolute;
-  z-index: 5;
+
   top: 50%;
   left: 1em;
   cursor: pointer;
@@ -63,9 +63,9 @@
   .gauche_carousel{
     width: 2%;
     position: absolute;
-    z-index: 5;
+
     top: 50%;
-    left: 3em;
+    left: 5%;
   }
 
   .droite_carousel{

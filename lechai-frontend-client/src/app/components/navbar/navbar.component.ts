@@ -44,6 +44,7 @@ export class NavbarComponent {
   deconnecter()
   {
     this.auth.setToken("");
+    localStorage.removeItem("token")
     this.router.navigate([""]);
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
   }

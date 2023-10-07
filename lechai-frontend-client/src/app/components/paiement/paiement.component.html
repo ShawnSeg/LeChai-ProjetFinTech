@@ -6,27 +6,27 @@
   <div class="colonnes">
     <aside class="livraison">
       <label for="">Prénom:</label>
-      <input type="text">
+      <input type="text" [(ngModel)]="prenom">
     </aside>
     <aside class="livraison">
       <label for="">Nom:</label>
-      <input type="text">
+      <input type="text" [(ngModel)]="nom">
     </aside>
     <aside class="livraison">
       <label for=""># Civique:</label>
-      <input placeholder="Ex:84" type="text">
+      <input placeholder="Ex:84" type="text" [(ngModel)]="no_civique">
     </aside>
     <aside class="livraison">
       <label for="">Rue:</label>
-      <input placeholder="Ex:Rue King-Est" type="text">
+      <input placeholder="Ex:Rue King-Est" type="text" [(ngModel)]="rue">
     </aside>
     <aside class="livraison">
       <label for="">Ville:</label>
-      <input placeholder="Ex:Sherbrooke" type="text">
+      <input placeholder="Ex:Sherbrooke" type="text" [(ngModel)]="ville">
     </aside>
     <aside class="livraison">
       <label for="">Province/Territoire:</label>
-      <select name="" id="">
+      <select name="" id="" [(ngModel)]="province">
         <option value="alberta">Alberta</option>
         <option value="cb">Colombie-Britannique</option>
         <option value="ipe">Île-du-Prince-Édouard</option>
@@ -43,7 +43,7 @@
     </aside>
     <aside class="livraison">
       <label for="">Code Postal:</label>
-      <input placeholder="Ex:J1H4E8" type="text">
+      <input placeholder="Ex:J1H4E8" type="text" [(ngModel)]="code_postal">
     </aside>
   </div>
 
@@ -51,7 +51,7 @@
   <hr>
   <aside class="livraison">
     <label class="code" for="">Code: <i>*Laisser vide si vous n'avez pas de code</i></label>
-    <input placeholder="Ex: 1234-5678" type="text">
+    <input placeholder="Ex: 1234-5678" type="text" [(ngModel)]="promotion">
   </aside>
   <h4 class="marginTop">Article(s) expédié(s)</h4>
   <hr>
