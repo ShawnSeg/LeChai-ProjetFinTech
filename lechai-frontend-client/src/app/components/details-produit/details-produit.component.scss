@@ -144,6 +144,11 @@
 .hidden{
   display: none;
 }
+
+.videoProd{
+  margin: 2em;
+}
+
 @media only screen and (min-width: 968px){
   /* ================================ WEB ======================================== */
 
@@ -208,7 +213,6 @@
   }
 
   .btnProd{
-    position: static;
     display: flex;
     flex-direction: row-reverse;
     gap: 4em;
@@ -235,6 +239,11 @@
 
   .droite_carousel{
     margin-left: 8em;
+  }
+
+  .videoProd{
+    margin: 4em;
+    margin-top: 8em;
   }
 
 }

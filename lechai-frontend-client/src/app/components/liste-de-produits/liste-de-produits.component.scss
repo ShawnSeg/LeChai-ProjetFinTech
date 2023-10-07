@@ -70,8 +70,8 @@
     margin-bottom: 2em;
     font-size: large;
     .imgProd{
-      width: 80%;
-      height:80%;
+      max-width: 80%;
+      max-height:80%;
       overflow: hidden;
     }
     .iconePanier{

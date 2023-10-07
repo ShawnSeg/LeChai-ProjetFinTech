@@ -50,6 +50,12 @@
     </div>
   </div>
 
+  <div *ngIf="produitAafficher?.video" class="videoProd">
+    <video width="auto" height="auto" controls="controls">
+      <source [src]='produitAafficher.video'/>
+    </video>
+  </div>
+
   <div class="btnProd">
     <button (click)="acheterMaintenant()" type="button">Acheter maintenant!</button>
     <button (click)="addPanier()" type="button">Ajouter au panier</button>

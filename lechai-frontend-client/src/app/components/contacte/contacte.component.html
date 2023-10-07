@@ -2,7 +2,7 @@
   <div>
     <ng-container *ngIf="connecter; else notConnected">
       <form [formGroup]="contactForm">
-        <p>*Vous pouvez nous envoyer un courriel au <b>LeChai@gmail.com</b> ou utiliser le formulaire ci-dessous.</p>
+        <p>*Vous pouvez nous envoyer un courriel au <b>lechai@gmail.com</b> ou utiliser le formulaire ci-dessous.</p>
         <h2 class="log-title">Nous contacter</h2>
 
         <div class="log-inputbox" [class.log-inputboxErr]="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')">

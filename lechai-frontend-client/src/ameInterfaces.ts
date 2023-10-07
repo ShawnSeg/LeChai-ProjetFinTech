@@ -52,6 +52,7 @@ export interface Produit{
   ingrediant?:string,
   description?: string,
   categorie: number,
+  video?: string,
 }
 
 export interface Compagnie{
