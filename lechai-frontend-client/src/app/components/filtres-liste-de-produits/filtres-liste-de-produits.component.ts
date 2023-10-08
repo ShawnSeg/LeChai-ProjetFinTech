@@ -4,6 +4,7 @@ import { Categorie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -106,7 +107,7 @@ export class FiltresListeDeProduitsComponent {
   public filtreCategorie:String = '';
   public filteredProduit?: Produit[];
 
-  constructor(private routingService:RoutingService, private toast: ToastService){
+  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService){
 
   }
 
@@ -116,6 +117,15 @@ export class FiltresListeDeProduitsComponent {
     this.groupProductsByCategory();
     this.filteredCategoryList = this.categorizedProducts;
     this.filteredCat=Object.keys(this.filteredCategoryList)
+
+    if(this.filteredProduit.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   groupProductsByCategory() {
@@ -195,6 +205,14 @@ export class FiltresListeDeProduitsComponent {
     this.filteredCat=Object.keys(this.filteredCategoryList)
     this.NoShownProducts()
     /* this.applyFilterPrix(filterPrixMin, filterPrixMax); */
+    if(this.isEmpty)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   applyChangeToFormWeb(){
@@ -224,7 +242,7 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllProduit(){
-    //this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+    this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
   }
 
   ajoutPanier(eventData:number)

@@ -5,10 +5,11 @@ import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
 import { ApiResponse } from 'src/shawnInterface';
-import { Client } from 'src/ameInterfaces';
+import { Client, reseau } from 'src/ameInterfaces';
 import { FormGroup } from '@angular/forms';
 import { Produit } from 'src/ameInterfaces';
 import { Collaborateurs } from 'src/ameInterfaces';
+import { ProduitTestAPI } from 'src/shawnInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +32,10 @@ export class RoutingService {
     //Store les routes que les clients pourront utiliser
   }
 
-  getProduitDetail(produitId:number):Observable<Produit>{
+  getProduitDetail(produitId:number):Observable<ProduitTestAPI>{
 
     let token = ""
-
+    alert(produitId)
     const httpOptions = {
 
       headers: new HttpHeaders({
@@ -43,7 +44,7 @@ export class RoutingService {
       })
     };
 
-    return this.http.get<Produit>(this.baseURL+"/testProduit/"+produitId.toString, httpOptions)
+    return this.http.get<ProduitTestAPI>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString, httpOptions)
   }
 
   getProduitsPanier(): Observable<ProduitPanier[]>{
@@ -74,7 +75,7 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Produit[]>(this.baseURL+"/testProduit/", httpOptions)
+    return this.http.get<Produit[]>(this.baseURL+"/Produits/GetAll", httpOptions)
   }
 
   getListeCommandes(): Observable<Commandes[]>{
@@ -151,7 +152,7 @@ export class RoutingService {
 
   checkToken(token:String){
     const url = this.baseURL+"/Clients/ConnexionStepTwo";
-
+    alert(token)
     const body = {
       Token: token,
 
@@ -385,5 +386,23 @@ export class RoutingService {
     };
 
     return this.http.post(url, body, httpOptions);
+  }
+
+  testRecevoirAPI(){
+    const url = this.baseURL+"/ReseauxSociaux/GetAll";
+
+
+
+    let token = ""
+
+    const httpOptions = {
+
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get<reseau>(url, httpOptions);
   }
 }

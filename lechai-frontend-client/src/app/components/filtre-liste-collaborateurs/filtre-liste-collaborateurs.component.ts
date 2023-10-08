@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Collaborateurs } from 'src/ameInterfaces';
 import { Compagnie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-filtre-liste-collaborateurs',
@@ -74,13 +75,21 @@ export class FiltreListeCollaborateursComponent {
   public filtreCompagnie:String = '';
   public filteredCollabs?: Collaborateurs[];
 
-  constructor(private routingService:RoutingService){
+  constructor(private routingService:RoutingService, private footerPosition: FooterPositionService){
 
   }
 
   ngOnInit() {
     this.getCollaborateurs();
     this.filteredCollabs = this.collaborators;
+    if(this.filteredCollabs?.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   toggleButton():void{
@@ -155,6 +164,15 @@ export class FiltreListeCollaborateursComponent {
 
     this.applyFilterNom(filterNom);
     this.applyCompagnieFilter(filterCompagnie);
+
+    if(this.filteredCollabs.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   applyChangeToFormWeb(){

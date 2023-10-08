@@ -5,7 +5,7 @@
       <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel_collab">
     </span>
 
-    <div *ngFor="let collaborator of collaborators; let i = index" class="container_carousel_collab" [class.hidden]="i !== currentIndex">
+    <div *ngFor="let collaborator of collaborators; let i = index" class="container_carousel_collab fade" [class.hidden]="i !== currentIndex">
       <!-- Contenu du collaborateur -->
       <span class="img_collab">
         <img [src]="'../assets/image/img temp/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
@@ -31,6 +31,11 @@
     </div>
     <span>
       <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel_collab">
+    </span>
+  </div>
+  <div  class="carousel-dot-container">
+    <span *ngFor="let dot of collaborators; let i=index" class="dot" [ngClass]="{'active':currentIndex===i}" (click)="selectCollaborateur(i)">
+
     </span>
   </div>
 </section>

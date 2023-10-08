@@ -1,4 +1,4 @@
-interface TypeFormat{
+export interface TypeFormat{
   nom:string,
   format:String[],
   format_selected:String
@@ -22,6 +22,19 @@ export interface ProduitPanier{
   taxes:Taxes[],
   cout:number,
   image:String
+}
+
+export interface ProduitTestAPI{
+  ID:number,
+  Nom:string,
+  Descriptions:string,
+  Ingrediants:string,
+  Prix:number,
+  QuantiteInventaire:number,
+  CategorieID:number,
+  Categorie:string,
+  EtatProduitID:number,
+  EtatProduit:string
 }
 
 export interface Commandes{

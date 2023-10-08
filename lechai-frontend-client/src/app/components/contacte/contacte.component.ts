@@ -7,6 +7,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-contacte',
@@ -39,7 +40,7 @@ export class ContacteComponent {
     },
   ];
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService, private auth: AuthService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService, private auth: AuthService, private footerPosition: FooterPositionService){
 
   }
 
@@ -53,6 +54,10 @@ export class ContacteComponent {
     this.token$.subscribe((token) => {
       this.connecter = !!token; // Met à jour la variable "connecter" en fonction du token
     });
+    if(!localStorage.getItem("token"))
+    {
+     this.footerPosition.setIsAbsolute(true)
+    }
   }
 
   onContact() {

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { ProduitTestAPI } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-details-produit',
@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./details-produit.component.scss']
 })
 export class DetailsProduitComponent implements OnInit{
-
+  public testProduit?:ProduitTestAPI;
   produits: Produit=
     {
       id:1,
@@ -127,7 +127,7 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   getProduit(id:number){
-    this.routingService.getProduitDetail(id).subscribe(produit=>this.produits=produit)
+    this.routingService.getProduitDetail(id).subscribe(produit=>this.testProduit=produit)
   }
 
 }

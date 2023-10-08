@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
@@ -14,8 +14,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./verify-user.component.scss']
 })
 export class VerifyUserComponent {
+  @ViewChild('token', { static: true }) token?: ElementRef;
 
-  public token :String ="";
+
 
 
 
@@ -32,10 +33,13 @@ export class VerifyUserComponent {
 
   checkToken(){
 
-    this.routingService.checkToken(this.token).subscribe({
+    const token = (this.token?.nativeElement as HTMLSelectElement).value;
+
+    this.routingService.checkToken(token).subscribe({
       next: (data: any) => {
         // Handle successful response here
         this.toast.showToast("success", 'Vous êtes connecté!', "bottom-center", 4000);
+        console.log(data)
         localStorage.setItem("token", data)
         this.router.navigate([``]);
       },
