@@ -5,10 +5,8 @@ import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
 import { ApiResponse } from 'src/shawnInterface';
-import { Client } from 'src/ameInterfaces';
+import { Client, Carousel, Produit, Collaborateurs } from 'src/ameInterfaces';
 import { FormGroup } from '@angular/forms';
-import { Produit } from 'src/ameInterfaces';
-import { Collaborateurs } from 'src/ameInterfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +42,17 @@ export class RoutingService {
     };
 
     return this.http.get<Produit>(this.baseURL+"/testProduit/"+produitId.toString, httpOptions)
+  }
+
+  getCarousel(): Observable<Carousel[]> {
+    let token = "";
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<Carousel[]>(this.baseURL + "/carousel/", httpOptions);
   }
 
   getProduitsPanier(): Observable<ProduitPanier[]>{

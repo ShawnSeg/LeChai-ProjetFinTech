@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Collaborateurs } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-carousel-collaborateur-accueil',
@@ -40,7 +42,10 @@ export class CarouselCollaborateurAccueilComponent {
   intervalId: any;
   timeInterval: number = 0;
 
+  constructor(private routingService:RoutingService){}
+
   ngOnInit(): void {
+    this.getCollaborateurs();
     this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
   }
 
@@ -73,5 +78,18 @@ export class CarouselCollaborateurAccueilComponent {
     this.changeImg(1); // Change l'image vers la droite
     this.stopCarousel();
     this.startCarousel(); // Redémarre le carrousel automatique
+  }
+
+  getCollaborateurs(){
+    this.routingService.getCollaborateur().subscribe({
+      next: (data: Collaborateurs[]) => {
+        this.collaborators=data;
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+       console.log(error.status);
+
+      }
+    });
   }
 }

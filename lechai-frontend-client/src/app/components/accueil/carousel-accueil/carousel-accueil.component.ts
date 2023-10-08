@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Carousel } from 'src/ameInterfaces';
+import { RoutingService } from 'src/app/services/routing.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-carousel-accueil',
@@ -25,7 +27,10 @@ export class CarouselAccueilComponent implements OnInit {
   intervalId: any;
   timeInterval: number = 0;
 
+  constructor(private routingSevice:RoutingService){}
+
   ngOnInit(): void {
+    this.getCarousel();
     this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
     localStorage.setItem("token", "2")
   }
@@ -59,6 +64,19 @@ export class CarouselAccueilComponent implements OnInit {
     this.changeImg(1); // Change l'image vers la droite
     this.stopCarousel();
     this.startCarousel(); // Redémarre le carrousel automatique
+  }
+
+  getCarousel(){
+    this.routingSevice.getCarousel().subscribe({
+      next: (data: Carousel[]) => {
+        this.images=data;
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+       console.log(error.status);
+
+      }
+    });
   }
 
 }
