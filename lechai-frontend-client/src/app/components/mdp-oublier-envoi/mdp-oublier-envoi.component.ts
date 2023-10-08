@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, Input, EventEmitter} from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
 
 @Component({
@@ -8,9 +8,9 @@ import { RoutingService } from 'src/app/services/routing.service';
 })
 export class MdpOublierEnvoiComponent {
   @Output() hideForm = new EventEmitter<boolean>(); // Event emitter for removing the product
+  @Input() showForm?:boolean;
 
 
-  showForm = true
   public resetPasswordEmail!:string;
   public isValidEmail=false;
 

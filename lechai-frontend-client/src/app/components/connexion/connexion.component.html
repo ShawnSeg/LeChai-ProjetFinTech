@@ -29,6 +29,6 @@
   </div>
 </section>
 
-<app-mdp-oublier-envoi *ngIf="showForm" (hideForm)="toggleForm()"></app-mdp-oublier-envoi>
+<app-mdp-oublier-envoi *ngIf="!hideForm" [showForm]="showForm" (hideForm)="toggleForm()"></app-mdp-oublier-envoi>
 <!-- [disabled]="loginForm.invalid" -->
 

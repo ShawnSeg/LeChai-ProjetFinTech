@@ -23,6 +23,7 @@ export class ConnexionComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash";
   showForm = false;
+  hideForm = true
 
   loginForm!: FormGroup;
 
@@ -90,10 +91,15 @@ export class ConnexionComponent implements OnInit {
     if(this.showForm)
     {
       this.showForm=false;
+      setTimeout(() => {
+        this.hideForm = true;
+      }, 500);
+
     }
     else
     {
       this.showForm=true;
+      this.hideForm = false;
     }
   }
 
