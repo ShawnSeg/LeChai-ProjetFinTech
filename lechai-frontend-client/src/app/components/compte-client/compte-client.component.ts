@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-compte-client',
@@ -25,7 +26,7 @@ export class CompteClientComponent {
       codePostal:'J2B J4H',
     };
 
-  constructor(private routingService : RoutingService)
+  constructor(private routingService : RoutingService, private footerPosition:FooterPositionService)
   {
 
   }
@@ -33,6 +34,7 @@ export class CompteClientComponent {
   ngOnInit()
   {
     this.getClientInfo();
+    this.footerPosition.setIsAbsolute(false)
   }
 
   getClientInfo()

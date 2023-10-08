@@ -6,6 +6,7 @@ import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-mdp-oublier-changement',
@@ -23,7 +24,7 @@ export class MdpOublierChangementComponent {
 
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService){
 
   }
 
@@ -34,6 +35,7 @@ export class MdpOublierChangementComponent {
     }, {
       validator: this.passwordMatchValidator // Fonction de validation personnalisée
     });
+    this.footerPosition.setIsAbsolute(true)
   }
 
   passwordMatchValidator(group: FormGroup) {

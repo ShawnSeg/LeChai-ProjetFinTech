@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Commandes } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-commandes-details',
@@ -28,7 +29,7 @@ export class CommandesDetailsComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private route: ActivatedRoute, private routingService:RoutingService, private toast:ToastService, private router:Router) {}
+  constructor(private route: ActivatedRoute, private routingService:RoutingService, private toast:ToastService, private router:Router, private footerPosition: FooterPositionService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -38,6 +39,7 @@ export class CommandesDetailsComponent {
     });
 
     this.getCommandeDetail();
+    this.footerPosition.setIsAbsolute(false)
   }
 
   calculateTotalCost() {

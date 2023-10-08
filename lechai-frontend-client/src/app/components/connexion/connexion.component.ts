@@ -10,6 +10,7 @@ import { ApiResponse } from 'src/shawnInterface';
 import { group } from '@angular/animations';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observer } from 'rxjs';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-connexion',
@@ -28,7 +29,7 @@ export class ConnexionComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService, private http:HttpClient){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService, private http:HttpClient, private footerPosition:FooterPositionService){
 
 
   }
@@ -38,6 +39,8 @@ export class ConnexionComponent implements OnInit {
       courriel: ['', Validators.required],
       password: ['', Validators.required]
     })
+
+    this.footerPosition.setIsAbsolute(false)
   }
 
   hideShowPass(){

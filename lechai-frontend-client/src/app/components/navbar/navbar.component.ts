@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
+import { ConnexionService } from 'src/app/services/connexion.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -16,13 +18,29 @@ export class NavbarComponent {
   connecter:boolean = false;
   token$!: Observable<string | null>;
 
-  constructor(private auth: AuthService, private router: Router, private toast: ToastService){}
+  private subscription: Subscription;
+
+  constructor(private auth: AuthService, private router: Router, private toast: ToastService, private connexion:ConnexionService){
+    this.subscription = this.connexion.isConnected$.subscribe(isConnected => {
+      if (isConnected) {
+        this.connecter = true
+      } else {
+        this.connecter = false;
+      }
+    });
+  }
 
   ngOnInit() {
-    this.token$ = this.auth.token$;
-    this.token$.subscribe((token) => {
-      this.connecter = !!token; // Met à jour la variable "connecter" en fonction du token
-    });
+    if(localStorage.getItem("token"))
+    {
+      this.connecter = true
+    }
+
+  }
+
+  ngOnDestroy() {
+    // Don't forget to unsubscribe to prevent memory leaks
+    this.subscription.unsubscribe();
   }
 
   toggleButton():void{
@@ -43,8 +61,9 @@ export class NavbarComponent {
 
   deconnecter()
   {
-    this.auth.setToken("");
+
     localStorage.removeItem("token")
+    this.connecter = false
     this.router.navigate([""]);
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
   }

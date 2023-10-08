@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ConnexionService } from 'src/app/services/connexion.service';
 
 @Component({
   selector: 'app-verify-user',
@@ -16,17 +18,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class VerifyUserComponent {
   @ViewChild('token', { static: true }) token?: ElementRef;
 
-
-
-
-
-
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService, private connexion:ConnexionService){
 
   }
 
   ngOnInit(): void{
-
+    this.footerPosition.setIsAbsolute(true)
   }
 
 
@@ -41,6 +38,7 @@ export class VerifyUserComponent {
         this.toast.showToast("success", 'Vous êtes connecté!', "bottom-center", 4000);
         console.log(data)
         localStorage.setItem("token", data)
+        this.connexion.setIsAbsolute(true)
         this.router.navigate([``]);
       },
       error: (error: HttpErrorResponse) => {

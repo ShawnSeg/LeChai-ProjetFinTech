@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProduitTestAPI } from 'src/shawnInterface';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-details-produit',
@@ -43,7 +44,7 @@ export class DetailsProduitComponent implements OnInit{
   selectedGrandeur: string = '';
   selectedCouleur: string = '';
 
-  constructor(private route: ActivatedRoute, private toast: ToastService, private routingService:RoutingService) { }
+  constructor(private route: ActivatedRoute, private toast: ToastService, private routingService:RoutingService, private footerPosition:FooterPositionService) { }
 
   ngOnInit() {
     // Récupérer le paramètre d'URL 'id'
@@ -65,6 +66,8 @@ export class DetailsProduitComponent implements OnInit{
 
       this.getProduit(params['id'])
     });
+
+    this.footerPosition.setIsAbsolute(false)
 
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 
 @Component({
@@ -8,9 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AccueilComponent {
 
-  constructor()
+  constructor(private footerPosition:FooterPositionService)
   {
 
+  }
+
+  ngOnInit(){
+    this.footerPosition.setIsAbsolute(false)
   }
 
 }

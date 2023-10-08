@@ -1,6 +1,7 @@
 import { Component,ViewChild, ElementRef } from '@angular/core';
 import { Commandes } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-liste-commandes',
@@ -41,7 +42,7 @@ export class ListeCommandesComponent {
   public filtreDate:Date = new Date();
   public filteredCommandes?: Commandes[];
 
-  constructor(private routingService: RoutingService){
+  constructor(private routingService: RoutingService, private footerPosition:FooterPositionService){
 
   }
 
@@ -49,6 +50,7 @@ export class ListeCommandesComponent {
   ngOnInit() {
     this.getListeCommande();
     this.filteredCommandes = this.listeCommande;
+    this.footerPosition.setIsAbsolute(false)
   }
 
   toggleButton():void{

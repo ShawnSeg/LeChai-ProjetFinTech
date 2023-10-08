@@ -5,6 +5,7 @@ import ValidationInput from 'src/app/helpers/validationInput';
 import { ToastService } from 'src/app/services/toast.service';
 import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-modifier-compte-client',
@@ -54,7 +55,7 @@ export class ModifierCompteClientComponent {
   modCompteClntForm!: FormGroup;
   clientInfo = this.client[0];
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService){
 
   }
 
@@ -79,6 +80,8 @@ export class ModifierCompteClientComponent {
     }, {
       validators: [this.passwordMatchValidator],
     });
+
+    this.footerPosition.setIsAbsolute(false)
   }
 
   passwordMatchValidator(group: FormGroup) {

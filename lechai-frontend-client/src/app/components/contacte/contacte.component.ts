@@ -58,6 +58,10 @@ export class ContacteComponent {
     {
      this.footerPosition.setIsAbsolute(true)
     }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   onContact() {
