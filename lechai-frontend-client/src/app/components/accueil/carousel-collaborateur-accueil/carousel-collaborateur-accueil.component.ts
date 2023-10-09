@@ -58,7 +58,7 @@ export class CarouselCollaborateurAccueilComponent {
   startCarousel(): void {
     this.intervalId = setInterval(() => {
       this.changeImg(1); // Change l'image automatiquement
-    }, 2000);
+    }, 10000);
   }
 
   // Méthode pour arrêter le carrousel automatique
@@ -91,5 +91,9 @@ export class CarouselCollaborateurAccueilComponent {
 
       }
     });
-  }
+
+}
+
+selectCollaborateur(i:number){
+  this.currentIndex = i;
 }

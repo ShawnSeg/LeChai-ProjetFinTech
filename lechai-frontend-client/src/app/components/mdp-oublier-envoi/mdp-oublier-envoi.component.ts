@@ -1,5 +1,8 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, Input, EventEmitter} from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mdp-oublier-envoi',
@@ -8,13 +11,13 @@ import { RoutingService } from 'src/app/services/routing.service';
 })
 export class MdpOublierEnvoiComponent {
   @Output() hideForm = new EventEmitter<boolean>(); // Event emitter for removing the product
+  @Input() showForm?:boolean;
 
 
-  showForm = true
   public resetPasswordEmail!:string;
   public isValidEmail=false;
 
-constructor(private routingService:RoutingService)
+constructor(private routingService:RoutingService, private toast:ToastService, private router: Router)
 {
 
 }
@@ -36,11 +39,25 @@ constructor(private routingService:RoutingService)
 
 
   confirmToSend(){
+
     if(this.checkValidEmail(this.resetPasswordEmail))
     {
-      alert("yay")
-      this.toggleForm();
-      this.routingService.changeMDP(this.resetPasswordEmail)
+      this.routingService.oublieMDP(this.resetPasswordEmail).subscribe({
+        next: (data: any) => {
+          // Handle successful response here
+          alert("yay")
+          this.toggleForm();
+          this.routingService.oublieMDP(this.resetPasswordEmail)
+          this.router.navigate([`/mdpOublierChangement`]);
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'il n\'existe pas de compte avec ce courriel et ce mot de passe.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+
+        }
+      });
     }
+
   }
 }

@@ -16,9 +16,9 @@ export class FooterComponent implements OnDestroy {
     this.subscription = this.footerPosition.isAbsolute$.subscribe(isAbsolute => {
       if (isAbsolute) {
         (this.footer?.nativeElement as HTMLElement).classList.add('absolute');
-        (this.footer?.nativeElement as HTMLElement).classList.remove('relative');
+        (this.footer?.nativeElement as HTMLElement).classList.remove('sticky');
       } else {
-        (this.footer?.nativeElement as HTMLElement).classList.add('relative');
+        (this.footer?.nativeElement as HTMLElement).classList.add('sticky');
         (this.footer?.nativeElement as HTMLElement).classList.remove('absolute');
       }
     });

@@ -4,6 +4,8 @@ import { Categorie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ProduitTestAPI } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -106,16 +108,26 @@ export class FiltresListeDeProduitsComponent {
   public filtreCategorie:String = '';
   public filteredProduit?: Produit[];
 
-  constructor(private routingService:RoutingService, private toast: ToastService){
+  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService){
 
   }
 
   ngOnInit() {
+    this.getAllCategorie();
     this.getAllProduit();
     this.filteredProduit = this.produits;
     this.groupProductsByCategory();
     this.filteredCategoryList = this.categorizedProducts;
     this.filteredCat=Object.keys(this.filteredCategoryList)
+
+    if(this.filteredProduit.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   groupProductsByCategory() {
@@ -195,6 +207,14 @@ export class FiltresListeDeProduitsComponent {
     this.filteredCat=Object.keys(this.filteredCategoryList)
     this.NoShownProducts()
     /* this.applyFilterPrix(filterPrixMin, filterPrixMax); */
+    if(this.isEmpty)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   applyChangeToFormWeb(){
@@ -224,7 +244,31 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllProduit(){
-    //this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+    this.routingService.getAllProduit().subscribe({
+      next:(data:any)=>{
+        let test: ProduitTestAPI[] = data;
+        for (let i = 0; i<test.length;i++)
+        {
+          this.produits[i].id=test[i].ID
+          this.produits[i].categorie=test[i].CategorieID
+          /*this.produits[i].=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID*/
+        }
+        alert('succès!')
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+        //this.toast.showToast("error", 'il n\'existe pas de compte avec ce courriel et ce mot de passe.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+
+      }
+    })
   }
 
   ajoutPanier(eventData:number)
@@ -257,6 +301,10 @@ export class FiltresListeDeProduitsComponent {
         console.error('Status code:', error.status);
       }
     );
+  }
+
+  getAllCategorie(){
+    this.routingService.getCategories().subscribe(categorie=>this.categories=categorie)
   }
 
 }

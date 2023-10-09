@@ -1,8 +1,13 @@
-
+import { TypeFormat } from "./shawnInterface"
 interface socialLinks
 {
   name:string,
   url:string,
+}
+
+export interface reseau{
+  ID:number,
+  Nom:string
 }
 
 export interface Collaborateurs{

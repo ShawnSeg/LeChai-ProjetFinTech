@@ -6,6 +6,7 @@ import { ProduitPanier } from 'src/shawnInterface';
 import { AdresseLivraison } from 'src/shawnInterface';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-paiement',
@@ -45,7 +46,7 @@ export class PaiementComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService){
+  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService, private footerPosition:FooterPositionService){
 
   }
 
@@ -53,6 +54,7 @@ export class PaiementComponent {
     this.calculateTotalCost();
     this.getPanier();
     this.getAdresseLivraison();
+    this.footerPosition.setIsAbsolute(false)
   }
 
 

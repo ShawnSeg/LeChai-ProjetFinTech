@@ -3,6 +3,7 @@ import { ProduitPanier } from 'src/shawnInterface';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
   selector: 'app-liste-souhait',
@@ -19,13 +20,21 @@ export class ListeSouhaitComponent {
 
   public length = this.produits$?.length;
 
-  constructor(private toastService:ToastService, private routingService: RoutingService)
+  constructor(private toastService:ToastService, private routingService: RoutingService, private footerPosition:FooterPositionService)
   {
 
   }
 
   ngOnInit(){
     this.getListeSouhait();
+    if(this.length&& this.length>0)
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
   }
 
   // Function to remove a product from the array
@@ -41,6 +50,15 @@ export class ListeSouhaitComponent {
           // Handle successful response here
           this.toastService.showToast("success", "le produit a été enlevé de la liste de souhait avec succès!", "bottom-center", 4000);
           this.produits$?.splice(index, 1);
+          this.length = this.produits$?.length
+          if(this.length&& this.length>0)
+          {
+            this.footerPosition.setIsAbsolute(false)
+          }
+          else
+          {
+            this.footerPosition.setIsAbsolute(true)
+          }
         },
         (error: HttpErrorResponse) => {
           // Handle error response here

@@ -27,12 +27,28 @@ export class CarouselAccueilComponent implements OnInit {
   intervalId: any;
   timeInterval: number = 0;
 
-  constructor(private routingSevice:RoutingService){}
+  selectedIndex = 0;
+
+  constructor(private routingService:RoutingService){
+
+  }
 
   ngOnInit(): void {
     this.getCarousel();
     this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
-    localStorage.setItem("token", "2")
+    this.routingService.testRecevoirAPI().subscribe({
+      next: (data: any) => {
+        // Handle successful response here
+        console.log(data)
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+
+        console.error('Status code:', error.status);
+
+      }
+    })
+
   }
 
   // Méthode pour changer d'image
@@ -44,7 +60,7 @@ export class CarouselAccueilComponent implements OnInit {
   startCarousel(): void {
     this.intervalId = setInterval(() => {
       this.changeImg(1); // Change l'image automatiquement
-    }, 6000);
+    }, 10000);
   }
 
   // Méthode pour arrêter le carrousel automatique
@@ -77,6 +93,8 @@ export class CarouselAccueilComponent implements OnInit {
 
       }
     });
+  selectImage(i:number):void {
+    this.currentIndex=i
   }
 
 }

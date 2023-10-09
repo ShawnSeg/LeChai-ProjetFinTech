@@ -19,21 +19,7 @@
           <small *ngIf="modCompteClntForm.controls['date'].dirty && modCompteClntForm.hasError('pattern', 'date')" class="errorSignup">*La date de naissance doit être une date valide!</small>
         </div>
 
-        <span>
-          <p class="add">Adresse principale : </p>
-          <div class="adresse">
-            <span class="rue">
-              <input type="text" formControlName="civic">
-              <input type="text" formControlName="rue">
-              <p>, Apt </p>
-              <input type="text" formControlName="apt">
-            </span>
 
-            <input type="text" formControlName="ville">
-            <input type="text" formControlName="province">
-            <input type="text" formControlName="codePostal">
-          </div>
-        </span>
 
         <div class="infoC">
           <p>Courriel : </p>
