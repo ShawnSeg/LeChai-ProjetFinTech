@@ -35,6 +35,7 @@ import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oub
 import { MdpOublierChangementComponent } from './components/mdp-oublier-changement/mdp-oublier-changement.component';
 import { Page404Component } from './components/page404/page404.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
+import { ConnexionService } from './services/connexion.service';
 
 
 

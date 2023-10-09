@@ -83,7 +83,7 @@ export class CarouselAccueilComponent implements OnInit {
   }
 
   getCarousel(){
-    this.routingSevice.getCarousel().subscribe({
+    this.routingService.getCarousel().subscribe({
       next: (data: Carousel[]) => {
         this.images=data;
       },
@@ -93,8 +93,10 @@ export class CarouselAccueilComponent implements OnInit {
 
       }
     });
+  }
   selectImage(i:number):void {
     this.currentIndex=i
   }
-
 }
+
+

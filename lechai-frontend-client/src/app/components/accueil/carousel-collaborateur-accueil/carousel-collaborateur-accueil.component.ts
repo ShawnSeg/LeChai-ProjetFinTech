@@ -92,8 +92,10 @@ export class CarouselCollaborateurAccueilComponent {
       }
     });
 
+  }
+  selectCollaborateur(i:number){
+    this.currentIndex = i;
+  }
 }
 
-selectCollaborateur(i:number){
-  this.currentIndex = i;
-}
+
