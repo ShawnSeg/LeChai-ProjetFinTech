@@ -110,7 +110,7 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Collaborateurs[]>(this.baseURL+"/getCollaborateur", httpOptions);
+    return this.http.get<Collaborateurs[]>(this.baseURL+"/Collaborateurs/GetAll", httpOptions);
   }
 
   getCommandesDetail(commandeId:number): Observable<Commandes>{

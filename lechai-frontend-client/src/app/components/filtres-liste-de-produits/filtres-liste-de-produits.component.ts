@@ -113,6 +113,7 @@ export class FiltresListeDeProduitsComponent {
   }
 
   ngOnInit() {
+    this.getAllCategorie();
     this.getAllProduit();
     this.filteredProduit = this.produits;
     this.groupProductsByCategory();
@@ -248,7 +249,16 @@ export class FiltresListeDeProduitsComponent {
         let test: ProduitTestAPI[] = data;
         for (let i = 0; i<test.length;i++)
         {
-
+          this.produits[i].id=test[i].ID
+          this.produits[i].categorie=test[i].CategorieID
+          /*this.produits[i].=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID
+          this.produits[i].id=test[i].ID*/
         }
         alert('succès!')
       },
@@ -291,6 +301,10 @@ export class FiltresListeDeProduitsComponent {
         console.error('Status code:', error.status);
       }
     );
+  }
+
+  getAllCategorie(){
+    this.routingService.getCategories().subscribe(categorie=>this.categories=categorie)
   }
 
 }
