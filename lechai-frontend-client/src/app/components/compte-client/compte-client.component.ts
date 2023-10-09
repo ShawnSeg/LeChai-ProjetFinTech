@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ClientInterface } from 'src/shawnInterface';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-compte-client',
@@ -15,7 +17,7 @@ export class CompteClientComponent {
       id:1,
       prenom: 'Et Appel',
       nom: 'Maison',
-      naissance: '2021-01-28',
+      naissance: "new Date()",
       courriel: 'ET@bidon.com',
       mdp:'ioiweiroewirew74dkjhs',
       civic:123,
@@ -39,7 +41,20 @@ export class CompteClientComponent {
 
   getClientInfo()
   {
-    this.routingService.getClientInfo().subscribe(client =>this.client = client);
+    this.routingService.getClientInfo().subscribe({
+      next:(data:ClientInterface)=>{
+        this.client.id = data.ID;
+
+
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+
+        console.error('Status code:', error.status);
+
+      }
+    })
   }
+
 
 }

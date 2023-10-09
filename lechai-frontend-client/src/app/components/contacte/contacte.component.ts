@@ -28,7 +28,7 @@ export class ContacteComponent {
       id:1,
       prenom: 'Et Appel',
       nom: 'Maison',
-      naissance: '2021-01-28',
+      naissance: "new Date()",
       courriel: 'ET@bidon.com',
       mdp:'ioiweiroewirew74dkjhs',
       civic:123,

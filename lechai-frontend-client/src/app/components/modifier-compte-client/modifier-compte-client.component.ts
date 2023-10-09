@@ -7,6 +7,9 @@ import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ClientInterface } from 'src/shawnInterface';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-modifier-compte-client',
@@ -15,22 +18,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class ModifierCompteClientComponent {
 
-  client: Client[] = [
-    {
-      id:1,
-      prenom: 'Et Appel',
-      nom: 'Maison',
-      naissance: '2021-01-28',
-      courriel: 'ET@bidon.com',
-      mdp:'BillieChien1!',
-      civic:123,
-      rue:"rue Chien",
-      apt:1,
-      ville:'sherbrooke',
-      province:'Quebec',
-      codePostal:'J2B J4H',
-    },
-  ];
+  client?: Client
 
   public prenom:String = "";
   public nom:String = "";
@@ -40,6 +28,7 @@ export class ModifierCompteClientComponent {
   public ville:String = "";
   public province:String = "";
   public codePostal:String = "";
+  public oldEmail: String = ""
 
   passType: string = "password";
   isText: boolean = false;
@@ -54,7 +43,7 @@ export class ModifierCompteClientComponent {
   eyeIconA: string = "fa-eye-slash";
 
   modCompteClntForm!: FormGroup;
-  clientInfo = this.client[0];
+  clientInfo = this.client;
 
   constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService){
 
@@ -62,20 +51,22 @@ export class ModifierCompteClientComponent {
 
   ngOnInit(): void{
 
-    console.log(this.clientInfo);
+
     this.getInfoClient();
+    this.clientInfo = this.client;
+    console.log(this.clientInfo);
 
     this.modCompteClntForm = this.fb.group({
-      prenom: [this.clientInfo.prenom, Validators.required],
-      nom: [this.clientInfo.nom, Validators.required],
-      date: [this.clientInfo.naissance, Validators.required],
-      civic: [this.clientInfo.civic],
-      rue: [this.clientInfo.rue],
-      apt: [this.clientInfo.apt],
-      ville: [this.clientInfo.ville],
-      province: [this.clientInfo.province],
-      codePostal: [this.clientInfo.codePostal],
-      courriel: [this.clientInfo.courriel, [Validators.required, Validators.pattern(/^.+@.+\..+$/)]],
+      prenom: [this.clientInfo?.prenom, Validators.required],
+      nom: [this.clientInfo?.nom, Validators.required],
+      date: [this.clientInfo?.naissance],
+      civic: [this.clientInfo?.civic],
+      rue: [this.clientInfo?.rue],
+      apt: [this.clientInfo?.apt],
+      ville: [this.clientInfo?.ville],
+      province: [this.clientInfo?.province],
+      codePostal: [this.clientInfo?.codePostal],
+      courriel: [this.clientInfo?.courriel, [Validators.required, Validators.pattern(/^.+@.+\..+$/)]],
       password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d<>@!#$%^&*()_+\[\]{}?:;|',./~.`\-=/]{8,}$/)]],
       validation: ['', Validators.required],
       validationActuel: ['', Validators.required],
@@ -99,15 +90,7 @@ export class ModifierCompteClientComponent {
   }
 
   passwordMatchValidatorActuel(group: FormGroup) {
-    const passwordActuel = this.clientInfo.mdp;
-    const validationActuel = group.get('validationActuel')!.value;
 
-    // Comparez les valeurs des champs "password" et "validation"
-    if (passwordActuel === validationActuel) {
-      return null; // Correspondance, pas d'erreur de validation
-    } else {
-      return { mismatch: true }; // Pas de correspondance, retourne une erreur de validation
-    }
   }
 
   hideShowPass(){
@@ -130,40 +113,41 @@ export class ModifierCompteClientComponent {
 
   onChange(){
     if(this.modCompteClntForm.get('password')!.value === ""){
-      this.modCompteClntForm.get('password')?.setValue(this.clientInfo.mdp);
-      this.modCompteClntForm.get('validation')?.setValue(this.clientInfo.mdp);
+      this.modCompteClntForm.get('password')?.setValue(this.modCompteClntForm.get("validationActuel")!.value);
+      this.modCompteClntForm.get('validation')?.setValue(this.modCompteClntForm.get("validationActuel")!.value);
     }
 
     if(this.modCompteClntForm.valid)
     {
       let date = new Date(this.modCompteClntForm.get('date')!.value)
-
-      this.routingService.UpdateChangementInfoClient(this.modCompteClntForm.get('prenom')!.value,this.modCompteClntForm.get('nom')!.value,date,this.modCompteClntForm.get('courriel')!.value, Number(this.client[0].id)).subscribe({
+      this.routingService.postChangementMDPAuthentifier(this.oldEmail, this.modCompteClntForm.get("validationActuel")!.value, this.modCompteClntForm.get('password')!.value).subscribe({
         next: (data: any) => {
           // Handle successful response here
-          this.toast.showToast("success", 'wahoo', "bottom-center", 4000);
-          this.routingService.postChangementMDPAuthentifier(this.modCompteClntForm.get('password')!.value).subscribe({
+          this.toast.showToast("success", 'yay', "bottom-center", 4000);
+          this.routingService.UpdateChangementInfoClient(this.modCompteClntForm.get('prenom')!.value,this.modCompteClntForm.get('nom')!.value,date,this.modCompteClntForm.get('courriel')!.value, Number(this.client!.id)).subscribe({
             next: (data: any) => {
               // Handle successful response here
-              this.toast.showToast("success", 'yay', "bottom-center", 4000);
+              this.toast.showToast("success", 'wahoo', "bottom-center", 4000);
+
 
             },
             error: (error: HttpErrorResponse) => {
               // Handle error response here
-              this.toast.showToast("error", 'oof.', "bottom-center", 4000);
+              this.toast.showToast("error", 'non.', "bottom-center", 4000);
               console.error('Status code:', error.status);
 
             }
           });
-
         },
         error: (error: HttpErrorResponse) => {
           // Handle error response here
-          this.toast.showToast("error", 'non.', "bottom-center", 4000);
+          this.toast.showToast("error", 'oof.', "bottom-center", 4000);
           console.error('Status code:', error.status);
 
         }
       });
+
+
 
     }
     else
@@ -181,6 +165,25 @@ export class ModifierCompteClientComponent {
 
   getInfoClient()
   {
-    this.routingService.getClientInfo().subscribe(client=>this.client[0]=client)
+    this.routingService.getClientInfo().subscribe({
+      next:(data:ClientInterface)=>{
+
+        this.client!.id = data.ID;
+        this.client!.prenom=data.Prenom;
+        this.client!.nom=data.Nom;
+        this.client!.courriel=data.Email;
+        this.oldEmail=data.Email;
+        this.client!.naissance=data.DateNaissance.slice(0,data.DateNaissance.indexOf('T'))
+        alert(this.client!.naissance)
+
+
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+        this.toast.showToast("error", 'non.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+
+      }
+    })
   }
 }

@@ -36,6 +36,7 @@ import { MdpOublierChangementComponent } from './components/mdp-oublier-changeme
 import { Page404Component } from './components/page404/page404.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 import { ConnexionService } from './services/connexion.service';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -80,6 +81,7 @@ import { ConnexionService } from './services/connexion.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    DatePipe
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

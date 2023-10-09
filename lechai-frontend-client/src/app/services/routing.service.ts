@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { ProduitPanier } from 'src/shawnInterface';
+import { ClientInterface, ProduitPanier } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
@@ -143,13 +143,14 @@ export class RoutingService {
     return this.http.get<AdresseLivraison[]>(this.baseURL+"/testProduit/", {headers:headers});
   }
 
-  getClientInfo():Observable<Client>{
+  getClientInfo(){
     const token = localStorage.getItem("token");
+    alert(token)
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<Client>(this.baseURL+"/getClientInfo", {headers:headers});
+    return this.http.get<ClientInterface>(this.baseURL+"/Clients/Get", {headers:headers});
   }
 
   connexion(courriel:string, mdp:string)
@@ -369,11 +370,13 @@ export class RoutingService {
     return this.http.put(url, body, {headers:headers})
   }
 
-  postChangementMDPAuthentifier(mdp:String)
+  postChangementMDPAuthentifier(email:String, oldMDP:String, mdp:String)
   {
     const url =this.baseURL+"/Clients/ChangePassword";
     const body = {
-      NewPassword:mdp
+      Email:email,
+      NewPassword:mdp,
+      Password:oldMDP
     }
 
     let testToken = localStorage.getItem("token")
@@ -382,7 +385,7 @@ export class RoutingService {
       'Authorization': `Bearer ${testToken}`
     });
 
-    return this.http.post(url, body, {headers:headers})
+    return this.http.put(url, body, {headers:headers})
   }
 
   postChangementMDP(mdp:String, token:String)
