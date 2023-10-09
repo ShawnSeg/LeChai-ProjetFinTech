@@ -340,7 +340,7 @@ export class RoutingService {
   }
 
   UpdateChangementInfoClient(prenom:string, nom:string,dateNaissance:Date,email:string, id:number){
-    const url =this.baseURL+"/Clients/ChangePassword";
+    const url =this.baseURL+"/Clients/UPDATE";
     const body = {
       Prenom:prenom,
       Nom:nom,

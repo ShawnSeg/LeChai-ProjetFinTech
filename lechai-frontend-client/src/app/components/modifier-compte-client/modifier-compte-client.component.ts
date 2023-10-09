@@ -63,6 +63,7 @@ export class ModifierCompteClientComponent {
   ngOnInit(): void{
 
     console.log(this.clientInfo);
+    this.getInfoClient();
 
     this.modCompteClntForm = this.fb.group({
       prenom: [this.clientInfo.prenom, Validators.required],
@@ -176,5 +177,10 @@ export class ModifierCompteClientComponent {
   annuler(){
     this.toast.showToast("info", "Les valeur initial ont été replacer", "bottom-center", 4000);
     this.router.navigate(['compteClient'] );
+  }
+
+  getInfoClient()
+  {
+    this.routingService.getClientInfo().subscribe(client=>this.client[0]=client)
   }
 }
