@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-modifier-compte-client',
@@ -134,8 +135,35 @@ export class ModifierCompteClientComponent {
 
     if(this.modCompteClntForm.valid)
     {
-      this.toast.showToast("success", "Les informations de votre compte ont été changer", "bottom-center", 4000);
-      this.router.navigate(['compteClient'] );
+      let date = new Date(this.modCompteClntForm.get('date')!.value)
+
+      this.routingService.UpdateChangementInfoClient(this.modCompteClntForm.get('prenom')!.value,this.modCompteClntForm.get('nom')!.value,date,this.modCompteClntForm.get('courriel')!.value, Number(this.client[0].id)).subscribe({
+        next: (data: any) => {
+          // Handle successful response here
+          this.toast.showToast("success", 'wahoo', "bottom-center", 4000);
+          this.routingService.postChangementMDPAuthentifier(this.modCompteClntForm.get('password')!.value).subscribe({
+            next: (data: any) => {
+              // Handle successful response here
+              this.toast.showToast("success", 'yay', "bottom-center", 4000);
+
+            },
+            error: (error: HttpErrorResponse) => {
+              // Handle error response here
+              this.toast.showToast("error", 'oof.', "bottom-center", 4000);
+              console.error('Status code:', error.status);
+
+            }
+          });
+
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'non.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+
+        }
+      });
+
     }
     else
     {

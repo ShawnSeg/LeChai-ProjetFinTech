@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-mdp-oublier-changement',
@@ -30,12 +31,13 @@ export class MdpOublierChangementComponent {
 
   ngOnInit(): void{
     this.signupForm = this.fb.group({
+      token: ['', Validators.required],
       password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d<>@!#$%^&*()_+\[\]{}?:;|',./~.`\-=/]{8,}$/)]],
       validation: ['', Validators.required],
     }, {
       validator: this.passwordMatchValidator // Fonction de validation personnalisée
     });
-    this.footerPosition.setIsAbsolute(true)
+    this.footerPosition.setIsAbsolute(false)
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -67,9 +69,20 @@ export class MdpOublierChangementComponent {
     {
       console.log(this.signupForm.value)
       // envoyer à la base de données
-      this.toast.showToast("success", "Le changement de mot de passe a fonctionné!", "bottom-center", 1000);
-      this.signupForm.reset();
-      this.router.navigate(['connexion'] );
+
+      this.routingService.postChangementMDP(this.signupForm.get("password")!.value, this.signupForm.get("token")!.value).subscribe({
+        next:(data:any)=>{
+          this.toast.showToast("success", "Le changement de mot de passe a fonctionné!", "bottom-center", 1000);
+          this.router.navigate(['connexion'] );
+        },
+        error: (error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'Veuillez réessayer plus tard.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+
+        }
+      })
+
 
       /* this.auth.login(this.loginForm.value)
       .subscribe({
@@ -85,12 +98,10 @@ export class MdpOublierChangementComponent {
     }
     else{
       ValidationInput.validationInput(this.signupForm);
-      this.toast.showToast("error", "Le changement de mot de passe n'a pas fonctionné", "bottom-center", 4000);
+      this.toast.showToast("error", "Assurez-vous d'avoir bien retranscrit le token et que le nouveau mot de passe est conforme aux règles.", "bottom-center", 4000);
     }
   }
 
-  sendChange(mdp:string){
-    this.routingService.changeMDP(mdp)
-  }
+
 
 }

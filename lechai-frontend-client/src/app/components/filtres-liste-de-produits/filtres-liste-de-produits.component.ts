@@ -5,6 +5,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ProduitTestAPI } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -242,7 +243,22 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllProduit(){
-    this.routingService.getAllProduit().subscribe(produits=>this.produits=produits)
+    this.routingService.getAllProduit().subscribe({
+      next:(data:any)=>{
+        let test: ProduitTestAPI[] = data;
+        for (let i = 0; i<test.length;i++)
+        {
+
+        }
+        alert('succès!')
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+        //this.toast.showToast("error", 'il n\'existe pas de compte avec ce courriel et ce mot de passe.', "bottom-center", 4000);
+        console.error('Status code:', error.status);
+
+      }
+    })
   }
 
   ajoutPanier(eventData:number)

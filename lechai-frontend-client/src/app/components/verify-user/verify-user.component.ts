@@ -9,6 +9,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ConnexionService } from 'src/app/services/connexion.service';
+import { TokenHandlingService } from 'src/app/services/token-handling.service';
 
 @Component({
   selector: 'app-verify-user',
@@ -18,7 +19,7 @@ import { ConnexionService } from 'src/app/services/connexion.service';
 export class VerifyUserComponent {
   @ViewChild('token', { static: true }) token?: ElementRef;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService, private connexion:ConnexionService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService, private connexion:ConnexionService, private tokenHandling:TokenHandlingService){
 
   }
 
@@ -39,6 +40,7 @@ export class VerifyUserComponent {
         console.log(data)
         localStorage.setItem("token", data)
         this.connexion.setIsAbsolute(true)
+        this.tokenHandling.expirationToken();
         this.router.navigate([``]);
       },
       error: (error: HttpErrorResponse) => {

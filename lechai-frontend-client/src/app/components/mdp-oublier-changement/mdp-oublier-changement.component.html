@@ -4,6 +4,13 @@
       <form [formGroup]="signupForm">
         <h2 class="log-title">Changer de mot de passe</h2>
 
+        <div class="log-inputbox">
+          <span (click)="hideShowPass()" class="fa eye-slash "></span>
+          <input formControlName="token" placeholder="Token" type="text" class="log-input" required>
+        </div>
+        <small *ngIf="signupForm.controls['token'].dirty && signupForm.hasError('required')" class="errorSignup">*Vous devez entrer le token qui vous a été envoyé</small>
+
+
 
         <div class="log-inputbox">
           <span (click)="hideShowPass()" class="fa eye-slash {{eyeIcon}}"></span>

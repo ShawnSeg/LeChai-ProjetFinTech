@@ -47,6 +47,19 @@ export class RoutingService {
     return this.http.get<ProduitTestAPI>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString, httpOptions)
   }
 
+  getCategories(){
+    let token = ""
+
+    const httpOptions = {
+
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<Produit[]>(this.baseURL+"/Categories/GetAll", httpOptions)
+  }
+
   getProduitsPanier(): Observable<ProduitPanier[]>{
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
@@ -170,6 +183,9 @@ export class RoutingService {
     return this.http.post(url, body, httpOptions);
   }
 
+  updateClientInfo(prenom:string, ){
+
+  }
 
   updateChangementQuantiteProduitPanier(productId:number, newQuantity:number){
 
@@ -234,21 +250,7 @@ export class RoutingService {
   }
 
 
-  postChangementMDP(mdp:String)
-  {
-    const url =this.baseURL+"/Clients/ConnexionStepTwo";
-    const body = {
-      newMDP:mdp
-    }
 
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.post(url, body, {headers:headers})
-  }
 
   envoiCourriel(sujet:String, message:String)
   {
@@ -337,13 +339,65 @@ export class RoutingService {
     })
   }
 
-  changeMDP(email:string){
-    const url = this.baseURL+"/checkout";
+  UpdateChangementInfoClient(prenom:string, nom:string,dateNaissance:Date,email:string, id:number){
+    const url =this.baseURL+"/Clients/ChangePassword";
+    const body = {
+      Prenom:prenom,
+      Nom:nom,
+      DateNaissance:dateNaissance,
+      Email:email,
+      ID:id
+    }
+
+    let testToken = localStorage.getItem("token")
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${testToken}`
+    });
+
+    return this.http.put(url, body, {headers:headers})
+  }
+
+  postChangementMDPAuthentifier(mdp:String)
+  {
+    const url =this.baseURL+"/Clients/ChangePassword";
+    const body = {
+      NewPassword:mdp
+    }
+
+    let testToken = localStorage.getItem("token")
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${testToken}`
+    });
+
+    return this.http.post(url, body, {headers:headers})
+  }
+
+  postChangementMDP(mdp:String, token:String)
+  {
+    const url =this.baseURL+"/Clients/RecuperationStepTwo";
+    const body = {
+      Token:token,
+      NewPassword:mdp
+    }
+
+    let testToken = ""
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${testToken}`
+    });
+
+    return this.http.post(url, body, {headers:headers})
+  }
+
+  oublieMDP(email:string){
+    const url = this.baseURL+"/Clients/RecuperationStepOne";
 
     // Create a request body with the product ID to send to the backend
-    const body = { clientEmail: email };
+    const body = { Email: email };
 
-    const token = localStorage.getItem("token");
+    const token = ""
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
