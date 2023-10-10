@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProduitTestAPI } from 'src/shawnInterface';
+import { ProduitInterface, ProduitTestAPI } from 'src/shawnInterface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 
 @Component({
@@ -55,7 +55,7 @@ export class DetailsProduitComponent implements OnInit{
       console.log('ID du produit :', productId);
 
       // Vous pouvez charger le produit correspondant à l'aide de 'productId'
-      this.produitAafficher = this.produits;
+
       // Par exemple, en appelant un service qui récupère les détails du produit.
 
 
@@ -130,7 +130,34 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   getProduit(id:number){
-    this.routingService.getProduitDetail(id).subscribe(produit=>this.testProduit=produit)
+    this.routingService.getProduitDetail(id).subscribe({
+      next:(data:ProduitInterface)=>{
+        console.log(data.Nom)
+
+        let imageProduit:string[]=[]
+        for(let j = 0; j<data.Images.length;j++)
+        {
+          imageProduit.push(data.Images[j].URL);
+
+        }
+
+        this.produits = {
+          id:data.ID,
+          image:imageProduit,
+          nom:data.Nom,
+          quantite:data.QuantiteInventaire,
+          prix:data.Prix,
+          categorie:data.CategorieID,
+          description:data.Descriptions
+        }
+
+        console.log(this.produits)
+        this.produitAafficher = this.produits;
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.log(error.status)
+      }
+    })
   }
 
 }

@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Collaborateurs } from 'src/ameInterfaces';
+import { Collaborateurs, CollaborateursAPI, CompagniesAPI } from 'src/ameInterfaces';
 import { Compagnie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-filtre-liste-collaborateurs',
@@ -80,16 +81,9 @@ export class FiltreListeCollaborateursComponent {
   }
 
   ngOnInit() {
-    this.getCollaborateurs();
-    this.filteredCollabs = this.collaborators;
-    if(this.filteredCollabs?.length==0)
-    {
-      this.footerPosition.setIsAbsolute(true)
-    }
-    else
-    {
-      this.footerPosition.setIsAbsolute(false)
-    }
+    this.getCompagnies();
+
+
   }
 
   toggleButton():void{
@@ -189,7 +183,64 @@ export class FiltreListeCollaborateursComponent {
 
   }
   getCollaborateurs(){
-    this.routingService.getCollaborateur().subscribe(collaborateurs=>this.collaborators=collaborateurs)
+    this.routingService.getCollaborateur().subscribe({
+      next:(data:CollaborateursAPI[])=>
+      {
+        this.collaborators=[]
+
+        for(let i = 0; i<data.length;i++)
+        {
+          let collaborateur:Collaborateurs = {
+            id:data[i].ID,
+            image:"test.png",
+            prenom:data[i].Prenom,
+            nom:data[i].Nom,
+            compagnie:data[i].CompagnieID,
+            description:"Test",
+            socialLinks:[{name:"Facebook", url:"test.com"}]
+          }
+          this.collaborators.push(collaborateur)
+          this.filteredCollabs = this.collaborators;
+
+        }
+        if(this.filteredCollabs?.length==0)
+        {
+          this.footerPosition.setIsAbsolute(true)
+        }
+        else
+        {
+          this.footerPosition.setIsAbsolute(false)
+        }
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.log(error.status)
+      }
+    })
+  }
+  getCompagnies(){
+    this.routingService.getCompagnies().subscribe({
+      next:(data:CompagniesAPI[])=>
+      {
+        this.compagnies=[]
+
+        for(let i = 0; i<data.length;i++)
+        {
+          let compagnie:Compagnie = {
+            id:data[i].ID,
+
+            nom:data[i].Nom,
+
+          }
+          this.compagnies.push(compagnie)
+
+        }
+
+        this.getCollaborateurs();
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.log(error.status)
+      }
+    })
   }
 }
 

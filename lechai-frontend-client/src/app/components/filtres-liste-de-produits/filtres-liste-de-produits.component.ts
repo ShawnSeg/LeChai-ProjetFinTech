@@ -5,7 +5,7 @@ import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
-import { ProduitTestAPI } from 'src/shawnInterface';
+import { CategoriesAPI, ProduitInterface, ProduitTestAPI } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -38,43 +38,8 @@ export class FiltresListeDeProduitsComponent {
   ];
 
   produits: Produit[] = [
-    {
-      id:1,
-      image: [
-        'leChai/leChaiFront',
-        'leChai/leChaiTop',
-        'leChai/leChaiBottom'
-      ],
-      nom: 'Le Chai',
-      icon: 'img temp/pepper.svg',
-      prix: 18.00,
-      quantite: 200,
-      ingrediant:'Thé noir cannelle mouscade cardamome gingenbre anis etoiler clou de girofle piment cayenne sucre',
-      description: `Nôtre Chai est naître comme la meilleure solution à une forte demande de nos clients toujours à la recherche
-      d’une bonne boisson plaine de réconfort.
 
-      La principale prétention de Le Chai est de satisfaire les palais qu’on le désir de découverte,
-      d’un gout authentique et d’une texture remarquable. Fait avec un mélange d’épices bien choisis et en équilibre.
-      Une petite touche piquante qui ne laissera pas tes sens indifférents. Du début à la fin un réconfort dans la bouche!`,
-      categorie: 1,
-    },
-    {
-      id:2,
-      image: [
-        'dirtyChai/dirtyFront',
-        'dirtyChai/dirtyTop',
-        'dirtyChai/dirtyBottom'
-      ],
-      nom: 'Dirty Chai',
-      icon: 'img temp/pepper.svg',
-      prix: 21.00,
-      quantite: 200,
-      ingrediant:'The noir, cannelle, muscade, cardamome, gingembre, anis etoiler, clou girofle, piment cayenne,cafe,sucre',
-      description: `C’est la version de Le Chai mélangé avec les délicieux attributs de la caféine.
-      La touché caféiné développe des notes plus boisées, grillés et de cacao.
-      Pourquoi pas essayer le meilleur de ces deux mondes.`,
-      categorie: 1,
-    },
+
     {
       id:3,
       image: [
@@ -114,20 +79,8 @@ export class FiltresListeDeProduitsComponent {
 
   ngOnInit() {
     this.getAllCategorie();
-    this.getAllProduit();
-    this.filteredProduit = this.produits;
-    this.groupProductsByCategory();
-    this.filteredCategoryList = this.categorizedProducts;
-    this.filteredCat=Object.keys(this.filteredCategoryList)
 
-    if(this.filteredProduit.length==0)
-    {
-      this.footerPosition.setIsAbsolute(true)
-    }
-    else
-    {
-      this.footerPosition.setIsAbsolute(false)
-    }
+
   }
 
   groupProductsByCategory() {
@@ -245,22 +198,50 @@ export class FiltresListeDeProduitsComponent {
 
   getAllProduit(){
     this.routingService.getAllProduit().subscribe({
-      next:(data:any)=>{
-        let test: ProduitTestAPI[] = data;
-        for (let i = 0; i<test.length;i++)
+      next:(data:ProduitInterface[])=>{
+        this.produits=[]
+        for (let i = 0; i<data.length;i++)
         {
-          this.produits[i].id=test[i].ID
-          this.produits[i].categorie=test[i].CategorieID
-          /*this.produits[i].=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID
-          this.produits[i].id=test[i].ID*/
+          if(data[i].EtatProduitID!=2)
+          {
+            let imageProduit:string[]=[]
+            for(let j = 0; j<data[i].Images.length;j++)
+            {
+              imageProduit.push(data[i].Images[j].URL)
+
+            }
+            let produit :Produit = {
+              id:data[i].ID,
+              image:imageProduit,
+              nom:data[i].Nom,
+              quantite:data[i].QuantiteInventaire,
+              prix:data[i].Prix,
+              categorie:data[i].CategorieID,
+              description:data[i].Descriptions
+
+            }
+
+            this.produits.push(produit)
+          }
         }
-        alert('succès!')
+
+        this.groupProductsByCategory();
+        this.filteredProduit = this.produits;
+        this.filteredCategoryList = this.categorizedProducts;
+        this.filteredCat=Object.keys(this.filteredCategoryList)
+
+        if(this.filteredProduit?.length==0)
+        {
+          this.footerPosition.setIsAbsolute(true)
+        }
+        else
+        {
+          this.footerPosition.setIsAbsolute(false)
+        }
+        console.log(this.produits)
+        console.log(this.filteredProduit)
+        console.log(this.filteredCategoryList)
+        console.log(this.filteredCat)
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here
@@ -304,7 +285,27 @@ export class FiltresListeDeProduitsComponent {
   }
 
   getAllCategorie(){
-    this.routingService.getCategories().subscribe(categorie=>this.categories=categorie)
+    this.routingService.getCategories().subscribe({
+      next:(data:CategoriesAPI[])=>
+      {
+        this.categories = []
+        for(let i = 0; i<data.length;i++)
+        {
+          let categorie:Categorie = {
+            id:data[i].ID,
+            nom:data[i].Nom
+          }
+
+          this.categories.push(categorie)
+        }
+        this.getAllProduit();
+
+      },
+      error:(error:HttpErrorResponse)=>
+      {
+        console.log(error.status)
+      }
+    })
   }
 
 }

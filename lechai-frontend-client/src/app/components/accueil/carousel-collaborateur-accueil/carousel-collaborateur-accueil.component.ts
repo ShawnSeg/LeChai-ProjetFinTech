@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Collaborateurs } from 'src/ameInterfaces';
+import { Collaborateurs, CollaborateursAPI } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -82,8 +82,8 @@ export class CarouselCollaborateurAccueilComponent {
 
   getCollaborateurs(){
     this.routingService.getCollaborateur().subscribe({
-      next: (data: Collaborateurs[]) => {
-        this.collaborators=data;
+      next: (data: CollaborateursAPI[]) => {
+        //this.collaborators=data;
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here

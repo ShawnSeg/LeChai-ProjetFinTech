@@ -10,6 +10,14 @@ export interface reseau{
   Nom:string
 }
 
+export interface CompagniesAPI{
+  ID:number,
+  Nom:string,
+  Telephone:string,
+  AdresseCourriel:string,
+  Contact:string
+}
+
 export interface Collaborateurs{
   id:number,
   image:string,
@@ -18,6 +26,15 @@ export interface Collaborateurs{
   compagnie:number,
   description:string,
   socialLinks:socialLinks[],
+}
+
+export interface CollaborateursAPI{
+  ID:number,
+  Nom:string,
+  Prenom:string,
+  Telephone:string,
+  CompagnieID:number,
+  Compagnie:string
 }
 
 export interface Carousel{

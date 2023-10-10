@@ -133,7 +133,7 @@ export class PanierComponent {
 
       if (formatType) {
         // Update the selected format for the format type
-        formatType.format_selected = eventData.selected_format;
+        //formatType.format_selected = eventData.selected_format;
 
         // Recalculate the total cost
         this.calculateTotalCost();

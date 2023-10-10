@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { ClientInterface, ProduitPanier } from 'src/shawnInterface';
+import { CategoriesAPI, ClientInterface, ProduitPanier } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
 import { ApiResponse } from 'src/shawnInterface';
-import { Client, Carousel, Produit, Collaborateurs, reseau } from 'src/ameInterfaces';
-
-import { FormGroup } from '@angular/forms';
-
-import { ProduitTestAPI } from 'src/shawnInterface';
+import { Client, Carousel, Produit, Collaborateurs, reseau, CollaborateursAPI, CompagniesAPI } from 'src/ameInterfaces';
+import { CommandeInterface } from 'src/shawnInterface';
+import { ProduitTestAPI, ProduitInterface, ProduitParCommandeInterface } from 'src/shawnInterface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +30,7 @@ export class RoutingService {
     //Store les routes que les clients pourront utiliser
   }
 
-  getProduitDetail(produitId:number):Observable<ProduitTestAPI>{
+  getProduitDetail(produitId:number){
 
     let token = ""
     alert(produitId)
@@ -44,7 +42,7 @@ export class RoutingService {
       })
     };
 
-    return this.http.get<ProduitTestAPI>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString, httpOptions)
+    return this.http.get<ProduitInterface>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString(), httpOptions)
   }
 
   getCategories(){
@@ -57,7 +55,7 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Produit[]>(this.baseURL+"/Categories/GetAll", httpOptions)
+    return this.http.get<CategoriesAPI[]>(this.baseURL+"/Categories/GetAll", httpOptions)
   }
 
   getCarousel(): Observable<Carousel[]> {
@@ -89,7 +87,17 @@ export class RoutingService {
     return this.http.get<ProduitPanier[]>(this.baseURL+"/testProduit/", {headers:headers});
   }
 
-  getAllProduit():Observable<Produit[]>{
+  getProduitParCommandes(id:number){
+    console.log(id)
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ProduitParCommandeInterface[]>(this.baseURL+"/ProduitsParCommande/GetAllDetailed?CommandeID="+id.toString(), {headers:headers});
+  }
+
+  getAllProduit(){
     let token = ""
 
     const httpOptions = {
@@ -99,19 +107,19 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Produit[]>(this.baseURL+"/Produits/GetAll", httpOptions)
+    return this.http.get<ProduitInterface[]>(this.baseURL+"/Produits/GetAllDetailed", httpOptions)
   }
 
-  getListeCommandes(): Observable<Commandes[]>{
+  getListeCommandes(){
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<Commandes[]>(this.baseURL+"/testProduit/", {headers:headers});
+    return this.http.get<CommandeInterface[]>(this.baseURL+"/Commandes/GetAll", {headers:headers});
   }
 
-  getCollaborateur():Observable<Collaborateurs[]>{
+  getCollaborateur(){
     let token = ""
 
     const httpOptions = {
@@ -121,17 +129,30 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Collaborateurs[]>(this.baseURL+"/Collaborateurs/GetAll", httpOptions);
+    return this.http.get<CollaborateursAPI[]>(this.baseURL+"/Collaborateurs/GetAll", httpOptions);
   }
 
-  getCommandesDetail(commandeId:number): Observable<Commandes>{
+  getCompagnies(){
+    let token = ""
+
+    const httpOptions = {
+
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<CompagniesAPI[]>(this.baseURL+"/Compagnies/GetAll", httpOptions);
+  }
+
+  getCommandesDetail(commandeId:number){
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    const appelApi = this.baseURL+"/testProduit/"+commandeId.toString
-    return this.http.get<Commandes>(appelApi, {headers:headers});
+    const appelApi = this.baseURL+"/Commandes/Get?ID="+commandeId.toString()
+    return this.http.get<CommandeInterface>(appelApi, {headers:headers});
   }
 
   getAdresseLivraisonPassee(): Observable<AdresseLivraison[]>{

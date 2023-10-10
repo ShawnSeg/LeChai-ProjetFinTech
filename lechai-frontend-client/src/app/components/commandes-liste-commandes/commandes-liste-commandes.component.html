@@ -1,5 +1,5 @@
 <a [routerLink]="['/commandes', commande?.id]">
-  <h4>Commande #{{commande?.id}}</h4>
+  <h4>Commande #{{commande?.numero_facture}}</h4>
 <label for="">Produit(s) acheté(s):</label>
 <div class="produitsAchetes">
   <p *ngFor="let produit of commande?.produitsAchetes">{{produit.nom}}</p>

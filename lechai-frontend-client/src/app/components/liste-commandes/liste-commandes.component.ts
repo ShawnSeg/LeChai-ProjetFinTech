@@ -1,7 +1,10 @@
 import { Component,ViewChild, ElementRef } from '@angular/core';
-import { Commandes } from 'src/shawnInterface';
+import { Commandes, ProduitPanier, ProduitParCommandeInterface, Taxes } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CommandeInterface } from 'src/shawnInterface';
+import { Produit } from 'src/ameInterfaces';
 
 @Component({
   selector: 'app-liste-commandes',
@@ -21,20 +24,21 @@ export class ListeCommandesComponent {
   @ViewChild('filterDateMobile', { static: true }) filterDateMobile?: ElementRef;
 
 
-  public listeCommande:Commandes[] = [{id:1, image:"test.png", produitsAchetes:[
+  /*public listeCommande:Commandes[] = [{id:1, image:"test.png", numero_facture:123, produitsAchetes:[
     {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
     {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
     {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
     {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
   ], dateCreation:new Date("2023-09-29"), etat:"fini", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", province:"Québec", code_postal:"J8L0G1"},
 
-                                      {id:2, image:"test2.png", produitsAchetes:[
+                                      {id:2, image:"test2.png", numero_facture:124, produitsAchetes:[
                                         {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
                                         {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
                                         {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
                                         {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
                                       ], dateCreation:new Date("2023-09-28"), etat:"en_cours", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", province:"Québec", code_postal:"J8L0G1"}]
-
+*/
+ public listeCommande:Commandes[] = []
 
   public filtreProduit: String = '';
   public filtreNumero:number = 0;
@@ -213,7 +217,81 @@ export class ListeCommandesComponent {
   }
 
   getListeCommande(){
-    this.routingService.getListeCommandes().subscribe(listeCommande=>this.listeCommande=listeCommande);
+    this.routingService.getListeCommandes().subscribe({
+      next: (data: CommandeInterface[]) => {
+        // Handle successful response here
+        alert(data.length)
+
+
+
+        for(let i = 0; i<data.length;i++)
+        {
+          let produitsParCommande:ProduitPanier[] = []
+          if(data[i].EtatsCommandes!="panier" && data[i].EtatsCommandes!='souhait')
+          {
+            console.log(data[i].ID)
+            this.routingService.getProduitParCommandes(data[i].ID).subscribe({
+              next:(data2:ProduitParCommandeInterface[])=>
+              {
+                  let taxes:Taxes[] = []
+                  for(let j = 0; i<data2[j].Taxes.length;i++)
+                  {
+                    let taxe:Taxes = {
+                      nom:data2[i].Taxes[j].Description,
+                      montant:data2[i].Taxes[j].Montant
+                    }
+                    taxes.push(taxe)
+                  }
+                  console.log(data2[i])
+
+                  let produits:ProduitPanier={
+                    id_commande:data2[i].CommandeID,
+                    id_produit:data2[i].ProduitID,
+                    nom:data2[i].Produit,
+                    description:data2[i].Description,
+                    id:data2[i].ID,
+                    quantite:data2[i].Quantite,
+                    quantite_restante:data2[i].QuantiteRestante,
+                    cout:data2[i].Cout,
+                    format:[{nom:"grandeur", format:["XS", "S"], format_selected:"XS"}],
+                    taxes:taxes,
+                    image:"test.com"
+                  }
+                  produitsParCommande.push(produits)
+
+
+                  let commande:Commandes = {
+                    id:data[i].ID,
+                    code_postal: data[i].CodePostal,
+                    dateCreation : new Date(data[i].DateTransaction.slice(0, data[i].DateTransaction.indexOf('T'))),
+                    etat : data[i].EtatsCommandes,
+                    no_civique : data[i].NumeroCiviqueLivraison,
+                    produitsAchetes:produitsParCommande,
+                    rue : data[i].RueLivraison,
+                    ville : data[i].Ville,
+                    numero_facture : data[i].NumeroFacture
+                  }
+                  this.listeCommande.push(commande)
+
+
+              },
+              error:(error:HttpErrorResponse)=>{
+                console.log(error.status)
+              }
+
+          })
+        }
+
+        }
+
+      },
+      error: (error: HttpErrorResponse) => {
+        // Handle error response here
+        alert("error")
+        console.error('Status code:', error.status);
+
+      }
+    });
   }
 }
 
