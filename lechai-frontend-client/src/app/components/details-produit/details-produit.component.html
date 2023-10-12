@@ -25,20 +25,19 @@
         <p>Quantité restante:</p>
         <p>{{produitAafficher.quantite}}</p>
       </span>
-
-      <span *ngIf="produitAafficher?.couleur">
-        <p>Couleur :</p>
-        <select aria-label="Sélectionnez une couleur" [(ngModel)]="selectedCouleur">
-          <option *ngFor="let couleur of produitAafficher.couleur" [value]="couleur">{{ couleur }}</option>
+      <span >
+        <p>Quantité:</p>
+        <input type="number" name="quantite" id="quantite" value="1"  [(ngModel)]="selectedQuantite">
+      </span>
+      <span *ngFor="let format of formats|keyvalue">
+        <p>{{format.key}} :</p>
+        <select aria-label="Sélectionnez une couleur" [(ngModel)]="selectedFormats[format.key]">
+          <option *ngFor="let nom of format.value" [value]="nom.FormatID">{{ nom.Format }}</option>
         </select>
       </span>
 
-      <span *ngIf="produitAafficher?.grandeur">
-        <p>Grandeur :</p>
-        <select aria-label="Sélectionnez une grandeur" [(ngModel)]="selectedGrandeur">
-          <option *ngFor="let grandeur of produitAafficher.grandeur" [value]="grandeur">{{ grandeur }}</option>
-        </select>
-      </span>
+
+
 
       <div *ngIf="produitAafficher?.ingrediant" class="descProd">
         <p>Ingrédiants :</p>
@@ -57,7 +56,7 @@
   </div>
 
   <div class="btnProd">
-    <button (click)="acheterMaintenant()" type="button">Acheter maintenant!</button>
+
     <button (click)="addPanier()" type="button">Ajouter au panier</button>
   </div>
 

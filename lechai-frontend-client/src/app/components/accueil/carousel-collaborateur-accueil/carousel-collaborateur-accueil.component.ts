@@ -14,6 +14,7 @@ export class CarouselCollaborateurAccueilComponent {
     {
       id:1,
       image: 'collab1.png',
+      email:"test@test.com",
       prenom:'ET Appel',
       nom: 'Maison',
       compagnie: 1,
@@ -27,6 +28,7 @@ export class CarouselCollaborateurAccueilComponent {
       id:2,
       image: 'prod1.png',
       prenom:'Collaborateur',
+      email:"test@test.com",
       nom: '2',
       compagnie: 1,
       description: 'scription qui affiche seulement tant de caractères shkfjdshjkhsk',

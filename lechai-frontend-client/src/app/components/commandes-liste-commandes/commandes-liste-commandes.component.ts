@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Commandes } from 'src/shawnInterface';
+import { CommandeInterface } from 'src/shawnInterface';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Commandes } from 'src/shawnInterface';
   styleUrls: ['./commandes-liste-commandes.component.scss']
 })
 export class CommandesListeCommandesComponent {
-  @Input() commande?:Commandes
+  @Input() commande?:CommandeInterface
 
   public cout = 0;
 

@@ -5,8 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ProduitInterface, ProduitTestAPI } from 'src/shawnInterface';
+import { ProduitInterface, ProduitTestAPI, TypeFormatAPI } from 'src/shawnInterface';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-details-produit',
@@ -41,8 +42,9 @@ export class DetailsProduitComponent implements OnInit{
   currentIndex: number = 0;
   isWish: boolean = false;
   heartIcon: string = "fa-heart-o";
-  selectedGrandeur: string = '';
-  selectedCouleur: string = '';
+  formats: { [key: string]: TypeFormatAPI[] } = {};
+  selectedQuantite: number = 1; // Property to store the selected quantity
+  selectedFormats: { [key: string]: number } = {}; // Property to store selected format values
 
   constructor(private route: ActivatedRoute, private toast: ToastService, private routingService:RoutingService, private footerPosition:FooterPositionService) { }
 
@@ -91,22 +93,26 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addWishList(): void{
+    let formatsChoisi:number[]=[]
+    for(let key in this.selectedFormats)
+    {
+      formatsChoisi.push(this.selectedFormats[key])
+    }
 
-
-    this.routingService.postProduitDansPanier(this.produits.id).subscribe(
-      (data: any) => {
+    this.routingService.postProduitDansLS(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
+      next:(data: any) => {
         // Handle successful response here
         this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
         this.isWish = !this.isWish;
         this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
 
       },
-      (error: HttpErrorResponse) => {
+      error:(error: HttpErrorResponse) => {
         // Handle error response here
         this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
         console.error('Status code:', error.status);
       }
-    );
+    });
   }
 
   acheterMaintenant(): void{
@@ -114,19 +120,23 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addPanier(): void{
-
-    this.routingService.postProduitDansPanier(this.produits.id).subscribe(
-      (data: any) => {
+    let formatsChoisi:number[]=[]
+    for(let key in this.selectedFormats)
+    {
+      formatsChoisi.push(this.selectedFormats[key])
+    }
+    this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
+      next:(data: any) => {
         // Handle successful response here
         this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
 
       },
-      (error: HttpErrorResponse) => {
+      error:(error: HttpErrorResponse) => {
         // Handle error response here
         this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
         console.error('Status code:', error.status);
       }
-    );
+    });
   }
 
   getProduit(id:number){
@@ -148,11 +158,24 @@ export class DetailsProduitComponent implements OnInit{
           quantite:data.QuantiteInventaire,
           prix:data.Prix,
           categorie:data.CategorieID,
-          description:data.Descriptions
-        }
+          description:data.Descriptions,
+          format:data.Formats
 
-        console.log(this.produits)
+        }
         this.produitAafficher = this.produits;
+        for(let i = 0; i<this.produits.format!.length;i++)
+        {
+          if(this.formats.hasOwnProperty(this.produits.format![i].TypeFormat))
+          {
+            this.formats[this.produits.format![i].TypeFormat].push(this.produits.format![i])
+          }
+          else
+          {
+            this.formats[this.produits.format![i].TypeFormat]=[(this.produits.format![i])]
+          }
+        }
+        console.log(this.formats)
+
       },
       error:(error:HttpErrorResponse)=>{
         console.log(error.status)

@@ -15,12 +15,7 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 })
 export class PaiementComponent {
 
-  public produits$?: ProduitPanier[] =[
-    {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-  ];
+  public produits$?: ProduitPanier[] =[];
 
   public prenom:String = ""
   public nom:String = ""
@@ -67,23 +62,23 @@ export class PaiementComponent {
       cost += (produit.cout*produit.quantite);
       for(const taxe of produit.taxes)
       {
-        taxes+=taxe.montant;
-        if(taxe.nom=="TPS")
+        taxes+=taxe.Montant;
+        if(taxe.Description=="Taxe TPS")
         {
-          totalTPS +=taxe.montant*produit.quantite
+          totalTPS +=taxe.Montant*produit.quantite
         }
-        if(taxe.nom=="TVQ")
+        if(taxe.Description=="Taxe TVQ")
         {
-          totalTVQ+=taxe.montant*produit.quantite
+          totalTVQ+=taxe.Montant*produit.quantite
         }
       }
       for (const autreTaxe of produit.taxes) {
-        if(autreTaxe.nom !="TVQ" && autreTaxe.nom!="TPS")
+        if(autreTaxe.Description !="Taxe TVQ" && autreTaxe.Description!="Taxe TPS")
         // Aggregate the total amount for each unique tax name
-        if (!this.aggregatedTaxes[autreTaxe.nom]) {
-          this.aggregatedTaxes[autreTaxe.nom] = autreTaxe.montant*produit.quantite;
+        if (!this.aggregatedTaxes[autreTaxe.Description]) {
+          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite;
         } else {
-          this.aggregatedTaxes[autreTaxe.nom] += autreTaxe.montant*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite;
         }
       }
     }
@@ -99,7 +94,7 @@ export class PaiementComponent {
 
   getPanier()
   {
-    this.routingService.getProduitsPanier().subscribe(produits=>this.produits$ = produits);
+    //this.routingService.getProduitsPanier().subscribe(produits=>this.produits$ = produits);
   }
 
   getAdresseLivraison()

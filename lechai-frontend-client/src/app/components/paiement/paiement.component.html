@@ -58,9 +58,9 @@
   <span  *ngFor="let produit of produits$" class="livraison">
     <p>{{produit.nom}} X{{produit.quantite}}: {{produit.cout*produit.quantite|number:'1.2-2'}}$</p>
 
-    <aside class="flex" *ngFor="let format of produit?.format">
+    <!--<aside class="flex" *ngFor="let format of produit?.format">
     <p class="format">-{{format.nom}}:{{format.format_selected}}</p>
-    </aside>
+    </aside>-->
   </span>
   <h4 class="marginTop">Coût</h4>
   <hr>

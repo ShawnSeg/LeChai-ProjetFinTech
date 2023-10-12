@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommandeInterface, Commandes } from 'src/shawnInterface';
+import { CommandeInterface, Commandes, ProduitPanier } from 'src/shawnInterface';
 import { RoutingService } from 'src/app/services/routing.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
@@ -14,12 +14,25 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class CommandesDetailsComponent {
 
-  public commande:Commandes= {id:1, numero_facture:125, produitsAchetes:[
-      {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-      {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:60.0, image:"test.png"},
-      {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-      {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-  ], dateCreation:new Date("2023-09-29"), etat:"Livré", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", code_postal:"J8L0G1"}
+  public commande: CommandeInterface ={
+    id:0,
+    MontantBrut:0,
+    produitsAchetes:[],
+    dateCreation:"",
+    EtatsCommandesID:0,
+    no_civique:0,
+    rue:"",
+    ville:"",
+    code_postal:"",
+    numero_facture:0,
+    etat:"",
+    Employe:"",
+    EmployeID:0,
+    Client:"",
+    ClientID:0,
+    VilleID:0
+  }
+
 
 
   public coutAvantTaxes =0;
@@ -34,11 +47,7 @@ export class CommandesDetailsComponent {
   constructor(private route: ActivatedRoute, private routingService:RoutingService, private toast:ToastService, private router:Router, private footerPosition: FooterPositionService) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      const commandeId = params['id']; // Get the 'id' parameter from the route
-      // Now you can fetch the corresponding 'commande' using the 'commandeId'
 
-    });
 
     this.getCommandeDetail();
 
@@ -54,23 +63,23 @@ export class CommandesDetailsComponent {
       cost += (produit.cout*produit.quantite);
       for(const taxe of produit.taxes)
       {
-        taxes+=taxe.montant;
-        if(taxe.nom=="TPS")
+        taxes+=(taxe.Montant*produit.cout*produit.quantite);
+        if(taxe.Description=="Taxes TPS")
         {
-          totalTPS +=taxe.montant*produit.quantite
+          totalTPS +=taxe.Montant*produit.quantite*produit.cout
         }
-        if(taxe.nom=="TVQ")
+        if(taxe.Description=="Taxes TVQ")
         {
-          totalTVQ+=taxe.montant*produit.quantite
+          totalTVQ+=taxe.Montant*produit.quantite*produit.cout
         }
       }
       for (const autreTaxe of produit.taxes) {
-        if(autreTaxe.nom !="TVQ" && autreTaxe.nom!="TPS")
+        if(autreTaxe.Description !="Taxes TVQ" && autreTaxe.Description!="Taxes TPS")
         // Aggregate the total amount for each unique tax name
-        if (!this.aggregatedTaxes[autreTaxe.nom]) {
-          this.aggregatedTaxes[autreTaxe.nom] = autreTaxe.montant*produit.quantite;
+        if (!this.aggregatedTaxes[autreTaxe.Description]) {
+          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite*produit.cout;
         } else {
-          this.aggregatedTaxes[autreTaxe.nom] += autreTaxe.montant*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite*produit.cout;
         }
       }
     }
@@ -94,17 +103,17 @@ export class CommandesDetailsComponent {
 
         this.routingService.getCommandesDetail(id).subscribe({
           next:(data:CommandeInterface)=>{
-              this.commande.id=data.ID;
-              this.commande.code_postal= data.CodePostal;
-              this.commande.dateCreation = new Date(data.DateTransaction.slice(0, data.DateTransaction.indexOf('T')));
-              this.commande.etat = data.EtatsCommandes;
-              this.commande.no_civique = data.NumeroCiviqueLivraison;
-              this.commande.produitsAchetes=[{id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:10.0, image:"test.png"}];
-              this.commande.rue = data.RueLivraison;
-              this.commande.ville = data.Ville;
-              this.commande.numero_facture = data.NumeroFacture;
+             this.commande = data
+             console.log(data)
+             this.routingService.getProduitParCommandes(this.commande.id).subscribe({
+              next:(data:ProduitPanier[])=>{
+                console.log(data)
+                this.commande.produitsAchetes=data
+                console.log(this.commande)
+                this.calculateTotalCost();
+              }
+             })
 
-              this.calculateTotalCost();
           },
 
           error:(error:HttpErrorResponse)=>{
@@ -114,7 +123,7 @@ export class CommandesDetailsComponent {
       }
       else
       {
-        this.toast.showToast("error", "Erreur: Produit inexistant", "bottom-center", 4000);
+        this.toast.showToast("error", "Produit inexistant", "bottom-center", 4000);
         this.router.navigate([``]);
       }
     });

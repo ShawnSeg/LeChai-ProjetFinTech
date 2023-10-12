@@ -24,38 +24,7 @@ export class FiltreListeCollaborateursComponent {
   @ViewChild('filterCompagnieMobile', { static: true }) filterCompagnieMobile?: ElementRef;
 
   collaborators: Collaborateurs[] = [
-    {
-      id:1,
-      image: 'collab1.png',
-      prenom:'ET Appel',
-      nom: 'Maison',
-      compagnie: 1,
-      description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat. Ultricies leo integer malesuada nunc vel risus
-      commodo viverra maecenas. Nisl vel pretium lectus quam id leo in vitae. Morbi enim nunc faucibus a. Diam ut venenatis tellus
-      in metus vulputate. Arcu dictum varius duis at consectetur. Lorem ipsum dolor sit amet consectetur adipiscing. Eleifend quam
-      adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Etiam non quam lacus suspendisse faucibus interdum posuere lorem.`,
-      socialLinks: [
-        { name: 'facebook', url: 'https://www.facebook.com/' },
-        { name: 'instagram', url: 'https://www.instagram.com/' }
-      ],
-    },
-    {
-      id:2,
-      image: 'prod1.png',
-      prenom:'Billie',
-      nom: 'Lavertu',
-      compagnie: 2,
-      description:  `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Consectetur purus ut faucibus pulvinar elementum integer enim neque volutpat. Ultricies leo integer malesuada nunc vel risus
-      commodo viverra maecenas. Nisl vel pretium lectus quam id leo in vitae. Morbi enim nunc faucibus a. Diam ut venenatis tellus
-      in metus vulputate. Arcu dictum varius duis at consectetur. Lorem ipsum dolor sit amet consectetur adipiscing. Eleifend quam
-      adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Etiam non quam lacus suspendisse faucibus interdum posuere lorem.`,
-      socialLinks: [
-        { name: 'facebook', url: 'https://www.facebook.com/' },
-        { name: 'instagram', url: 'https://www.instagram.com/' }
-      ],
-    },
+
     // Ajoutez d'autres collaborateurs ici
   ];
 
@@ -192,12 +161,14 @@ export class FiltreListeCollaborateursComponent {
         {
           let collaborateur:Collaborateurs = {
             id:data[i].ID,
-            image:"test.png",
+            image:data[i].Image,
             prenom:data[i].Prenom,
             nom:data[i].Nom,
             compagnie:data[i].CompagnieID,
-            description:"Test",
-            socialLinks:[{name:"Facebook", url:"test.com"}]
+            description:data[i].Description,
+            socialLinks:[{name:"facebook", url:"test.com"}],
+            email:data[i].Email,
+
           }
           this.collaborators.push(collaborateur)
           this.filteredCollabs = this.collaborators;

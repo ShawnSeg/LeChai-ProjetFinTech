@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { CategoriesAPI, ClientInterface, ProduitPanier } from 'src/shawnInterface';
+import { CategoriesAPI, ClientInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
@@ -45,6 +45,20 @@ export class RoutingService {
     return this.http.get<ProduitInterface>(this.baseURL+"/Produits/GetDetailed?ID="+produitId.toString(), httpOptions)
   }
 
+  getFormatsProduits(idProduit:number){
+    let token = ""
+
+    const httpOptions = {
+
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get<TypeFormatAPI[]>(this.baseURL+"/formatsproduits/GetAllDetailed?ProduitID="+idProduit.toString(), httpOptions)
+  }
+
   getCategories(){
     let token = ""
 
@@ -55,7 +69,7 @@ export class RoutingService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<CategoriesAPI[]>(this.baseURL+"/Categories/GetAll", httpOptions)
+    return this.http.get<CategoriesAPI[]>(this.baseURL+"/Categories/GetAllDetailed", httpOptions)
   }
 
   getCarousel(): Observable<Carousel[]> {
@@ -69,22 +83,22 @@ export class RoutingService {
     return this.http.get<Carousel[]>(this.baseURL + "/carousel/", httpOptions);
   }
 
-  getProduitsPanier(): Observable<ProduitPanier[]>{
+  getProduitsPanier(){
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ProduitPanier[]>(this.baseURL+"/testProduit/", {headers:headers});
+    return this.http.get<CommandeInterface>(this.baseURL+"/Commandes/GetDetailed?EtatsCommandesID=4", {headers:headers});
   }
 
-  getProduitsListeSouhait(): Observable<ProduitPanier[]>{
+  getListeSouhait(){
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ProduitPanier[]>(this.baseURL+"/testProduit/", {headers:headers});
+    return this.http.get<CommandeInterface>(this.baseURL+"/Commandes/GetDetailed?EtatsCommandesID=5", {headers:headers});
   }
 
   getProduitParCommandes(id:number){
@@ -94,7 +108,15 @@ export class RoutingService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ProduitParCommandeInterface[]>(this.baseURL+"/ProduitsParCommande/GetAllDetailed?CommandeID="+id.toString(), {headers:headers});
+    return this.http.get<ProduitPanier[]>(this.baseURL+"/ProduitsParCommande/GetAllDetailed?id_commande="+id.toString(), {headers:headers});
+  }
+  getListeCommandes(){
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<CommandeInterface[]>(this.baseURL+"/Commandes/GetAll", {headers:headers});
   }
 
   getAllProduit(){
@@ -110,14 +132,7 @@ export class RoutingService {
     return this.http.get<ProduitInterface[]>(this.baseURL+"/Produits/GetAllDetailed", httpOptions)
   }
 
-  getListeCommandes(){
-    const token = localStorage.getItem("token");
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<CommandeInterface[]>(this.baseURL+"/Commandes/GetAll", {headers:headers});
-  }
+
 
   getCollaborateur(){
     let token = ""
@@ -151,7 +166,7 @@ export class RoutingService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    const appelApi = this.baseURL+"/Commandes/Get?ID="+commandeId.toString()
+    const appelApi = this.baseURL+"/Commandes/Get?id="+commandeId.toString()
     return this.http.get<CommandeInterface>(appelApi, {headers:headers});
   }
 
@@ -222,11 +237,10 @@ export class RoutingService {
 
   updateChangementQuantiteProduitPanier(productId:number, newQuantity:number){
 
-    let appelApi = this.baseURL+"/Clients/ConnexionStepTwo"+productId.toString
+    let appelApi = this.baseURL+"/ProduitsParCommande/updatequantite"
     const requestBody = {
       productId:productId,
       quantity:newQuantity,
-      clientId:1
     }
 
     const token = localStorage.getItem("token");
@@ -235,15 +249,16 @@ export class RoutingService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post(appelApi, requestBody, {headers:headers})
+    return this.http.put(appelApi, requestBody, {headers:headers})
   }
 
 
   updateChangementFormatChoisiProduitPanier(productId:number, formatChoisi:String, typeFormat:String){
-    let appelApi = this.baseURL+"/Clients/ConnexionStepTwo"+productId.toString
+    let appelApi = this.baseURL+"/ProduitsParCommande/updateformat"+productId.toString
     const requestBody = {
       format_choisi:formatChoisi,
-      type_format:typeFormat
+      type_format:typeFormat,
+      ProduitID:productId
     }
 
     const token = localStorage.getItem("token");
@@ -254,15 +269,40 @@ export class RoutingService {
 
     return this.http.post(appelApi, requestBody, {headers:headers})
   }
-
-
-
-  postProduitDansPanier(productId: number): Observable<any> {
+  postProduitDansLS(productId: number, quantite:number=1, format_choisi:number[]=[]){
     // Define the URL of your backend API endpoint for adding a product to the panier
-    const url = this.baseURL+"/Clients/ConnexionStepTwo";
+    const url = this.baseURL+"/ProduitsParCommande/Insertls";
 
     // Create a request body with the product ID to send to the backend
-    const body = { productId: productId };
+    const body = {
+      ClientID : 1,
+      ProduitID : productId,
+      Quantite : quantite,
+      FormatChoisiID : format_choisi
+    }
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.post(url, body,{headers:headers});
+  }
+
+
+  postProduitDansPanier(productId: number, quantite:number=1, format_choisi:number[]=[]){
+    // Define the URL of your backend API endpoint for adding a product to the panier
+    const url = this.baseURL+"/ProduitsParCommande/InsertPanier";
+
+    // Create a request body with the product ID to send to the backend
+    const body = {
+      ClientID : 1,
+      ProduitID : productId,
+      Quantite : quantite,
+      FormatChoisiID : format_choisi
+    }
 
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
@@ -277,7 +317,7 @@ export class RoutingService {
   postListetDansPanier(liste:ProduitPanier[]){
     for(const produit of liste)
     {
-      this.postProduitDansPanier(produit.id_produit)
+      //this.postProduitDansPanier(produit.id_produit)
     }
 
   }
@@ -341,7 +381,7 @@ export class RoutingService {
   }
 
   deleteProduitListeSouhait(productId:number){
-    const url = this.baseURL+"/Clients/ConnexionStepTwo"+productId.toString(); // Replace with your actual backend API endpoint for deleting a product
+    const url = this.baseURL+"/Commandes/GetAllDetailed?EtatsCommandesID=5"+productId.toString(); // Replace with your actual backend API endpoint for deleting a product
 
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({

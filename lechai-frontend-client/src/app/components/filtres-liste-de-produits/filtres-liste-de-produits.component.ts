@@ -48,15 +48,7 @@ export class FiltresListeDeProduitsComponent {
       ],
       nom: 'Chandail du Chai',
       prix: 32.00,
-      grandeur:[
-        'S',
-        'M',
-        'L',
-        'XL'
-      ],
-      couleur: [
-        'Noir'
-      ],
+
       description: `shaaiuhfkjfiuaqhuhdadh Description du chandail sdhfoidshfsoihfsiodhiodhisf`,
       categorie: 2,
     },
@@ -224,9 +216,9 @@ export class FiltresListeDeProduitsComponent {
             this.produits.push(produit)
           }
         }
-
-        this.groupProductsByCategory();
         this.filteredProduit = this.produits;
+        this.groupProductsByCategory();
+
         this.filteredCategoryList = this.categorizedProducts;
         this.filteredCat=Object.keys(this.filteredCategoryList)
 
@@ -238,6 +230,7 @@ export class FiltresListeDeProduitsComponent {
         {
           this.footerPosition.setIsAbsolute(false)
         }
+        console.log(this.categories)
         console.log(this.produits)
         console.log(this.filteredProduit)
         console.log(this.filteredCategoryList)
@@ -288,14 +281,16 @@ export class FiltresListeDeProduitsComponent {
     this.routingService.getCategories().subscribe({
       next:(data:CategoriesAPI[])=>
       {
+
         this.categories = []
         for(let i = 0; i<data.length;i++)
         {
+
           let categorie:Categorie = {
-            id:data[i].ID,
+            id:i+1,
             nom:data[i].Nom
           }
-
+          console.log(data[i])
           this.categories.push(categorie)
         }
         this.getAllProduit();

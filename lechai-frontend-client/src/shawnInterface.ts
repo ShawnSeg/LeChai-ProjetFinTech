@@ -1,16 +1,11 @@
 export interface TypeFormat{
+  id:number
   nom:string,
   format:string[],
   format_selected:string
 }
 
-export interface TypeFormatAPI{
-  FormatID:number,
-  Format:String,
-  ProduitID:number,
-  Description:string,
-  TypeFormat:string
-}
+
 
 export interface Taxes{
   nom:string,
@@ -41,7 +36,15 @@ interface Image{
   ProduitID:number,
   Description:string
 }
-
+export interface TypeFormatAPI{
+  FormatID:number,
+  Format:String,
+  Description:string,
+  TypeFormat:string,
+  format_selected:string,
+  type_format_selected?:string
+  ProduitID?:number
+}
 
 export interface ProduitPanier{
   id_commande:number,
@@ -51,10 +54,12 @@ export interface ProduitPanier{
   description:string,
   quantite:number,
   quantite_restante:number,
-  format:TypeFormat[],
-  taxes:Taxes[],
+  format:TypeFormatAPI[],
+  taxes:AffectationsPPC[],
   cout:number,
-  image:String
+  image:Image[],
+  formatDispo:TypeFormatAPI[],
+  formatDict: { [key: string]: TypeFormatAPI[] };
 }
 
 export interface ProduitTestAPI{
@@ -78,15 +83,17 @@ export interface ProduitTestAPI{
 export interface ProduitParCommandeInterface{
   ID:number,
   ProduitID:number,
-  CommandeID:number,
   Produit:string,
   Description:string,
-  Cout:number,
-  FormatChoisiID:number,
-  FormatChoisiString:string,
-  FormatChoisi:string,
-  Quantite:number,
   QuantiteRestante:number,
+  CommandeID:number,
+  Quantite:number,
+
+  FormatChoisiID?:number,
+  FormatChoisiString?:string,
+  FormatChoisi?:string,
+  Cout:number,
+
   Taxes:AffectationsPPC[]
 
 }
@@ -133,7 +140,7 @@ export interface ClientInterface{
 
 export interface Commandes{
   id:number,
-
+  MontantBrut:number,
   produitsAchetes:ProduitPanier[],
   dateCreation:Date,
   etat:String,
@@ -146,21 +153,23 @@ export interface Commandes{
 }
 
 export interface CommandeInterface{
-  ID:number,
-  NumeroFacture:number,
+  id:number,
+  numero_facture:number,
   MontantBrut:number,
-  DateTransaction:string,
-  NumeroCiviqueLivraison:number,
-  RueLivraison:string,
-  CodePostal:string,
+  dateCreation:string,
+  no_civique:number,
+  rue:string,
+  code_postal:string,
   ClientID:number,
   Client:string,
   EtatsCommandesID:number,
-  EtatsCommandes:string,
+  etat:string,
   VilleID:number,
-  Ville:string,
+  ville:string,
   EmployeID:number,
-  Employe:number
+  Employe:string,
+  produitsAchetes: ProduitPanier[]
+  Province?:string
 }
 
 export interface CategoriesAPI{

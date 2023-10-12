@@ -5,16 +5,16 @@
     <h3>Filtres </h3>
 
     <div class="filtre">
-      <label for="">Produit acheté</label>
-      <input type="text" name="" id="" #filterProduitMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()" >
+      <label for="produitsFiltreMobile">Produit acheté</label>
+      <input type="text" name="produitsFiltreMobile" id="produitsFiltreMobile" #filterProduitMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()" >
     </div>
     <div class="filtre">
-      <label for=""># de commande</label>
-      <input type="number" name="" id="" #filterNumeroMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+      <label for="commandeFiltreMobile"># de commande</label>
+      <input type="number" name="commandeFiltreMobile" id="commandeFiltreMobile" #filterNumeroMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
     </div>
     <div class="filtre">
-      <label for="">État de la commande</label>
-      <select name="" id="" #filterEtatMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+      <label for="etatFiltreMobile">État de la commande</label>
+      <select name="etatFiltreMobile" id="etatFiltreMobile" #filterEtatMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
         <option value="tout">Tout</option>
         <option value="fini">Terminé</option>
         <option value="en_cours">En cours</option>
@@ -22,8 +22,8 @@
       </select>
     </div>
     <div class="filtre">
-      <label for="">Date Création</label>
-      <input type="date" name="" id="" #filterDateMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
+      <label for="dateFiltreMobile">Date Création</label>
+      <input type="date" name="dateFiltreMobile" id="dateFiltreMobile" #filterDateMobile (input)="applyChangeToFormWeb()" (input)="applyAllFilters()">
     </div>
 
 
@@ -51,16 +51,16 @@
       <h2>Filtres </h2>
 
       <div class="filtre">
-        <label for="">Produit acheté</label>
-        <input type="text" name="" id="" #filterProduit (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+        <label for="produitsFiltre">Produit acheté</label>
+        <input type="text" name="produitsFiltre" id="produitsFiltre" #filterProduit (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
       <div class="filtre">
-        <label for=""># de commande</label>
-        <input type="number" name="" id="" #filterNumero (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+        <label for="commandeFiltre"># de commande</label>
+        <input type="number" name="commandeFiltre" id="commandeFiltre" #filterNumero (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
       <div class="filtre">
-        <label for="">État de la commande</label>
-        <select name="" id="" #filterEtat (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+        <label for="etatFiltre">État de la commande</label>
+        <select name="etatFiltre" id="etatFiltre" #filterEtat (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
           <option value="tout" selected>Tout</option>
           <option value="fini">Terminé</option>
           <option value="en_cours">En cours</option>
@@ -68,8 +68,8 @@
         </select>
       </div>
       <div class="filtre">
-        <label for="">Date Création</label>
-        <input type="date" name="" id="" #filterDate (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
+        <label for="dateFiltre">Date Création</label>
+        <input type="date" name="dateFiltre" id="dateFiltre" #filterDate (input)="applyChangeToForMobile()" (input)="applyAllFilters()">
       </div>
 
 

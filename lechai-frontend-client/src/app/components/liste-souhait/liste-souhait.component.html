@@ -6,7 +6,7 @@
   <hr class="ligneWeb">
   <hr class="ligneMobile">
   <span *ngFor="let produit of produits$">
-    <app-produit-liste-souhait [produit]="produit" (removeProduct)="removeProduct($event)" (addToPanier)="ajoutProduitPanier($event)"></app-produit-liste-souhait>
+    <app-produit-liste-souhait [produit]="produit" (removeProduct)="removeProduct($event)" ></app-produit-liste-souhait>
   </span>
 
   <button (click)="ajouterListePanier()">Ajouter la liste de souhait au panier</button>

@@ -1,4 +1,4 @@
-import { TypeFormat } from "./shawnInterface"
+import { TypeFormatAPI } from "./shawnInterface"
 interface socialLinks
 {
   name:string,
@@ -25,6 +25,7 @@ export interface Collaborateurs{
   nom:string,
   compagnie:number,
   description:string,
+  email:string,
   socialLinks:socialLinks[],
 }
 
@@ -33,8 +34,11 @@ export interface CollaborateursAPI{
   Nom:string,
   Prenom:string,
   Telephone:string,
+  Email:string,
+  Image:string,
   CompagnieID:number,
-  Compagnie:string
+  Compagnie:string,
+  Description:string
 }
 
 export interface Carousel{
@@ -69,8 +73,7 @@ export interface Produit{
   icon?: string,
   prix: number,
   quantite?: number,
-  grandeur?:string[],
-  couleur?: string[],
+  format?:TypeFormatAPI[],
   ingrediant?:string,
   description?: string,
   categorie: number,

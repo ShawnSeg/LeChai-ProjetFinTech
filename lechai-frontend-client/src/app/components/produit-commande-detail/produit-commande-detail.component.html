@@ -4,12 +4,13 @@
     <div class="infosProduit">
       <h3><a routerLink="/detailsProduit/{{produit?.id_produit}}">{{produit?.nom}}</a></h3>
       <aside class="flex">
-        <label for="">Description:</label>
-        <p>{{produit?.description}}</p>
+        <label for="">Quantité:</label>
+        <p>{{produit?.quantite}}</p>
       </aside>
       <aside *ngFor="let typeFormat of produit?.format">
+
         <aside class="flex">
-          <label for="">{{typeFormat.nom}}:</label>
+          <label for="">{{typeFormat.TypeFormat}}:</label>
           <p>{{typeFormat.format_selected}}</p>
         </aside>
       </aside>

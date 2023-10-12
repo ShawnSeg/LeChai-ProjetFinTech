@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 import { ProduitPanierComponent } from '../produit-panier/produit-panier.component';
-import { ProduitPanier } from 'src/shawnInterface';
-import { Observable } from 'rxjs';
+import { CommandeInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
+import { Observable, catchError, concat, concatMap, filter, forkJoin, from, map, mergeMap, of, reduce } from 'rxjs';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -17,11 +17,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class PanierComponent {
   public produits$?: ProduitPanier[] =[
-    {id_commande:1, id_produit:1, id:1, nom:"patate", description:"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:2, id:2, nom:"tomate", description:"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:3, id:3, nom:"Chandail", description:"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:4, id:4, nom:"Chai", description:"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-  ];
+   ];
 
   public coutAvantTaxes =0;
   public coutTotal = 0;
@@ -38,13 +34,13 @@ export class PanierComponent {
   }
 
   ngOnInit(){
-    this.getProduitsPanier();
-    this.footerPosCheck()
-    this.calculateTotalCost();
+    this.getProduitPanier();
+
+
   }
 
   footerPosCheck(){
-    if (this.produits$ && this.produits$.length < 2) {
+    if (this.produits$ && this.produits$.length < 1) {
       this.footerPosition.setIsAbsolute(true)
     }
     else
@@ -63,23 +59,23 @@ export class PanierComponent {
       cost += (produit.cout*produit.quantite);
       for(const taxe of produit.taxes)
       {
-        taxes+=taxe.montant;
-        if(taxe.nom=="TPS")
+        taxes+=taxe.Montant*produit.quantite*produit.cout;
+        if(taxe.Description=="Taxes TPS")
         {
-          totalTPS +=taxe.montant*produit.quantite
+          totalTPS +=taxe.Montant*produit.quantite*produit.cout
         }
-        if(taxe.nom=="TVQ")
+        if(taxe.Description=="Taxes TVQ")
         {
-          totalTVQ+=taxe.montant*produit.quantite
+          totalTVQ+=taxe.Montant*produit.quantite*produit.cout
         }
       }
       for (const autreTaxe of produit.taxes) {
-        if(autreTaxe.nom !="TVQ" && autreTaxe.nom!="TPS")
+        if(autreTaxe.Description !="Taxes TVQ" && autreTaxe.Description!="Taxes TPS")
         // Aggregate the total amount for each unique tax name
-        if (!this.aggregatedTaxes[autreTaxe.nom]) {
-          this.aggregatedTaxes[autreTaxe.nom] = autreTaxe.montant*produit.quantite;
+        if (!this.aggregatedTaxes[autreTaxe.Description]) {
+          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite*produit.quantite;
         } else {
-          this.aggregatedTaxes[autreTaxe.nom] += autreTaxe.montant*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite*produit.quantite;
         }
       }
     }
@@ -129,7 +125,7 @@ export class PanierComponent {
 
     if (product) {
       // Find the format type within the product
-      const formatType = product.format.find((ft) => ft.nom === eventData.formatType);
+      const formatType = product.format.find((ft) => ft.Format === eventData.formatType);
 
       if (formatType) {
         // Update the selected format for the format type
@@ -194,8 +190,72 @@ export class PanierComponent {
   }
 
 
-  getProduitsPanier(){
-    this.routingService.getProduitsPanier().subscribe(produits=>this.produits$ = produits)
+
+
+
+  getProduitPanier() {
+    this.routingService.getProduitsPanier().subscribe({
+      next: (data: CommandeInterface) => {
+        this.routingService.getProduitParCommandes(data.id)
+          .pipe(
+            concatMap((produits: ProduitPanier[]) => {
+              const observables = produits.map(produit => {
+                return this.routingService.getFormatsProduits(produit.id_produit).pipe(
+                  map((formats: TypeFormatAPI[]) => {
+                    // Ensure that each product has its own formatDispo array
+                    produit.formatDispo = formats; // Use spread operator to clone the array
+                    return produit;
+                  })
+                );
+              });
+
+              // Concatenate the observables to ensure sequential execution
+              return concat(...observables);
+            }),
+            reduce((acc: Array<ProduitPanier>, produit: ProduitPanier) => [...acc, produit], []) // Collect emitted values into an array
+          )
+          .subscribe((produits: ProduitPanier[]) => {
+            this.produits$ = produits; // Assign the array of produits to produits$
+
+
+            for(let i = 0; i<this.produits$.length;i++)
+            {
+              for(let j = 0; j<this.produits$[i].format.length;j++)
+              {
+                for(let k = 0; k<this.produits$[i].formatDispo.length;k++)
+                {
+                  this.produits$[i].formatDispo[k].format_selected=""
+                  if(this.produits$[i].format[j].TypeFormat==this.produits$[i].formatDispo[k].TypeFormat)
+                  {
+                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].format_selected
+                  }
+                }
+              }
+            }
+            for (let i = 0; i < this.produits$.length; i++) {
+              this.produits$[i].formatDict = {}; // Initialize formatDict as an empty object
+              for (let j = 0; j < this.produits$[i].formatDispo.length; j++) {
+
+
+                const typeFormat = this.produits$[i].formatDispo[j].TypeFormat;
+                if (this.produits$[i].formatDict.hasOwnProperty(typeFormat)) {
+                  this.produits$[i].formatDict[typeFormat].push(this.produits$[i].formatDispo[j]);
+                } else {
+                  this.produits$[i].formatDict[typeFormat] = [this.produits$[i].formatDispo[j]];
+                }
+              }
+            }
+
+            console.log(this.produits$);
+            this.calculateTotalCost()
+            this.footerPosCheck()
+          });
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
   }
+
 
 }

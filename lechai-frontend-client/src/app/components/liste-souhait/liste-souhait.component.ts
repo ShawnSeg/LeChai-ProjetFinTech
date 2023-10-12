@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ProduitPanier } from 'src/shawnInterface';
+import { CommandeInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { concatMap, map, concat, reduce } from 'rxjs';
 
 @Component({
   selector: 'app-liste-souhait',
@@ -11,12 +12,7 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
   styleUrls: ['./liste-souhait.component.scss']
 })
 export class ListeSouhaitComponent {
-  public produits$?: ProduitPanier[] =[
-    {id_commande:1, id_produit:1, id:1, nom:"patate", "description":"C'est un légume", quantite:2, quantite_restante:10, format:[{nom:"Couleur", format:["Rouge", "Bleu"], format_selected:"Bleu"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}, {nom:"Bruh", montant:30/2}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:2, id:2, nom:"tomate", "description":"C'est un fruit", quantite:1, quantite_restante:10,format:[],taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:3, id:3, nom:"Chandail", "description":"En cotton", quantite:1, quantite_restante:10,format:[{nom:"Grandeur", format:["XS", "S", "M", "L", "XL"], format_selected:"M"}, {nom:"Couleur", format:["Rouge", "Noir"], format_selected:"Noir"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-    {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
-  ];
+  public produits$?: ProduitPanier[] =[];
 
   public length = this.produits$?.length;
 
@@ -70,29 +66,76 @@ export class ListeSouhaitComponent {
     }
   }
 
-  ajoutProduitPanier(productId:number):void{
-    this.routingService.postProduitDansPanier(productId).subscribe(
-      (data: any) => {
-        // Handle successful response here
-        this.toastService.showToast("success", "Le produit a été ajouté au panier avec succès!", "bottom-center", 3000)
 
-      },
-      (error: HttpErrorResponse) => {
-        // Handle error response here
-        this.toastService.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
-        console.error('Status code:', error.status);
-      }
-    );
-
-
-  }
 
   ajouterListePanier(){
     this.routingService.postListetDansPanier(this.produits$!);
     this.toastService.showToast("success", "La liste de souhait a été ajouté au panier avec succès!", "bottom-center", 3000)
   }
 
+
+
+
+
+
   getListeSouhait(){
-    this.routingService.getProduitsListeSouhait().subscribe(listeSouhait=>this.produits$=listeSouhait);
+    this.routingService.getListeSouhait().subscribe({
+      next: (data: CommandeInterface) => {
+        this.routingService.getProduitParCommandes(data.id)
+          .pipe(
+            concatMap((produits: ProduitPanier[]) => {
+              const observables = produits.map(produit => {
+                return this.routingService.getFormatsProduits(produit.id_produit).pipe(
+                  map((formats: TypeFormatAPI[]) => {
+                    // Ensure that each product has its own formatDispo array
+                    produit.formatDispo = formats; // Use spread operator to clone the array
+                    return produit;
+                  })
+                );
+              });
+
+              // Concatenate the observables to ensure sequential execution
+              return concat(...observables);
+            }),
+            reduce((acc: Array<ProduitPanier>, produit: ProduitPanier) => [...acc, produit], []) // Collect emitted values into an array
+          )
+          .subscribe((produits: ProduitPanier[]) => {
+            this.produits$ = produits; // Assign the array of produits to produits$
+
+            for(let i = 0; i<this.produits$.length;i++)
+            {
+              for(let j = 0; j<this.produits$[i].format.length;j++)
+              {
+                for(let k = 0; k<this.produits$[i].formatDispo.length;k++)
+                {
+                  this.produits$[i].formatDispo[k].format_selected=""
+                  if(this.produits$[i].format[j].TypeFormat==this.produits$[i].formatDispo[k].TypeFormat)
+                  {
+                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].format_selected
+                  }
+                }
+              }
+            }
+            for (let i = 0; i < this.produits$.length; i++) {
+              this.produits$[i].formatDict = {}; // Initialize formatDict as an empty object
+              for (let j = 0; j < this.produits$[i].formatDispo.length; j++) {
+
+
+                const typeFormat = this.produits$[i].formatDispo[j].TypeFormat;
+                if (this.produits$[i].formatDict.hasOwnProperty(typeFormat)) {
+                  this.produits$[i].formatDict[typeFormat].push(this.produits$[i].formatDispo[j]);
+                } else {
+                  this.produits$[i].formatDict[typeFormat] = [this.produits$[i].formatDispo[j]];
+                }
+              }
+            }
+            console.log(this.produits$);
+
+          });
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
   }
 }

@@ -3,21 +3,19 @@
     <img src="" alt="image">
     <div>
       <a routerLink="/detailsProduit/{{produit?.id_produit}}"><h3>{{produit?.nom}}</h3></a>
-      <aside id="description" class="flex">
-        <label for="">Description:</label>
-        <p>{{produit?.description}}</p>
-      </aside>
+
 
 
       <aside class="flex">
         <label for="">Quantité:</label>
-        <input type="number" class="selectQuantite" value="{{produit?.quantite_restante}}" (change)="changeProductQuantity()"  #quantiteProduit>
+        <input type="number" class="selectQuantite" value="{{produit?.quantite}}" (change)="changeProductQuantity()"  #quantiteProduit>
       </aside>
-      <aside class="flex" *ngFor="let formatType of produit?.format">
-        <label #formatTypeLabel for="">{{formatType.nom}}:</label>
-        <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected  (change)="changeProductFormatSelected(changeFormatSelected.value, formatTypeLabel.innerText)">
-          <ng-container *ngFor="let format of formatType.format">
-            <option [value]="format"  [selected]="format === formatType.format_selected">{{format}}</option>
+
+      <aside class="flex" *ngFor="let formatType of produit?.formatDict|keyvalue">
+        <label #formatTypeLabel for="">{{formatType.key}}:</label>
+        <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected  (change)="changeProductFormatSelected(changeFormatSelected.value, formatType.key)">
+          <ng-container *ngFor="let format of formatType.value">
+            <option [value]="format.Format"  >{{format.Format}}</option>
           </ng-container>
         </select>
       </aside>

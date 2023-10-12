@@ -5,6 +5,8 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CommandeInterface } from 'src/shawnInterface';
 import { Produit } from 'src/ameInterfaces';
+import { concatMap, mergeMap, switchMap, filter, map} from 'rxjs/operators';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-liste-commandes',
@@ -38,13 +40,13 @@ export class ListeCommandesComponent {
                                         {id_commande:1, id_produit:4, id:4, nom:"Chai", "description":"C'est du thé", quantite:1, quantite_restante:10,format:[{nom:"Quantite en g", format:["20", "30", "40"], format_selected:"20"}], taxes:[{nom:"TPS", montant:30*7/100},{nom:"TVQ", montant:30*8/100}], cout:30.0, image:"test.png"},
                                       ], dateCreation:new Date("2023-09-28"), etat:"en_cours", no_civique:84, rue:"chemin de la Topaze", ville:"Ange-Gardien", province:"Québec", code_postal:"J8L0G1"}]
 */
- public listeCommande:Commandes[] = []
+ public listeCommande:CommandeInterface[] = []
 
   public filtreProduit: String = '';
   public filtreNumero:number = 0;
   public filtreEtat:String = "";
   public filtreDate:Date = new Date();
-  public filteredCommandes?: Commandes[];
+  public filteredCommandes?: CommandeInterface[];
 
   constructor(private routingService: RoutingService, private footerPosition:FooterPositionService){
 
@@ -91,7 +93,7 @@ export class ListeCommandesComponent {
         // Perform filtering logic here
         const filteredCommandes = this.filteredCommandes?.filter((commande) => {
           // Check if the `dateCreation` of the `Commande` matches the selected date
-          return this.isSameDate(commande.dateCreation, selectedDate);
+          return this.isSameDate(new Date(commande.dateCreation), selectedDate);
         });
 
         // Update the list with filtered commandes
@@ -217,81 +219,58 @@ export class ListeCommandesComponent {
   }
 
   getListeCommande(){
-    this.routingService.getListeCommandes().subscribe({
-      next: (data: CommandeInterface[]) => {
-        // Handle successful response here
-        alert(data.length)
+    this.listeCommande = [];
 
-
-
-        for(let i = 0; i<data.length;i++)
-        {
-          let produitsParCommande:ProduitPanier[] = []
-          if(data[i].EtatsCommandes!="panier" && data[i].EtatsCommandes!='souhait')
-          {
-            console.log(data[i].ID)
-            this.routingService.getProduitParCommandes(data[i].ID).subscribe({
-              next:(data2:ProduitParCommandeInterface[])=>
-              {
-                  let taxes:Taxes[] = []
-                  for(let j = 0; i<data2[j].Taxes.length;i++)
-                  {
-                    let taxe:Taxes = {
-                      nom:data2[i].Taxes[j].Description,
-                      montant:data2[i].Taxes[j].Montant
-                    }
-                    taxes.push(taxe)
+    this.routingService.getListeCommandes()
+      .pipe(
+        mergeMap((data: CommandeInterface[]) => {
+          return from(data).pipe(
+            // Filter out unwanted commands (if needed)
+            filter(commande => commande.EtatsCommandesID !== 4 && commande.EtatsCommandesID !== 5),
+            concatMap((commande: CommandeInterface) => {
+              return this.routingService.getProduitParCommandes(commande.id).pipe(
+                map((data2: ProduitPanier[]) => {
+                  commande.produitsAchetes = data2;
+                  commande.MontantBrut = 0;
+                  for (let j = 0; j < commande.produitsAchetes.length; j++) {
+                    commande.MontantBrut += commande.produitsAchetes[j].cout * commande.produitsAchetes[j].quantite;
                   }
-                  console.log(data2[i])
-
-                  let produits:ProduitPanier={
-                    id_commande:data2[i].CommandeID,
-                    id_produit:data2[i].ProduitID,
-                    nom:data2[i].Produit,
-                    description:data2[i].Description,
-                    id:data2[i].ID,
-                    quantite:data2[i].Quantite,
-                    quantite_restante:data2[i].QuantiteRestante,
-                    cout:data2[i].Cout,
-                    format:[{nom:"grandeur", format:["XS", "S"], format_selected:"XS"}],
-                    taxes:taxes,
-                    image:"test.com"
-                  }
-                  produitsParCommande.push(produits)
-
-
-                  let commande:Commandes = {
-                    id:data[i].ID,
-                    code_postal: data[i].CodePostal,
-                    dateCreation : new Date(data[i].DateTransaction.slice(0, data[i].DateTransaction.indexOf('T'))),
-                    etat : data[i].EtatsCommandes,
-                    no_civique : data[i].NumeroCiviqueLivraison,
-                    produitsAchetes:produitsParCommande,
-                    rue : data[i].RueLivraison,
-                    ville : data[i].Ville,
-                    numero_facture : data[i].NumeroFacture
-                  }
-                  this.listeCommande.push(commande)
-
-
-              },
-              error:(error:HttpErrorResponse)=>{
-                console.log(error.status)
-              }
-
-          })
-        }
-
-        }
-
+                  return commande;
+                })
+              );
+            })
+          );
+        })
+      )
+      .subscribe((commande: CommandeInterface) => {
+        // You will receive each commande with produitsAchetes set correctly.
+        this.listeCommande.push(commande);
       },
-      error: (error: HttpErrorResponse) => {
+      (error: HttpErrorResponse) => {
         // Handle error response here
-        alert("error")
+        alert("error");
         console.error('Status code:', error.status);
+      });
+  }
 
+  getProduitParCommande(commandes:CommandeInterface[])
+  {
+
+
+
+
+  }
+
+  getProduitParCommande2(idCommande:number):ProduitPanier[]
+  {
+    let produitParCommande:ProduitPanier[] = []
+    this.routingService.getProduitParCommandes(idCommande).subscribe({
+      next:(data:ProduitPanier[])=>{
+        console.log(data)
+        return data
       }
-    });
+    })
+    return produitParCommande
   }
 }
 
