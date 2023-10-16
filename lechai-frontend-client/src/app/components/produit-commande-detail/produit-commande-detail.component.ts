@@ -8,4 +8,12 @@ import { ProduitPanier } from 'src/shawnInterface';
 })
 export class ProduitCommandeDetailComponent {
   @Input() produit?:ProduitPanier
+
+
+  image:string = ""
+
+  ngOnInit()
+  {
+    this.image = this.produit?.Images[0].URL||""
+  }
 }

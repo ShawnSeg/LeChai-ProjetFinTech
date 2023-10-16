@@ -1,3 +1,7 @@
+// COLORS
+$formCouleur: rgb(255,250,234);
+
+
 section{
   display: flex;
   justify-content: center;
@@ -12,7 +16,7 @@ form{
   position: relative;
   width: auto;
   height: auto;
-  background: rgb(255,250,234);
+  background: $formCouleur;
   border: none;
   border-radius: 20px;
   padding: 4em 2em 4em 2em;
@@ -78,7 +82,7 @@ textarea{
   position: relative;
   padding: 4em;
   margin: 2em;
-  background-color:  rgb(255,250,234);
+  background-color:  $formCouleur;
   border-radius: 20px;
 }
 

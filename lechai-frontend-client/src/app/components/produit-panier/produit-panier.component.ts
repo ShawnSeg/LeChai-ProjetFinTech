@@ -9,8 +9,9 @@ export interface QuantityChangeEvent {
 
 export interface SelectedFormatChangeEvent {
   productId: number;
-  formatType: String;
-  selected_format:String;
+
+  selected_format:number;
+  old_format:number
 }
 
 @Component({
@@ -33,6 +34,11 @@ export class ProduitPanierComponent {
   @ViewChild('typeFormat', { static: true }) formatTypeLabel?: ElementRef;
 
 
+  image:string = ""
+  ngOnInit()
+  {
+    this.image = this.produit?.Images[0].URL||""
+  }
   erase(): void {
     const produitaffiche = this.produitaffiche?.nativeElement as HTMLElement;
     if (confirm("Voulez-vous vraiment enlever ce produit du panier?")) {
@@ -49,18 +55,27 @@ export class ProduitPanierComponent {
 
     this.changeQuantity.emit({ productId: this.produit?.id || 0, quantity: quantiteNew || 0 }); // Pass the product ID to the parent
   }
-  changeProductFormatSelected(value:String, format:String)
+  changeProductFormatSelected(value:String, key:string,)
   {
     alert(value)
-    alert(format)
+
     const formatSelected = this.formatSelected?.nativeElement as HTMLSelectElement;
     const typeFormat = this.formatTypeLabel?.nativeElement as HTMLElement;
+    let oldFormat:number = 0;
 
+    for(let i = 0; i<this.produit?.formatDict[key].length!;i++)
+    {
+      if(this.produit?.formatDict[key][i].format_selected == this.produit?.formatDict[key][i].Format)
+      {
+        oldFormat = this.produit?.formatDict[key][i].FormatID||0
 
+      }
+    }
+    console.log(this.produit?.id)
+    console.log(value)
+    console.log(oldFormat)
 
-
-
-    this.changeFormatSelected.emit({ productId: this.produit?.id || 0, formatType: format, selected_format:value }); // Pass the product ID to the parent
+    this.changeFormatSelected.emit({ productId: this.produit?.id || 0, selected_format: Number(value), old_format:oldFormat}); // Pass the product ID to the parent
   }
 
 }

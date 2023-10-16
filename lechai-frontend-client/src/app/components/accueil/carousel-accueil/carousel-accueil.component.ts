@@ -9,20 +9,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./carousel-accueil.component.scss']
 })
 export class CarouselAccueilComponent implements OnInit {
-  images: Carousel[] = [
-    {
-      id:1,
-      image:'carousel1.png'
-    },
-    {
-      id:1,
-      image:'carousel2.png'
-    },
-    {
-      id:1,
-      image:'carousel3.png'
-    },
-  ];
+  images: Carousel[] = [];
   currentIndex: number = 0;
   intervalId: any;
   timeInterval: number = 0;
@@ -86,6 +73,7 @@ export class CarouselAccueilComponent implements OnInit {
     this.routingService.getCarousel().subscribe({
       next: (data: Carousel[]) => {
         this.images=data;
+        console.log('../assets/image/img temp/' + this.images[0].Lien)
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here

@@ -35,7 +35,7 @@ export class PanierComponent {
 
   ngOnInit(){
     this.getProduitPanier();
-
+    this.routingService.callRefresh();
 
   }
 
@@ -56,26 +56,26 @@ export class PanierComponent {
     let totalTPS = 0;
     let totalTVQ = 0;
     for (const produit of this.produits$!) {
-      cost += (produit.cout*produit.quantite);
-      for(const taxe of produit.taxes)
+      cost += (produit.coutProduit*produit.quantite);
+      for(const taxe of produit.TaxesProduit)
       {
-        taxes+=taxe.Montant*produit.quantite*produit.cout;
+        taxes+=taxe.Montant*produit.quantite*produit.coutProduit;
         if(taxe.Description=="Taxes TPS")
         {
-          totalTPS +=taxe.Montant*produit.quantite*produit.cout
+          totalTPS +=taxe.Montant*produit.quantite*produit.coutProduit
         }
         if(taxe.Description=="Taxes TVQ")
         {
-          totalTVQ+=taxe.Montant*produit.quantite*produit.cout
+          totalTVQ+=taxe.Montant*produit.quantite*produit.coutProduit
         }
       }
-      for (const autreTaxe of produit.taxes) {
+      for (const autreTaxe of produit.TaxesProduit) {
         if(autreTaxe.Description !="Taxes TVQ" && autreTaxe.Description!="Taxes TPS")
         // Aggregate the total amount for each unique tax name
         if (!this.aggregatedTaxes[autreTaxe.Description]) {
-          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.coutProduit*produit.quantite;
         } else {
-          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.coutProduit*produit.quantite;
         }
       }
     }
@@ -118,22 +118,22 @@ export class PanierComponent {
   }
 
 
-  formatChange(eventData:{productId:number, formatType:String, selected_format:String})
+  formatChange(eventData:{productId:number, selected_format:number, old_format:number})
   {
-    alert(eventData.formatType+""+eventData.selected_format)
+
     const product = this.produits$?.find((p) => p.id === eventData.productId);
 
     if (product) {
       // Find the format type within the product
-      const formatType = product.format.find((ft) => ft.Format === eventData.formatType);
 
-      if (formatType) {
+
+
         // Update the selected format for the format type
         //formatType.format_selected = eventData.selected_format;
 
         // Recalculate the total cost
         this.calculateTotalCost();
-        this.routingService.updateChangementFormatChoisiProduitPanier(eventData.productId,eventData.selected_format, eventData.formatType).subscribe(
+        this.routingService.updateChangementFormatChoisiProduitPanier(eventData.productId,eventData.selected_format, eventData.old_format).subscribe(
           (data: any) => {
             // Handle successful response here
 
@@ -145,7 +145,7 @@ export class PanierComponent {
             console.error('Status code:', error.status);
           }
         );;
-      }
+
     }
 
   }
@@ -160,7 +160,7 @@ export class PanierComponent {
     if (index !== -1&& typeof index === 'number') {
 
       this.calculateTotalCost(); // Recalculate the total cost
-      this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+
 
       this.footerPosCheck();
       this.routingService.deleteProduitDePanier(productId).subscribe(
@@ -195,8 +195,8 @@ export class PanierComponent {
 
   getProduitPanier() {
     this.routingService.getProduitsPanier().subscribe({
-      next: (data: CommandeInterface) => {
-        this.routingService.getProduitParCommandes(data.id)
+      next: (data: CommandeInterface[]) => {
+        this.routingService.getProduitParCommandes(data[0].id)
           .pipe(
             concatMap((produits: ProduitPanier[]) => {
               const observables = produits.map(produit => {
@@ -227,7 +227,7 @@ export class PanierComponent {
                   this.produits$[i].formatDispo[k].format_selected=""
                   if(this.produits$[i].format[j].TypeFormat==this.produits$[i].formatDispo[k].TypeFormat)
                   {
-                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].format_selected
+                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].Format
                   }
                 }
               }

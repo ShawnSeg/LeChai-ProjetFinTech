@@ -26,7 +26,14 @@ export interface Collaborateurs{
   compagnie:number,
   description:string,
   email:string,
-  socialLinks:socialLinks[],
+  socialLinks:Reseau[],
+}
+
+export interface Reseau{
+  CollaborateurID:number,
+  ReseauxSociauxID:number,
+  ReseauxSociauxNom:string,
+  Liens:string
 }
 
 export interface CollaborateursAPI{
@@ -39,11 +46,15 @@ export interface CollaborateursAPI{
   CompagnieID:number,
   Compagnie:string,
   Description:string
+  Reseau:Reseau[]
 }
 
 export interface Carousel{
-  id:number,
-  image:string,
+  ID:number,
+  Lien:string,
+  Nom:string,
+  TypeMediaID:number,
+  TypeMedia:string
 }
 
 export interface HistoireAccueil{

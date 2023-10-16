@@ -1,6 +1,6 @@
 <div ngmodel #produitaffiche class="divProduit">
   <aside class="asideProduit">
-    <img src="" alt="image">
+    <img [src]="'../assets/image/'+image+'.png'" alt="image">
     <div>
       <a routerLink="/detailsProduit/{{produit?.id_produit}}"><h3>{{produit?.nom}}</h3></a>
 
@@ -15,7 +15,7 @@
         <label #formatTypeLabel for="">{{formatType.key}}:</label>
         <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected  (change)="changeProductFormatSelected(changeFormatSelected.value, formatType.key)">
           <ng-container *ngFor="let format of formatType.value">
-            <option [value]="format.Format"  >{{format.Format}}</option>
+            <option [value]="format.FormatID" [selected]="format.Format===format.format_selected" >{{format.Format}}</option>
           </ng-container>
         </select>
       </aside>
@@ -25,7 +25,7 @@
   </aside>
   <aside class="flex center max-width" *ngIf="produit">
     <h2 id="cout">Coût:</h2>
-    <h2>{{ produit.cout * (produit.quantite || 0) |number:"1.2-2"}}$</h2>
+    <h2>{{ produit.coutProduit * (produit.quantite || 0) |number:"1.2-2"}}$</h2>
   </aside>
 </div>
 <hr>

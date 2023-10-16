@@ -1,26 +1,26 @@
 <div ngmodel #produitaffiche class="divProduit">
 
     <aside class="asideProduit">
-      <img src="{{produit?.image}}" alt="image">
+      <img [src]="'../assets/image/'+image+'.png'" alt="image">
       <div class="detailProduit">
         <a routerLink="/detailsProduit/{{produit?.id_produit}}"><h3>{{produit?.nom}}</h3></a>
         <aside class="flex">
-          <aside class="flex" *ngFor="let formatType of produit?.formatDict|keyvalue">
+          <aside class="flex formatContainer" *ngFor="let formatType of produit?.formatDict|keyvalue">
             <label #formatTypeLabel for="">{{formatType.key}}:</label>
-            <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected (change)="changeProductFormatSelected(changeFormatSelected.value, formatType.key)" [(ngModel)]="selectedFormats[formatType.key]" >
+            <select name="selectGrandeur" class="selectQuantite" #changeFormatSelected (change)="changeProductFormatSelected(changeFormatSelected.value, formatType.key)"  >
               <ng-container *ngFor="let format of formatType.value">
-                <option [value]="format.Format" [selected]="format.Format===format.format_selected" >{{format.Format}}</option>
+                <option [value]="format.FormatID"  [selected]="format.Format===format.format_selected" >{{format.Format}}</option>
               </ng-container>
             </select>
           </aside>
         </aside>
-        <aside class="flex">
-          <label for="quantite">Quantité</label>
-          <input type="number" name="quantite" id="quantite" value="{{produit?.quantite}}" (change)="changeProductQuantity()"  #quantiteProduit [(ngModel)]="selectedQuantite">
+        <aside class="flex formatContainer">
+          <label for="quantite">Quantité:</label>
+          <input type="number" name="quantite" id="quantite"  (change)="changeProductQuantity()"  #quantiteProduit [(ngModel)]="selectedQuantite">
         </aside>
         <aside class="flex ">
           <h3 id="cout" >Coût:</h3>
-          <h3>{{produit?.cout|number:'1.2-2'}}$</h3>
+          <h3>{{ (produit?.coutProduit || 1) * (produit?.quantite || 1) | number:'1.2-2' }}$</h3>
         </aside>
 
       </div>

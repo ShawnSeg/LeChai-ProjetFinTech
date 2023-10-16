@@ -38,6 +38,8 @@ export class DetailsProduitComponent implements OnInit{
       categorie: 1,
     };
 
+
+
   produitAafficher: Produit | undefined;
   currentIndex: number = 0;
   isWish: boolean = false;
@@ -50,6 +52,7 @@ export class DetailsProduitComponent implements OnInit{
 
   ngOnInit() {
     // Récupérer le paramètre d'URL 'id'
+    this.formats = {};
     this.route.params.subscribe(params => {
       const productId = +params['id']; // Convertir en nombre si nécessaire
 
@@ -68,7 +71,7 @@ export class DetailsProduitComponent implements OnInit{
 
       this.getProduit(params['id'])
     });
-
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
 
   }
@@ -125,18 +128,27 @@ export class DetailsProduitComponent implements OnInit{
     {
       formatsChoisi.push(this.selectedFormats[key])
     }
-    this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
-      next:(data: any) => {
-        // Handle successful response here
-        this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
+    console.log(this.produits.id)
+    if(this.produits&& this.selectedQuantite>this.produits?.quantite!)
+    {
+      this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
+        next:(data: any) => {
+          // Handle successful response here
+          this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
 
-      },
-      error:(error: HttpErrorResponse) => {
-        // Handle error response here
-        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
-        console.error('Status code:', error.status);
-      }
-    });
+        },
+        error:(error: HttpErrorResponse) => {
+          // Handle error response here
+          this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+          console.error('Status code:', error.status);
+        }
+      });
+    }
+    else
+    {
+      this.toast.showToast("error", "Veuillez choisir une quantité plus petite ou égale à la quantité en inventaire", "bottom-center",4000)
+    }
+
   }
 
   getProduit(id:number){
@@ -163,6 +175,8 @@ export class DetailsProduitComponent implements OnInit{
 
         }
         this.produitAafficher = this.produits;
+
+        console.log(this.produitAafficher)
         for(let i = 0; i<this.produits.format!.length;i++)
         {
           if(this.formats.hasOwnProperty(this.produits.format![i].TypeFormat))
@@ -174,6 +188,10 @@ export class DetailsProduitComponent implements OnInit{
             this.formats[this.produits.format![i].TypeFormat]=[(this.produits.format![i])]
           }
         }
+
+        for (const key of Object.keys(this.formats)) {
+          this.selectedFormats[key] = this.formats[key][0].FormatID;
+      }
         console.log(this.formats)
 
       },

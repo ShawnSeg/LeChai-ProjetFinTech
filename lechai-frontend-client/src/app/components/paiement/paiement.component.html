@@ -20,25 +20,13 @@
       <label for="">Rue:</label>
       <input placeholder="Ex:Rue King-Est" type="text" [(ngModel)]="rue">
     </aside>
+
     <aside class="livraison">
       <label for="">Ville:</label>
-      <input placeholder="Ex:Sherbrooke" type="text" [(ngModel)]="ville">
-    </aside>
-    <aside class="livraison">
-      <label for="">Province/Territoire:</label>
-      <select name="" id="" [(ngModel)]="province">
-        <option value="alberta">Alberta</option>
-        <option value="cb">Colombie-Britannique</option>
-        <option value="ipe">Île-du-Prince-Édouard</option>
-        <option value="manitoba">Manitoba</option>
-        <option value="nb">Nouveau-Brunswick</option>
-        <option value="ne">Nouvelle-Écosse</option>
-        <option value="nunavut">Nunavut</option>
-        <option value="ontario">Ontario</option>
-        <option value="quebec" selected>Québec</option>
-        <option value="sk">Saskatchewan</option>
-        <option value="tno">Territoires du Nord-Ouest</option>
-        <option value="yukon">Yukon</option>
+      <select name="" id="" #villeChoisie>
+        <ng-container *ngFor="let ville of villeDeservie | keyvalue">
+          <option [value]="ville.key">{{ville.value}}</option>
+        </ng-container>
       </select>
     </aside>
     <aside class="livraison">
@@ -56,7 +44,7 @@
   <h4 class="marginTop">Article(s) expédié(s)</h4>
   <hr>
   <span  *ngFor="let produit of produits$" class="livraison">
-    <p>{{produit.nom}} X{{produit.quantite}}: {{produit.cout*produit.quantite|number:'1.2-2'}}$</p>
+    <p>{{produit.nom}} X{{produit.quantite}}: {{produit.coutProduit*produit.quantite|number:'1.2-2'}}$</p>
 
     <!--<aside class="flex" *ngFor="let format of produit?.format">
     <p class="format">-{{format.nom}}:{{format.format_selected}}</p>

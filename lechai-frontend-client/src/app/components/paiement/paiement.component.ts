@@ -1,12 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import {loadStripe} from '@stripe/stripe-js';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
-import { ProduitPanier } from 'src/shawnInterface';
+import { CommandeInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
 import { AdresseLivraison } from 'src/shawnInterface';
 import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { concatMap, map, concat, reduce } from 'rxjs';
+
+
+interface KeyValue<K, V> {
+  key: K
+  value: V
+}
 
 @Component({
   selector: 'app-paiement',
@@ -15,14 +22,16 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 })
 export class PaiementComponent {
 
+  @ViewChild('villeChoisie', { static: true }) villeChoisie?: ElementRef;
+
   public produits$?: ProduitPanier[] =[];
 
   public prenom:String = ""
   public nom:String = ""
   public no_civique:String = ""
   public rue:String = ""
-  public ville:String = ""
-  public province:String = ""
+  public ville:KeyValue<string, string> = {key:"test", value:"test"};
+
   public code_postal:String = ""
   public promotion:String = ""
 
@@ -30,6 +39,8 @@ export class PaiementComponent {
 
 
   public adresse_livraison$:AdresseLivraison[] = [];
+
+  public villeDeservie:{ [id: string]: string } = {};
 
   public coutAvantTaxes =0;
   public coutTotal = 0;
@@ -46,10 +57,13 @@ export class PaiementComponent {
   }
 
   ngOnInit(){
+
     this.calculateTotalCost();
     this.getPanier();
     this.getAdresseLivraison();
     this.footerPosition.setIsAbsolute(false)
+    this.routingService.callRefresh();
+
   }
 
 
@@ -59,26 +73,26 @@ export class PaiementComponent {
     let totalTPS = 0;
     let totalTVQ = 0;
     for (const produit of this.produits$!) {
-      cost += (produit.cout*produit.quantite);
-      for(const taxe of produit.taxes)
+      cost += (produit.coutProduit*produit.quantite);
+      for(const taxe of produit.TaxesProduit)
       {
-        taxes+=taxe.Montant;
-        if(taxe.Description=="Taxe TPS")
+        taxes+=taxe.Montant*produit.quantite*produit.coutProduit;
+        if(taxe.Description=="Taxes TPS")
         {
-          totalTPS +=taxe.Montant*produit.quantite
+          totalTPS +=taxe.Montant*produit.quantite*produit.coutProduit
         }
-        if(taxe.Description=="Taxe TVQ")
+        if(taxe.Description=="Taxes TVQ")
         {
-          totalTVQ+=taxe.Montant*produit.quantite
+          totalTVQ+=taxe.Montant*produit.quantite*produit.coutProduit
         }
       }
-      for (const autreTaxe of produit.taxes) {
-        if(autreTaxe.Description !="Taxe TVQ" && autreTaxe.Description!="Taxe TPS")
+      for (const autreTaxe of produit.TaxesProduit) {
+        if(autreTaxe.Description !="Taxes TVQ" && autreTaxe.Description!="Taxes TPS")
         // Aggregate the total amount for each unique tax name
         if (!this.aggregatedTaxes[autreTaxe.Description]) {
-          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] = autreTaxe.Montant*produit.quantite*produit.coutProduit;
         } else {
-          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite;
+          this.aggregatedTaxes[autreTaxe.Description] += autreTaxe.Montant*produit.quantite*produit.coutProduit;
         }
       }
     }
@@ -94,7 +108,77 @@ export class PaiementComponent {
 
   getPanier()
   {
-    //this.routingService.getProduitsPanier().subscribe(produits=>this.produits$ = produits);
+    this.routingService.getProduitsPanier().subscribe({
+      next: (data: CommandeInterface[]) => {
+        this.routingService.getProduitParCommandes(data[0].id)
+          .pipe(
+            concatMap((produits: ProduitPanier[]) => {
+              const observables = produits.map(produit => {
+                return this.routingService.getFormatsProduits(produit.id_produit).pipe(
+                  map((formats: TypeFormatAPI[]) => {
+                    // Ensure that each product has its own formatDispo array
+                    produit.formatDispo = formats; // Use spread operator to clone the array
+                    return produit;
+                  })
+                );
+              });
+
+              // Concatenate the observables to ensure sequential execution
+              return concat(...observables);
+            }),
+            reduce((acc: Array<ProduitPanier>, produit: ProduitPanier) => [...acc, produit], []) // Collect emitted values into an array
+          )
+          .subscribe((produits: ProduitPanier[]) => {
+            this.produits$ = produits; // Assign the array of produits to produits$
+
+
+            for(let i = 0; i<this.produits$.length;i++)
+            {
+              for(let j = 0; j<this.produits$[i].format.length;j++)
+              {
+                for(let k = 0; k<this.produits$[i].formatDispo.length;k++)
+                {
+                  this.produits$[i].formatDispo[k].format_selected=""
+                  if(this.produits$[i].format[j].TypeFormat==this.produits$[i].formatDispo[k].TypeFormat)
+                  {
+                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].Format
+                  }
+                }
+              }
+            }
+            for (let i = 0; i < this.produits$.length; i++) {
+              this.produits$[i].formatDict = {}; // Initialize formatDict as an empty object
+              for (let j = 0; j < this.produits$[i].formatDispo.length; j++) {
+
+
+                const typeFormat = this.produits$[i].formatDispo[j].TypeFormat;
+                if (this.produits$[i].formatDict.hasOwnProperty(typeFormat)) {
+                  this.produits$[i].formatDict[typeFormat].push(this.produits$[i].formatDispo[j]);
+                } else {
+                  this.produits$[i].formatDict[typeFormat] = [this.produits$[i].formatDispo[j]];
+                }
+              }
+            }
+
+            console.log(this.produits$);
+            this.calculateTotalCost()
+            this.routingService.getVilles().subscribe({
+              next:(data:{[id:string]:string})=>{
+                this.villeDeservie = {}
+                this.villeDeservie = data
+                console.log(this.villeDeservie)
+              },
+              error:(error:HttpErrorResponse)=>
+              {
+                console.log(error.status)
+              }
+            })
+          });
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
   }
 
   getAdresseLivraison()
@@ -104,9 +188,13 @@ export class PaiementComponent {
 
   onCheckout():void{
     this.validerPromotion();
-    if(this.validerForm())
+    if( this.validerForm())
     {
-      this.routingService.onCheckout(this.produits$!)
+      const villetest = (this.villeChoisie?.nativeElement as HTMLSelectElement).value;
+      alert(this.no_civique)
+      alert(this.rue)
+      this.routingService.onCheckout(Number(this.no_civique), this.rue, Number(villetest))
+
     }
     else{
       this.toast.showToast("error", "Veuillez entrer toutes les entrées du formulaire", "bottom-center", 4000)
@@ -116,7 +204,7 @@ export class PaiementComponent {
   }
 
   validerForm(){
-    return (this.nom!="" && this.prenom!="" && this.no_civique!=""&& this.rue!=""&& this.ville!="" && this.code_postal!="" && this.promoIsValide)
+    return (this.nom!="" && this.prenom!="" && this.no_civique!=""&& this.rue!="" && this.code_postal!="" && this.promoIsValide)
   }
 
   validerPromotion(){

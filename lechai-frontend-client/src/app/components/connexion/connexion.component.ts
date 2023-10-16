@@ -40,7 +40,7 @@ export class ConnexionComponent implements OnInit {
       courriel: ['', Validators.required],
       password: ['', Validators.required]
     })
-
+    this.routingSevice.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 

@@ -50,7 +50,7 @@ export class CommandesDetailsComponent {
 
 
     this.getCommandeDetail();
-
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 
@@ -61,7 +61,7 @@ export class CommandesDetailsComponent {
     let totalTVQ = 0;
     for (const produit of this.commande.produitsAchetes) {
       cost += (produit.cout*produit.quantite);
-      for(const taxe of produit.taxes)
+      for(const taxe of produit.TaxesProduit)
       {
         taxes+=(taxe.Montant*produit.cout*produit.quantite);
         if(taxe.Description=="Taxes TPS")
@@ -73,7 +73,7 @@ export class CommandesDetailsComponent {
           totalTVQ+=taxe.Montant*produit.quantite*produit.cout
         }
       }
-      for (const autreTaxe of produit.taxes) {
+      for (const autreTaxe of produit.TaxesProduit) {
         if(autreTaxe.Description !="Taxes TVQ" && autreTaxe.Description!="Taxes TPS")
         // Aggregate the total amount for each unique tax name
         if (!this.aggregatedTaxes[autreTaxe.Description]) {
@@ -124,7 +124,7 @@ export class CommandesDetailsComponent {
       else
       {
         this.toast.showToast("error", "Produit inexistant", "bottom-center", 4000);
-        this.router.navigate([``]);
+        this.router.navigate([`listeProduits`]);
       }
     });
 

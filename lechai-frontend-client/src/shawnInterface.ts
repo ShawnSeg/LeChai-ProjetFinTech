@@ -38,7 +38,7 @@ interface Image{
 }
 export interface TypeFormatAPI{
   FormatID:number,
-  Format:String,
+  Format:string,
   Description:string,
   TypeFormat:string,
   format_selected:string,
@@ -55,9 +55,10 @@ export interface ProduitPanier{
   quantite:number,
   quantite_restante:number,
   format:TypeFormatAPI[],
-  taxes:AffectationsPPC[],
+  TaxesProduit:AffectationsPPC[],
   cout:number,
-  image:Image[],
+  coutProduit:number,
+  Images:Image[],
   formatDispo:TypeFormatAPI[],
   formatDict: { [key: string]: TypeFormatAPI[] };
 }
@@ -178,5 +179,10 @@ export interface CategoriesAPI{
   Description:String,
   CategorieMereID?:number,
   CategorieMere?:String
+}
+
+export interface ConnexionInterface{
+  token:String,
+  userID:number
 }
 

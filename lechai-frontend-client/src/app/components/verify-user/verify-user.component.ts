@@ -25,6 +25,7 @@ export class VerifyUserComponent {
 
   ngOnInit(): void{
     this.footerPosition.setIsAbsolute(true)
+    this.routingService.callRefresh();
   }
 
 
@@ -40,7 +41,7 @@ export class VerifyUserComponent {
         console.log(data)
         localStorage.setItem("token", data)
         this.connexion.setIsAbsolute(true)
-        this.tokenHandling.expirationToken();
+
         this.router.navigate([``]);
       },
       error: (error: HttpErrorResponse) => {

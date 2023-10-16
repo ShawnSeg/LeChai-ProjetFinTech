@@ -1,3 +1,9 @@
+// COLORS
+$formCouleur: rgb(255,250,234);
+$borderCouleur: #FFE649;
+
+
+
 *{
   z-index:0
 }
@@ -101,7 +107,7 @@
   width:80%;
   margin-left:10%;
   border-radius: 35px;
-  background-color: rgb(255,250,234);
+  background-color: $formCouleur;
   padding-bottom: 3%;
   h3{
     text-align: center;
@@ -168,9 +174,7 @@
 
   }
 
-  .conteneur-web{
 
-  }
   .mobile{
     display: none;
   }
@@ -180,8 +184,8 @@
   }
 
   .filtreFormWeb{
-    border-bottom: 8px #FFE649 solid;
-    border-right: 8px #FFE649 solid;
+    border-bottom: 8px $borderCouleur solid;
+    border-right: 8px $borderCouleur solid;
     border-radius: 10px;
     margin-left: 2%;
     margin-right: 2%;

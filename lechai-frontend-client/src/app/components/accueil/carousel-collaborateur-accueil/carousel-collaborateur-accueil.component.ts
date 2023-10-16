@@ -19,10 +19,7 @@ export class CarouselCollaborateurAccueilComponent {
       nom: 'Maison',
       compagnie: 1,
       description: 'Description qui affiche seulement tant de caractères shkfjdshjkhskjhkjdshkjfdhkjfkjhdsfjkfdhdfgggggggggggggggggggggggggggggdsfkhsdjkhfs',
-      socialLinks: [
-        { name: 'facebook', url: 'https://www.facebook.com/' },
-        { name: 'instagram', url: 'https://www.instagram.com/' }
-      ],
+      socialLinks: [],
     },
     {
       id:2,
@@ -32,10 +29,7 @@ export class CarouselCollaborateurAccueilComponent {
       nom: '2',
       compagnie: 1,
       description: 'scription qui affiche seulement tant de caractères shkfjdshjkhsk',
-      socialLinks: [
-        { name: 'facebook', url: 'https://www.facebook.com/' },
-        { name: 'instagram', url: 'https://www.instagram.com/' }
-      ],
+      socialLinks: [],
     },
     // Ajoutez d'autres collaborateurs ici
   ];
@@ -48,7 +42,7 @@ export class CarouselCollaborateurAccueilComponent {
 
   ngOnInit(): void {
     this.getCollaborateurs();
-    this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
+
   }
 
   // Méthode pour changer d'image
@@ -84,15 +78,33 @@ export class CarouselCollaborateurAccueilComponent {
 
   getCollaborateurs(){
     this.routingService.getCollaborateur().subscribe({
-      next: (data: CollaborateursAPI[]) => {
-        //this.collaborators=data;
-      },
-      error: (error: HttpErrorResponse) => {
-        // Handle error response here
-       console.log(error.status);
+      next:(data:CollaborateursAPI[])=>
+      {
+        this.collaborators=[]
 
+        for(let i = 0; i<data.length;i++)
+        {
+          let collaborateur:Collaborateurs = {
+            id:data[i].ID,
+            image:data[i].Image,
+            prenom:data[i].Prenom,
+            nom:data[i].Nom,
+            compagnie:data[i].CompagnieID,
+            description:data[i].Description,
+            socialLinks:data[i].Reseau,
+            email:data[i].Email,
+
+          }
+          this.collaborators.push(collaborateur)
+
+
+        }
+        this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
+      },
+      error:(error:HttpErrorResponse)=>{
+        console.log(error.status)
       }
-    });
+    })
 
   }
   selectCollaborateur(i:number){

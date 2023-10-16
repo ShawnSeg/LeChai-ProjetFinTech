@@ -36,6 +36,7 @@ export class CompteClientComponent {
   ngOnInit()
   {
     this.getClientInfo();
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 
@@ -44,6 +45,10 @@ export class CompteClientComponent {
     this.routingService.getClientInfo().subscribe({
       next:(data:ClientInterface)=>{
         this.client.id = data.ID;
+        this.client.nom=data.Nom;
+        this.client.prenom=data.Prenom;
+        this.client.courriel=data.Email;
+        this.client.naissance=data.DateNaissance.slice(0,data.DateNaissance.indexOf('T'));
 
 
       },

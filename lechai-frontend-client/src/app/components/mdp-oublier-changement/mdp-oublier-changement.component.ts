@@ -37,6 +37,7 @@ export class MdpOublierChangementComponent {
     }, {
       validator: this.passwordMatchValidator // Fonction de validation personnalisée
     });
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 

@@ -51,7 +51,7 @@ export class FiltreListeCollaborateursComponent {
 
   ngOnInit() {
     this.getCompagnies();
-
+    this.routingService.callRefresh();
 
   }
 
@@ -166,12 +166,13 @@ export class FiltreListeCollaborateursComponent {
             nom:data[i].Nom,
             compagnie:data[i].CompagnieID,
             description:data[i].Description,
-            socialLinks:[{name:"facebook", url:"test.com"}],
+            socialLinks:data[i].Reseau,
             email:data[i].Email,
 
           }
           this.collaborators.push(collaborateur)
           this.filteredCollabs = this.collaborators;
+          console.log(data)
 
         }
         if(this.filteredCollabs?.length==0)

@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ClientInterface } from 'src/shawnInterface';
 
 @Component({
   selector: 'app-contacte',
@@ -20,6 +21,7 @@ export class ContacteComponent {
   message: string = "";
   connecter:boolean = false;
   token$!: Observable<string | null>;
+  courriel:string = ""
 
   contactForm!: FormGroup;
 
@@ -46,6 +48,7 @@ export class ContacteComponent {
 
   ngOnInit(): void{
     this.contactForm = this.fb.group({
+      courriel:['', Validators.required],
       sujet: ['', Validators.required],
       message: ['', Validators.required]
     });
@@ -62,12 +65,16 @@ export class ContacteComponent {
     {
       this.footerPosition.setIsAbsolute(false)
     }
+    this.routingService.callRefresh();
+    this.courriel = ""
+    this.getInfoClient();
+
   }
 
   onContact() {
     if(this.contactForm.valid)
     {
-      this.routingService.envoiCourriel(this.contactForm.get('sujet')!.value, this.contactForm.get('message')!.value).subscribe(
+      this.routingService.envoiCourriel(this.courriel, this.contactForm.get('sujet')!.value, this.contactForm.get('message')!.value).subscribe(
         (data: any) => {
           // Handle successful response here
           this.toast.showToast("success", "Le message  " + this.sujet + " a été envoyé avec succès!", "bottom-center", 4000);
@@ -79,26 +86,27 @@ export class ContacteComponent {
           console.error('Status code:', error.status);
         }
       );
-      // envoyer à la base de données
 
-
-
-      /* this.auth.login(this.loginForm.value)
-      .subscribe({
-        next:(res)=>{
-          this.toast.showToast("success", res.message, "bottom-center", 1000);
-          this.loginForm.reset();
-        },
-        error:(err)=>{
-          this.toast.showToast("error", err?.error.message, "top-center", 5000);
-        }
-      }) */
     }
     else{
       ValidationInput.validationInput(this.contactForm);
-      this.toast.showToast("error", "Le message n'a pas pu envoyer", "bottom-center", 4000);
+      this.toast.showToast("error", "Veuillez remplir tout le formulaire d'envoi.", "bottom-center", 4000);
     }
 
+  }
+
+  getInfoClient(){
+    this.routingService.getClientInfo().subscribe({
+      next:(data:ClientInterface)=>
+      {
+        console.log(data)
+        this.courriel = data.Email
+      },
+      error:(error:HttpErrorResponse)=>
+      {
+        console.log(error.status)
+      }
+    })
   }
 
 }

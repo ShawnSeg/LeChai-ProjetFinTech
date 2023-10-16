@@ -17,10 +17,11 @@ export class MdpOublierEnvoiComponent {
   public resetPasswordEmail!:string;
   public isValidEmail=false;
 
-constructor(private routingService:RoutingService, private toast:ToastService, private router: Router)
-{
+  constructor(private routingService:RoutingService, private toast:ToastService, private router: Router){
 
-}
+  }
+
+
   toggleForm(){
     this.showForm=false
 
@@ -45,7 +46,7 @@ constructor(private routingService:RoutingService, private toast:ToastService, p
       this.routingService.oublieMDP(this.resetPasswordEmail).subscribe({
         next: (data: any) => {
           // Handle successful response here
-          alert("yay")
+
           this.toggleForm();
           this.routingService.oublieMDP(this.resetPasswordEmail)
           this.router.navigate([`/mdpOublierChangement`]);

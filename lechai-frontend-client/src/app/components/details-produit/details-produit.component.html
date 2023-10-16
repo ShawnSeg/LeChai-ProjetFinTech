@@ -32,7 +32,10 @@
       <span *ngFor="let format of formats|keyvalue">
         <p>{{format.key}} :</p>
         <select aria-label="Sélectionnez une couleur" [(ngModel)]="selectedFormats[format.key]">
-          <option *ngFor="let nom of format.value" [value]="nom.FormatID">{{ nom.Format }}</option>
+          <ng-container *ngFor="let nom of format.value; let i = index">
+            <option [value]="nom.FormatID" [selected]="i === 0">{{nom.Format}}</option>
+          </ng-container>
+
         </select>
       </span>
 

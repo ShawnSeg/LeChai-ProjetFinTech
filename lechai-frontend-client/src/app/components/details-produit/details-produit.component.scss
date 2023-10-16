@@ -196,6 +196,12 @@
 
     }
 
+    .img_carousel{
+      max-width: 60%; /* Assurez-vous que les images ne dépassent pas la largeur du conteneur */
+      max-height: 80%;
+      height: 50%;
+    }
+
     .webRight{
       margin-left: 38em;
       margin-top: -2em;

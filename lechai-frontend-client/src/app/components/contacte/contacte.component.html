@@ -5,6 +5,11 @@
         <p>*Vous pouvez nous envoyer un courriel au <b>lechai@gmail.com</b> ou utiliser le formulaire ci-dessous.</p>
         <h2 class="log-title">Nous contacter</h2>
 
+        <div class="log-inputbox" [class.log-inputboxErr]="contactForm.controls['courriel'].dirty && contactForm.hasError('required', 'courriel')">
+          <input placeholder="Courriel" value="{{courriel}}" formControlName="courriel" type="text" class="log-input" required>
+        </div>
+        <small *ngIf="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')" class="errorLogin">*Vous devez entrer le sujet de votre message!</small>
+
         <div class="log-inputbox" [class.log-inputboxErr]="contactForm.controls['sujet'].dirty && contactForm.hasError('required', 'sujet')">
           <input placeholder="Sujet" formControlName="sujet" type="text" class="log-input" required>
         </div>

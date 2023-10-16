@@ -33,11 +33,17 @@ export class ProduitListeSouhaitComponent {
   @ViewChild('formatSelected', { static: true }) formatSelected?: ElementRef;
   @ViewChild('typeFormat', { static: true }) formatTypeLabel?: ElementRef;
 
-  selectedQuantite: number = 1; // Property to store the selected quantity
+  selectedQuantite: number = this.produit?.quantite||0; // Property to store the selected quantity
   selectedFormats: { [key: string]: number } = {}; // Property to store selected format values
+  image:string = ""
 
   constructor(private routingService:RoutingService, private toast:ToastService){
 
+  }
+  ngOnInit(){
+    console.log(this.produit)
+    this.selectedQuantite= this.produit?.quantite||0;
+    this.image = this.produit?.Images[0].URL||""
   }
 
   erase(){
@@ -49,12 +55,9 @@ export class ProduitListeSouhaitComponent {
   }
 
   addProduitPanier(){
-    let formatsChoisi:number[]=[]
-    for(let key in this.selectedFormats)
-    {
-      formatsChoisi.push(this.selectedFormats[key])
-    }
-    this.routingService.postProduitDansPanier(this.produit!.id, this.selectedQuantite, formatsChoisi).subscribe({
+
+
+    this.routingService.postLSVersPanier(this.produit!.id).subscribe({
       next:(data: any) => {
         // Handle successful response here
         this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
@@ -78,25 +81,34 @@ export class ProduitListeSouhaitComponent {
         this.changeQuantity.emit({ productId: this.produit?.id || 0, quantity: quantiteNew || 0 }); // Pass the product ID to the parent
       },
       error:(error:HttpErrorResponse)=>{
-        this.toast.showToast("error", "Erreur, Veuillez réessayer plus tard...", "bottom-center", 4000)
+        this.toast.showToast("error", "Veuillez réessayer plus tard...", "bottom-center", 4000)
       }
     })
 
   }
-  changeProductFormatSelected(value:String, format:String)
+  changeProductFormatSelected(value:string, key:string)
   {
+    let oldFormat: number = 0
 
     const formatSelected = this.formatSelected?.nativeElement as HTMLSelectElement;
     const typeFormat = this.formatTypeLabel?.nativeElement as HTMLElement;
+    for(let i = 0; i<this.produit?.formatDict[key].length!;i++)
+    {
+      if(this.produit?.formatDict[key][i].format_selected == this.produit?.formatDict[key][i].Format)
+      {
+        oldFormat = this.produit?.formatDict[key][i].FormatID||0
 
-    this.routingService.updateChangementFormatChoisiProduitPanier(this.produit!.id, format, value).subscribe({
+      }
+    }
+    console.log(oldFormat)
+    this.routingService.updateChangementFormatChoisiProduitPanier(this.produit!.id, Number(value), oldFormat).subscribe({
       next:(data:any)=>
       {
-        console.log(value)
-        console.log(format)
+
+
       },
       error:(error:HttpErrorResponse)=>{
-        this.toast.showToast("error", "Erreur, Veuillez réessayer plus tard...", "bottom-center", 4000)
+        this.toast.showToast("error", "Veuillez réessayer plus tard...", "bottom-center", 4000)
       }
     })
 

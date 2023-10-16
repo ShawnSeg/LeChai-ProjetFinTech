@@ -2,7 +2,7 @@
   <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel" id="non">
 
   <span >
-     <img *ngFor="let img of images; let i = index" [src]="'../assets/image/img temp/' + img.image" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
+     <img *ngFor="let img of images; let i = index" [src]="'../assets/image/img temp/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
      [ngClass]="{'animate-opacity': i === currentIndex}">
   </span>
   <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel">

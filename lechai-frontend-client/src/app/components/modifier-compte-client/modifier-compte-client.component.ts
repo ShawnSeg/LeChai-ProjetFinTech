@@ -18,7 +18,13 @@ import { DatePipe } from '@angular/common';
 })
 export class ModifierCompteClientComponent {
 
-  client?: Client
+  client: Client={
+    id:0,
+    nom:"",
+    prenom:"",
+    courriel:"",
+    mdp:"",
+  }
 
   public prenom:String = "";
   public nom:String = "";
@@ -53,28 +59,9 @@ export class ModifierCompteClientComponent {
 
 
     this.getInfoClient();
-    this.clientInfo = this.client;
-    console.log(this.clientInfo);
 
-    this.modCompteClntForm = this.fb.group({
-      prenom: [this.clientInfo?.prenom, Validators.required],
-      nom: [this.clientInfo?.nom, Validators.required],
-      date: [this.clientInfo?.naissance],
-      civic: [this.clientInfo?.civic],
-      rue: [this.clientInfo?.rue],
-      apt: [this.clientInfo?.apt],
-      ville: [this.clientInfo?.ville],
-      province: [this.clientInfo?.province],
-      codePostal: [this.clientInfo?.codePostal],
-      courriel: [this.clientInfo?.courriel, [Validators.required, Validators.pattern(/^.+@.+\..+$/)]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d<>@!#$%^&*()_+\[\]{}?:;|',./~.`\-=/]{8,}$/)]],
-      validation: ['', Validators.required],
-      validationActuel: ['', Validators.required],
-    }, {
-      validators: [this.passwordMatchValidator],
-    });
 
-    this.footerPosition.setIsAbsolute(false)
+
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -123,11 +110,12 @@ export class ModifierCompteClientComponent {
       this.routingService.postChangementMDPAuthentifier(this.oldEmail, this.modCompteClntForm.get("validationActuel")!.value, this.modCompteClntForm.get('password')!.value).subscribe({
         next: (data: any) => {
           // Handle successful response here
-          this.toast.showToast("success", 'yay', "bottom-center", 4000);
+
           this.routingService.UpdateChangementInfoClient(this.modCompteClntForm.get('prenom')!.value,this.modCompteClntForm.get('nom')!.value,date,this.modCompteClntForm.get('courriel')!.value, Number(this.client!.id)).subscribe({
             next: (data: any) => {
               // Handle successful response here
-              this.toast.showToast("success", 'wahoo', "bottom-center", 4000);
+              this.toast.showToast("success", 'Les modifications ont été sauvegardées!', "bottom-center", 4000);
+              this.router.navigate([`/compteClient`]);
 
 
             },
@@ -167,16 +155,36 @@ export class ModifierCompteClientComponent {
   {
     this.routingService.getClientInfo().subscribe({
       next:(data:ClientInterface)=>{
-
+        console.log(data)
         this.client!.id = data.ID;
         this.client!.prenom=data.Prenom;
         this.client!.nom=data.Nom;
         this.client!.courriel=data.Email;
         this.oldEmail=data.Email;
         this.client!.naissance=data.DateNaissance.slice(0,data.DateNaissance.indexOf('T'))
-        alert(this.client!.naissance)
 
 
+        this.clientInfo = this.client;
+        console.log(this.clientInfo);
+        this.modCompteClntForm = this.fb.group({
+          prenom: [this.clientInfo?.prenom, Validators.required],
+          nom: [this.clientInfo?.nom, Validators.required],
+          date: [this.clientInfo?.naissance],
+          civic: [this.clientInfo?.civic],
+          rue: [this.clientInfo?.rue],
+          apt: [this.clientInfo?.apt],
+          ville: [this.clientInfo?.ville],
+          province: [this.clientInfo?.province],
+          codePostal: [this.clientInfo?.codePostal],
+          courriel: [this.clientInfo?.courriel, [Validators.required, Validators.pattern(/^.+@.+\..+$/)]],
+          password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d<>@!#$%^&*()_+\[\]{}?:;|',./~.`\-=/]{8,}$/)]],
+          validation: ['', Validators.required],
+          validationActuel: ['', Validators.required],
+        }, {
+          validators: [this.passwordMatchValidator],
+        });
+        this.routingService.callRefresh();
+        this.footerPosition.setIsAbsolute(false)
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here

@@ -1,3 +1,7 @@
+// COLORS
+$footerCouleur:#CCD256;
+
+
 *{
   box-sizing: border-box;
   margin:0;
@@ -18,7 +22,7 @@
 
 footer{
   margin-top:5%;
-  background-color: #CCD256;
+  background-color: $footerCouleur;
 
   width:100%;
 
@@ -70,7 +74,7 @@ footer{
 
   footer{
   margin-top:5%;
-  background-color: #CCD256;
+  background-color: $footerCouleur;
 
   width:100%;
 

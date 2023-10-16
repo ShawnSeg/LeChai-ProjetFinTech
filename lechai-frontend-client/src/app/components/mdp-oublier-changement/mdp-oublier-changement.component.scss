@@ -1,3 +1,6 @@
+// COLORS
+$formCouleur: rgb(255,250,234);
+
 
 .loginSection{
   display: flex;
@@ -13,7 +16,7 @@
   position: relative;
   width: auto;
   height: auto;
-  background: rgb(255,250,234);
+  background: $formCouleur;
   border: none;
   border-radius: 20px;
   display: flex;

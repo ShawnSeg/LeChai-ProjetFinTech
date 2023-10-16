@@ -40,7 +40,7 @@ export class InscriptionComponent {
     }, {
       validator: this.passwordMatchValidator // Fonction de validation personnalisée
     });
-
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 
@@ -76,9 +76,11 @@ export class InscriptionComponent {
       this.routingService.inscription(this.signupForm.get('prenom')!.value, this.signupForm.get('nom')!.value,this.signupForm.get('date')!.value,this.signupForm.get('courriel')!.value,this.signupForm.get('password')!.value).subscribe(
         (data: any) => {
           // Handle successful response here
-          this.toast.showToast("success", "L'inscription réussi, un courriel de validation vous à été envoyer.", "bottom-center", 6000);
+          //this.toast.showToast("info", "Un courriel de confirmation vous a été envoyé.", "bottom-center", 6000);
           this.signupForm.reset();
-          this.router.navigate(['connexion'] );
+          localStorage.setItem("token", data)
+
+          this.router.navigate([''] );
         },
         (error: HttpErrorResponse) => {
           // Handle error response here

@@ -65,6 +65,7 @@ export class NavbarComponent {
     localStorage.removeItem("token")
     this.connecter = false
     this.router.navigate([""]);
+    this.connexion.setIsAbsolute(false)
     this.toast.showToast("success", "Déconnexion réussi.", "bottom-center", 4000);
   }
 }

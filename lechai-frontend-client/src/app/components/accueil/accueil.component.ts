@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { RoutingService } from 'src/app/services/routing.service';
 
 
 @Component({
@@ -9,13 +11,17 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 })
 export class AccueilComponent {
 
-  constructor(private footerPosition:FooterPositionService)
+  constructor(private footerPosition:FooterPositionService, private routingService:RoutingService)
   {
 
   }
 
   ngOnInit(){
     this.footerPosition.setIsAbsolute(false)
+    this.routingService.callRefresh();
+
+
+
   }
 
 }

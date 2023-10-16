@@ -71,7 +71,7 @@ export class FiltresListeDeProduitsComponent {
 
   ngOnInit() {
     this.getAllCategorie();
-
+    this.routingService.callRefresh();
 
   }
 

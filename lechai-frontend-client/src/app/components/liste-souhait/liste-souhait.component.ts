@@ -4,7 +4,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
-import { concatMap, map, concat, reduce } from 'rxjs';
+import { concatMap, map, concat, reduce, from, observable, of, switchMap, forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-liste-souhait',
@@ -23,14 +23,7 @@ export class ListeSouhaitComponent {
 
   ngOnInit(){
     this.getListeSouhait();
-    if(this.length&& this.length>0)
-    {
-      this.footerPosition.setIsAbsolute(false)
-    }
-    else
-    {
-      this.footerPosition.setIsAbsolute(true)
-    }
+    this.routingService.callRefresh();
   }
 
   // Function to remove a product from the array
@@ -78,10 +71,13 @@ export class ListeSouhaitComponent {
 
 
 
-  getListeSouhait(){
-    this.routingService.getListeSouhait().subscribe({
-      next: (data: CommandeInterface) => {
-        this.routingService.getProduitParCommandes(data.id)
+
+getListeSouhait() {
+  this.routingService.getListeSouhait()
+    .pipe(
+      switchMap((data: CommandeInterface[]) => {
+        console.log(data)
+        return this.routingService.getProduitParCommandes(data[0].id)
           .pipe(
             concatMap((produits: ProduitPanier[]) => {
               const observables = produits.map(produit => {
@@ -98,44 +94,37 @@ export class ListeSouhaitComponent {
               return concat(...observables);
             }),
             reduce((acc: Array<ProduitPanier>, produit: ProduitPanier) => [...acc, produit], []) // Collect emitted values into an array
-          )
-          .subscribe((produits: ProduitPanier[]) => {
-            this.produits$ = produits; // Assign the array of produits to produits$
-
-            for(let i = 0; i<this.produits$.length;i++)
-            {
-              for(let j = 0; j<this.produits$[i].format.length;j++)
-              {
-                for(let k = 0; k<this.produits$[i].formatDispo.length;k++)
-                {
-                  this.produits$[i].formatDispo[k].format_selected=""
-                  if(this.produits$[i].format[j].TypeFormat==this.produits$[i].formatDispo[k].TypeFormat)
-                  {
-                    this.produits$[i].formatDispo[k].format_selected=this.produits$[i].format[j].format_selected
-                  }
-                }
-              }
+          );
+      })
+    )
+    .subscribe((produits: ProduitPanier[]) => {
+      for (let i = 0; i < produits.length; i++) {
+        for (let j = 0; j < produits[i].format.length; j++) {
+          for (let k = 0; k < produits[i].formatDispo.length; k++) {
+            produits[i].formatDispo[k].format_selected = "";
+            if (produits[i].format[j].TypeFormat == produits[i].formatDispo[k].TypeFormat) {
+              produits[i].formatDispo[k].format_selected = produits[i].format[j].Format;
             }
-            for (let i = 0; i < this.produits$.length; i++) {
-              this.produits$[i].formatDict = {}; // Initialize formatDict as an empty object
-              for (let j = 0; j < this.produits$[i].formatDispo.length; j++) {
-
-
-                const typeFormat = this.produits$[i].formatDispo[j].TypeFormat;
-                if (this.produits$[i].formatDict.hasOwnProperty(typeFormat)) {
-                  this.produits$[i].formatDict[typeFormat].push(this.produits$[i].formatDispo[j]);
-                } else {
-                  this.produits$[i].formatDict[typeFormat] = [this.produits$[i].formatDispo[j]];
-                }
-              }
-            }
-            console.log(this.produits$);
-
-          });
-      },
-      error: (error) => {
-        console.error('Error fetching products:', error);
+          }
+        }
       }
-    });
-  }
+      for (let i = 0; i < produits.length; i++) {
+        produits[i].formatDict = {}; // Initialize formatDict as an empty object
+        for (let j = 0; j < produits[i].formatDispo.length; j++) {
+          const typeFormat = produits[i].formatDispo[j].TypeFormat;
+          if (produits[i].formatDict.hasOwnProperty(typeFormat)) {
+            produits[i].formatDict[typeFormat].push(produits[i].formatDispo[j]);
+          } else {
+            produits[i].formatDict[typeFormat] = [produits[i].formatDispo[j]];
+          }
+        }
+      }
+      console.log(produits);
+      this.produits$ = produits; // Assign the array of produits to produits$
+    },
+    (error) => { // Handle the error here
+      console.error('Error fetching products:', error);
+    })
+}
+
 }

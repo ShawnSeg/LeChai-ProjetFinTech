@@ -56,6 +56,7 @@ export class ListeCommandesComponent {
   ngOnInit() {
     this.getListeCommande();
     this.filteredCommandes = this.listeCommande;
+    this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
   }
 

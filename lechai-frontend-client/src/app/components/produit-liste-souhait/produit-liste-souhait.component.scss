@@ -140,7 +140,7 @@ hr{
       flex-direction: row;
       margin-left: 20%;;
       img{
-        width:30%;
+        width:15%;
         margin-left:5%;
         margin-right:5%;
 
@@ -196,7 +196,7 @@ hr{
     margin-left: 15%;
     margin-bottom: 5%;
     img{
-      width:35%;
+      max-width:20%;
       transition:width 0.3s ease;
     &:hover{
       width:45%;
@@ -210,6 +210,26 @@ hr{
 
   p{
     width: 100%;
+  }
+
+  .formatContainer{
+    width:100%;
+
+    select{
+      width: 50%;
+
+      height:35px;
+      margin-left:0
+    }
+  }
+
+  label{
+    width:50%;
+  }
+  input{
+    width:50%;
+
+    height:35px;
   }
 
 }

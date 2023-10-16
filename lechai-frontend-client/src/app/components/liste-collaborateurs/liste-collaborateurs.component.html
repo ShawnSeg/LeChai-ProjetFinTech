@@ -7,8 +7,8 @@
         <h3>{{collab?.prenom}} {{collab?.nom}}</h3>
 
         <div *ngFor="let socialLink of collab?.socialLinks" class="lienCollab">
-          <a href="{{ socialLink.url }}" target="_blank">
-            <img src="../assets/image/{{ socialLink.name }}.png" alt="facebook" class="collab_FB"></a>
+          <a href="{{ socialLink.Liens }}" target="_blank">
+            <img src="../assets/image/{{ socialLink.ReseauxSociauxNom }}.png" alt="facebook" class="collab_FB"></a>
         </div>
 
         <!-- <a routerLink="/listeProduits" class="lienProduits">Voir ces produits</a> -->
