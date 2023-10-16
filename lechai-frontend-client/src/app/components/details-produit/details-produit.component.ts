@@ -129,7 +129,7 @@ export class DetailsProduitComponent implements OnInit{
       formatsChoisi.push(this.selectedFormats[key])
     }
     console.log(this.produits.id)
-    if(this.produits&& this.selectedQuantite>this.produits?.quantite!)
+    if(this.produits&& this.selectedQuantite<this.produits?.quantite!)
     {
       this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
         next:(data: any) => {
