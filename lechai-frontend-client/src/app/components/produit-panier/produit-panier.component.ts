@@ -34,10 +34,11 @@ export class ProduitPanierComponent {
   @ViewChild('typeFormat', { static: true }) formatTypeLabel?: ElementRef;
 
 
-  image:string = ""
+  image:string = "https://localhost:7247/GetImage/"
+
   ngOnInit()
   {
-    this.image = this.produit?.Images[0].URL||""
+    this.image += this.produit?.Images[0].URL||""
   }
   erase(): void {
     const produitaffiche = this.produitaffiche?.nativeElement as HTMLElement;

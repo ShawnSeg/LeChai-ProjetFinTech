@@ -96,45 +96,19 @@ export class DetailsProduitComponent implements OnInit{
   }
 
   addWishList(): void{
-    let formatsChoisi:number[]=[]
-    for(let key in this.selectedFormats)
+    if(localStorage.getItem("token"))
     {
-      formatsChoisi.push(this.selectedFormats[key])
-    }
-
-    this.routingService.postProduitDansLS(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
-      next:(data: any) => {
-        // Handle successful response here
-        this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
-        this.isWish = !this.isWish;
-        this.isWish ? this.heartIcon = "fa-heart" : this.heartIcon = "fa-heart-o";
-
-      },
-      error:(error: HttpErrorResponse) => {
-        // Handle error response here
-        this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
-        console.error('Status code:', error.status);
+      let formatsChoisi:number[]=[]
+      for(let key in this.selectedFormats)
+      {
+        formatsChoisi.push(this.selectedFormats[key])
       }
-    });
-  }
 
-  acheterMaintenant(): void{
-
-  }
-
-  addPanier(): void{
-    let formatsChoisi:number[]=[]
-    for(let key in this.selectedFormats)
-    {
-      formatsChoisi.push(this.selectedFormats[key])
-    }
-    console.log(this.produits.id)
-    if(this.produits&& this.selectedQuantite<this.produits?.quantite!)
-    {
-      this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
+      this.routingService.postProduitDansLS(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
         next:(data: any) => {
           // Handle successful response here
-          this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
+          this.toast.showToast("success", "Le produit à été ajouter à la liste de souhait", "bottom-center", 3000);
+
 
         },
         error:(error: HttpErrorResponse) => {
@@ -146,8 +120,51 @@ export class DetailsProduitComponent implements OnInit{
     }
     else
     {
-      this.toast.showToast("error", "Veuillez choisir une quantité plus petite ou égale à la quantité en inventaire", "bottom-center",4000)
+      this.toast.showToast("error", "Vous devez vous connecter afin de pouvoir ajouter un produit à votre Liste de souhait", "bottom-center", 4000)
     }
+
+  }
+
+  acheterMaintenant(): void{
+
+  }
+
+  addPanier(): void{
+    if(localStorage.getItem("token"))
+    {
+      let formatsChoisi:number[]=[]
+      for(let key in this.selectedFormats)
+      {
+        formatsChoisi.push(this.selectedFormats[key])
+      }
+      console.log(this.produits.id)
+      console.log(this.selectedQuantite)
+      console.log(formatsChoisi)
+      if(this.produits&& this.selectedQuantite<this.produits?.quantite!)
+      {
+        this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
+          next:(data: any) => {
+            // Handle successful response here
+            this.toast.showToast("success", "le produit a été ajouté au panier avec succès!", "bottom-center", 4000);
+
+          },
+          error:(error: HttpErrorResponse) => {
+            // Handle error response here
+            this.toast.showToast("error", 'Une erreur est survenue... Veuillez essayer plus tard.', "bottom-center", 4000);
+            console.error('Status code:', error.status);
+          }
+        });
+      }
+      else
+      {
+        this.toast.showToast("error", "Veuillez choisir une quantité plus petite ou égale à la quantité en inventaire", "bottom-center",4000)
+      }
+    }
+    else
+    {
+      this.toast.showToast("error", "Vous devez vous connecter afin de pouvoir ajouter un produit à votre Panier", "bottom-center", 4000)
+    }
+
 
   }
 

@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { CategoriesAPI, ProduitInterface, ProduitTestAPI } from 'src/shawnInterface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -29,11 +30,14 @@ export class FiltresListeDeProduitsComponent {
   categories: Categorie[] = [
     {
       id:1,
-      nom:'Thé'
+      nom:'Thé',
+      nomCatMere:""
     },
     {
       id:2,
-      nom:'Marchandise'
+      nom:'Marchandise',
+      nomCatMere:""
+
     }
   ];
 
@@ -65,14 +69,29 @@ export class FiltresListeDeProduitsComponent {
   public filtreCategorie:String = '';
   public filteredProduit?: Produit[];
 
-  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService){
+  public collaborateurID:number=0
+
+  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService, private route: ActivatedRoute){
 
   }
 
   ngOnInit() {
+
+
+    this.route.params.subscribe((params) => {
+      if (params['id_collaborateur']) {
+        // Parameter exists, retrieve and handle it
+        this.collaborateurID = params['id_collaborateur'];
+        console.log('Parameter found:', this.collaborateurID);
+        // Perform actions with the parameter
+      } else {
+        // No parameter, act normally
+        console.log('No parameter found.');
+        // Perform normal actions
+      }
+    });
     this.getAllCategorie();
     this.routingService.callRefresh();
-
   }
 
   groupProductsByCategory() {
@@ -128,8 +147,16 @@ export class FiltresListeDeProduitsComponent {
     }
     else
     {
+      let nomCategorieMere:String = "0"
       for (const key in this.filteredCategoryList) {
-        if (this.filteredCategoryList.hasOwnProperty(key) && key !== value) {
+        for(let i = 0; i<this.categories.length;i++)
+        {
+          if(key == this.categories[i].nom && this.categories[i].nomCatMere!="")
+          {
+            nomCategorieMere=this.categories[i].nomCatMere
+          }
+        }
+        if (this.filteredCategoryList.hasOwnProperty(key) && key !== value && nomCategorieMere!=value) {
           // Check if the category name is not equal to "Thé"
           delete this.filteredCategoryList[key]; // Remove the category
         }
@@ -288,16 +315,75 @@ export class FiltresListeDeProduitsComponent {
 
           let categorie:Categorie = {
             id:i+1,
-            nom:data[i].Nom
+            nom:data[i].Nom,
+            nomCatMere:data[i].CategorieMere||""
           }
           console.log(data[i])
           this.categories.push(categorie)
         }
-        this.getAllProduit();
+        if(this.collaborateurID==0)
+          this.getAllProduit();
+        else
+          this.getProduitsCollaborateur()
 
       },
       error:(error:HttpErrorResponse)=>
       {
+        console.log(error.status)
+      }
+    })
+  }
+
+  getProduitsCollaborateur()
+  {
+    this.routingService.getProduitsCollaborateurs(this.collaborateurID).subscribe({
+      next:(data:ProduitInterface[])=>{
+        this.produits=[]
+        for (let i = 0; i<data.length;i++)
+        {
+          if(data[i].EtatProduitID!=2)
+          {
+            let imageProduit:string[]=[]
+            for(let j = 0; j<data[i].Images.length;j++)
+            {
+              imageProduit.push(data[i].Images[j].URL)
+
+            }
+            let produit :Produit = {
+              id:data[i].ID,
+              image:imageProduit,
+              nom:data[i].Nom,
+              quantite:data[i].QuantiteInventaire,
+              prix:data[i].Prix,
+              categorie:data[i].CategorieID,
+              description:data[i].Descriptions
+
+            }
+
+            this.produits.push(produit)
+          }
+        }
+        this.filteredProduit = this.produits;
+        this.groupProductsByCategory();
+
+        this.filteredCategoryList = this.categorizedProducts;
+        this.filteredCat=Object.keys(this.filteredCategoryList)
+
+        if(this.filteredProduit?.length==0)
+        {
+          this.footerPosition.setIsAbsolute(true)
+        }
+        else
+        {
+          this.footerPosition.setIsAbsolute(false)
+        }
+        console.log(this.categories)
+        console.log(this.produits)
+        console.log(this.filteredProduit)
+        console.log(this.filteredCategoryList)
+        console.log(this.filteredCat)
+      },
+      error:(error:HttpErrorResponse)=>{
         console.log(error.status)
       }
     })

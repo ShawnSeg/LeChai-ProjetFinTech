@@ -14,13 +14,21 @@ export class CarouselAccueilComponent implements OnInit {
   intervalId: any;
   timeInterval: number = 0;
 
+  imageFlecheGauche:string="https://localhost:7247/GetImage/imagesAutres/fleche_gauche.png"
+  imageFlecheDroite:string="https://localhost:7247/GetImage/imagesAutres/fleche_droite.png"
+
   selectedIndex = 0;
+
+  testVideo:Carousel={ID:4, Lien:"test", Nom:"testVidéo", TypeMediaID:2, TypeMedia:"Video"}
+
+  lienMedia:string="https://localhost:7247/GetImage/"
 
   constructor(private routingService:RoutingService){
 
   }
 
   ngOnInit(): void {
+
     this.getCarousel();
     this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
     this.routingService.testRecevoirAPI().subscribe({
@@ -73,7 +81,8 @@ export class CarouselAccueilComponent implements OnInit {
     this.routingService.getCarousel().subscribe({
       next: (data: Carousel[]) => {
         this.images=data;
-        console.log('../assets/image/img temp/' + this.images[0].Lien)
+        this.images.push(this.testVideo)
+        console.log(this.images[0].Lien)
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here

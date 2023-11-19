@@ -1,6 +1,6 @@
 <div ngmodel #produitaffiche class="divProduit">
   <aside class="asideProduit">
-    <img [src]="'../assets/image/'+image+'.png'" alt="image">
+    <img [src]="image" alt="image">
     <div>
       <a routerLink="/detailsProduit/{{produit?.id_produit}}"><h3>{{produit?.nom}}</h3></a>
 

@@ -2,13 +2,13 @@
 <section>
   <div class="container_carousel_collab">
     <span>
-      <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel_collab">
+      <img (click)="onLeftArrowClick()" [src]="imageFlecheGauche" alt="fleche carousel gauche" class="gauche_carousel_collab">
     </span>
 
     <div *ngFor="let collaborator of collaborators; let i = index" class="container_carousel_collab fade" [class.hidden]="i !== currentIndex">
       <!-- Contenu du collaborateur -->
       <span class="img_collab">
-        <img [src]="'../assets/image/img temp/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
+        <img [src]="'https://localhost:7247/GetImage/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
       </span>
       <span class="desc_coll_carousel">
         <h3>{{ collaborator.prenom + " " + collaborator.nom}}</h3>
@@ -21,7 +21,7 @@
 
           <span *ngFor="let socialLink of collaborator.socialLinks" class="collab_lien">
             <a href="{{ socialLink.Liens }}" target="_blank">
-              <img src="../assets/image/{{ socialLink.ReseauxSociauxNom }}.png" alt="Facebook" class="collab_lienImg">
+              <img [src]="'https://localhost:7247/GetImage/imagesAutres/'+ socialLink.ReseauxSociauxNom +'.png'" alt="Facebook" class="collab_lienImg">
               </a>
           </span>
 
@@ -30,7 +30,7 @@
       </span>
     </div>
     <span>
-      <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel_collab">
+      <img (click)="onRightArrowClick()" [src]="imageFlecheDroite" alt="fleche carousel droite" class="droite_carousel_collab">
     </span>
   </div>
   <div  class="carousel-dot-container">

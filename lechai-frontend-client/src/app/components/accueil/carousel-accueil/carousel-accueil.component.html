@@ -1,11 +1,25 @@
 <div class="container_carousel">
-  <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel" id="non">
+  <img (click)="onLeftArrowClick()" [src]="imageFlecheGauche" alt="fleche carousel gauche" class="gauche_carousel" id="non">
 
   <span class="img_container">
-     <img *ngFor="let img of images; let i = index" [src]="'../assets/image/img temp/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
-     [ngClass]="{'animate-opacity': i === currentIndex}">
+    <ng-container *ngFor="let img of images; let i = index">
+      <ng-container *ngIf="img.TypeMediaID==1">
+        <img  [src]="'../assets/image/img temp/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
+        [ngClass]="{'animate-opacity': i === currentIndex}">
+      </ng-container>
+      <ng-container *ngIf="img.TypeMediaID==2">
+        <video width="320" height="240" controls class="img_carousel" [class.hidden]="i !== currentIndex"
+        [ngClass]="{'animate-opacity': i === currentIndex}">
+          <source [src]="'https://localhost:7247/GetImage/carousselMedia/test.mp4'" type="video/mp4">
+
+        Your browser does not support the video tag.
+        </video>
+      </ng-container>
+
+    </ng-container>
+
   </span>
-  <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel">
+  <img (click)="onRightArrowClick()" [src]="imageFlecheDroite" alt="fleche carousel droite" class="droite_carousel">
   <div  class="carousel-dot-container">
     <span *ngFor="let dot of images; let i=index" class="dot" [ngClass]="{'active':currentIndex===i}" (click)="selectImage(i)">
 

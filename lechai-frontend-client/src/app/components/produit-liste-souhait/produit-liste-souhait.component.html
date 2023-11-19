@@ -1,7 +1,7 @@
 <div ngmodel #produitaffiche class="divProduit">
 
     <aside class="asideProduit">
-      <img [src]="'../assets/image/'+image+'.png'" alt="image">
+      <img [src]="image" alt="image">
       <div class="detailProduit">
         <a routerLink="/detailsProduit/{{produit?.id_produit}}"><h3>{{produit?.nom}}</h3></a>
         <aside class="flex">
@@ -29,8 +29,8 @@
     </aside>
 
   <div class="flex">
-    <button class="coeur" (click)="erase()"><img src="assets/image/coeurNoir.png" alt="favori" ></button>
-    <button class="ajoutPanier" (click)="addProduitPanier()"><img src="assets/image/ajoutPanier.png" alt="ajoutPanier"></button>
+    <button class="coeur" (click)="erase()"><img [src]="'https://localhost:7247/GetImage/imagesAutres/coeurNoir.png'" alt="favori" ></button>
+    <button class="ajoutPanier" (click)="addProduitPanier()"><img id="test" [src]="'https://localhost:7247/GetImage/imagesAutres/ajoutPanier.png'" alt="ajoutPanier"></button>
   </div>
 
 </div>

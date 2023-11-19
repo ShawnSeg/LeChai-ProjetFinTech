@@ -134,6 +134,7 @@ section{
   .container_carousel_collab{
     position: relative;
     width: 100%;
+    margin-left:2%;
     max-height: 30em; /* Limite la hauteur de l'image */
     overflow: hidden; /* Cache le contenu qui dépasse la hauteur maximale */
     display: flex;
@@ -149,6 +150,7 @@ section{
 
     top: 50%;
     left: 2%;
+    z-index: 10;
   }
 
   .droite_carousel_collab{

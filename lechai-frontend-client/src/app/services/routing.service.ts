@@ -635,6 +635,36 @@ export class RoutingService {
     }
   }
 
+  getImage(lien:string)
+  {
+    const url = this.baseURL+"/GetImage/"+lien;
 
+    // Create a request body with the product ID to send to the backend
+    const body = { imagePath: lien };
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.get(url,{headers:headers});
+  }
+
+  getProduitsCollaborateurs(id:number)
+  {
+    const url = this.baseURL+"/Produits/GetallDetailed?CollaborateurID="+id.toString();
+
+    // Create a request body with the product ID to send to the backend
+
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.get<ProduitInterface[]>(url,{headers:headers});
+  }
 
 }

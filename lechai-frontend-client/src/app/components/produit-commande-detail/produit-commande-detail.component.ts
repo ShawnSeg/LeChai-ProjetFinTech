@@ -10,10 +10,10 @@ export class ProduitCommandeDetailComponent {
   @Input() produit?:ProduitPanier
 
 
-  image:string = ""
+  image:string = "https://localhost:7247/GetImage/"
 
   ngOnInit()
   {
-    this.image = this.produit?.Images[0].URL||""
+    this.image += this.produit?.Images[0].URL||""
   }
 }

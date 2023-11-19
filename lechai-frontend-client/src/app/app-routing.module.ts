@@ -29,6 +29,7 @@ const routes: Routes = [
   {path: 'commandes/:id', component: CommandesDetailsComponent, canActivate: [authGuard]},
   {path: "paiement", component:PaiementComponent, canActivate: [authGuard]},
   {path: "listeProduits", component:FiltresListeDeProduitsComponent},
+  {path: "listeProduits/:id_collaborateur", component:FiltresListeDeProduitsComponent},
   {path: "detailsProduit/:id", component:DetailsProduitComponent},
   {path: "listeCollaborateurs", component:FiltreListeCollaborateursComponent},
   {path: "connexion", component:ConnexionComponent},

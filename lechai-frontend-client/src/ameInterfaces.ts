@@ -99,4 +99,5 @@ export interface Compagnie{
 export interface Categorie{
   id:number,
   nom: string,
+  nomCatMere:String
 }

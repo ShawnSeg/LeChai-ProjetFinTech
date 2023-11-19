@@ -1,6 +1,10 @@
 
 /* ================================ MOBILE ======================================== */
 
+*{
+  z-index: 0;
+}
+
 @keyframes fade{
   from{
     opacity:0.4;
@@ -65,7 +69,7 @@
   top: 50%;
   left: 1em;
   cursor: pointer;
-  z-index: 40;
+  z-index: 1;
 }
 
 .droite_carousel{

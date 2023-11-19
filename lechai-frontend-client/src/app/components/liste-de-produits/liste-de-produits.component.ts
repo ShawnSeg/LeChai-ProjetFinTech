@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter } from '@angular/core';
 import { Produit } from 'src/ameInterfaces';
 import { Output } from '@angular/core';
 
+
 @Component({
   selector: 'app-liste-de-produits',
   templateUrl: './liste-de-produits.component.html',
@@ -13,6 +14,14 @@ export class ListeDeProduitsComponent {
   @Output() listeSouhait = new EventEmitter<number>(); // Event emitter for removing the product
 
   currentIndex: number = 0;
+  image:string = "https://localhost:7247/GetImage/"
+
+  ngOnInit()
+  {
+
+    this.image+=this.prod?.image[0]
+    console.log(this.image)
+  }
 
   ajoutPanier()
   {

@@ -1,14 +1,14 @@
 
 
 <div class="header">
-  <img src="assets/image/devany chai (1).png" id="titre" alt="Titre">
+  <img [src]="imageTitre" id="titre" alt="Titre">
 
   <div id="cercle">
     <a routerLink="">
-      <img id="logo"src="assets/image/logo.png" alt="logo">
+      <img id="logo" [src]="imageLogo" alt="logo">
     </a>
     <a routerLink="/panier">
-      <img class="panierMobile" src="assets/image/panier.png" alt="panier">
+      <img class="panierMobile" [src]="imagePanier" alt="panier">
     </a>
     <aside class="aside2">
       <div #menuMobile ngModel id="menuMobile" class="hide">
@@ -58,10 +58,10 @@
 
 
     <li>
-      <a routerLink="/listeSouhait"><img src="assets/image/liste_souhait.png" alt="souhait"></a>
+      <a routerLink="/listeSouhait"><img [src]="imageListeSouhait" alt="souhait"></a>
     </li>
     <li>
-      <a  routerLink="/panier"><img src="assets/image/panier.png" alt="panier"></a>
+      <a  routerLink="/panier"><img [src]="imagePanier" alt="panier"></a>
     </li>
 
   </ul>

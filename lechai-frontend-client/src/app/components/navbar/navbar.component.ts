@@ -18,6 +18,11 @@ export class NavbarComponent {
   connecter:boolean = false;
   token$!: Observable<string | null>;
 
+  imagePanier:string="https://localhost:7247/GetImage/imagesAutres/panier.png"
+  imageListeSouhait:string="https://localhost:7247/GetImage/imagesAutres/liste_souhait.png"
+  imageTitre:string="https://localhost:7247/GetImage/imagesAutres/devany chai (1).png"
+  imageLogo:string="https://localhost:7247/GetImage/imagesAutres/logo.png"
+
   private subscription: Subscription;
 
   constructor(private auth: AuthService, private router: Router, private toast: ToastService, private connexion:ConnexionService){

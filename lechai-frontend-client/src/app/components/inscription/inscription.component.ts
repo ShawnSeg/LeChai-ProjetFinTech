@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { ConnexionService } from 'src/app/services/connexion.service';
 
 @Component({
   selector: 'app-inscription',
@@ -25,7 +26,7 @@ export class InscriptionComponent {
 
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService, private connexionService:ConnexionService){
 
   }
 
@@ -79,7 +80,7 @@ export class InscriptionComponent {
           //this.toast.showToast("info", "Un courriel de confirmation vous a été envoyé.", "bottom-center", 6000);
           this.signupForm.reset();
           localStorage.setItem("token", data)
-
+          this.connexionService.setIsAbsolute(true)
           this.router.navigate([''] );
         },
         (error: HttpErrorResponse) => {

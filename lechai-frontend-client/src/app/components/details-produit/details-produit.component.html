@@ -6,9 +6,9 @@
 
   <div class="contenuProd">
     <div  class="container_carousel">
-      <img (click)="onLeftArrowClick()" src="../assets/image/fleche_gauche.svg" alt="fleche carousel gauche" class="gauche_carousel">
-      <img *ngFor="let img of produitAafficher.image; let i = index" [src]="'../assets/image/' + img + '.png'" alt="image produit" class="img_carousel" [class.hidden]="i !== currentIndex">
-      <img (click)="onRightArrowClick()" src="../assets/image/fleche_droite.svg" alt="fleche carousel droite" class="droite_carousel">
+      <img (click)="onLeftArrowClick()" [src]="'https://localhost:7247/GetImage/imagesAutres/fleche_gauche.png'" alt="fleche carousel gauche" class="gauche_carousel">
+      <img *ngFor="let img of produitAafficher.image; let i = index" [src]="'https://localhost:7247/GetImage/' + img" alt="image produit" class="img_carousel" [class.hidden]="i !== currentIndex">
+      <img (click)="onRightArrowClick()" [src]="'https://localhost:7247/GetImage/imagesAutres/fleche_droite.png'" alt="fleche carousel droite" class="droite_carousel">
     </div>
 
     <span (click)="addWishList()" class="spanSouhait">

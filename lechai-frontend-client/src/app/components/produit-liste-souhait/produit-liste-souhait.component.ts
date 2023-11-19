@@ -35,7 +35,7 @@ export class ProduitListeSouhaitComponent {
 
   selectedQuantite: number = this.produit?.quantite||0; // Property to store the selected quantity
   selectedFormats: { [key: string]: number } = {}; // Property to store selected format values
-  image:string = ""
+  image:string = "https://localhost:7247/GetImage/"
 
   constructor(private routingService:RoutingService, private toast:ToastService){
 
@@ -43,13 +43,13 @@ export class ProduitListeSouhaitComponent {
   ngOnInit(){
     console.log(this.produit)
     this.selectedQuantite= this.produit?.quantite||0;
-    this.image = this.produit?.Images[0].URL||""
+    this.image += this.produit?.Images[0].URL||""
+
   }
 
   erase(){
     if(confirm("Voulez-vous vraiment enlever ce produit de votre liste de souhait?"))
     {
-      alert(this.produit?.id)
       this.removeProduct.emit(this.produit?.id||0);
     }
   }
@@ -116,4 +116,6 @@ export class ProduitListeSouhaitComponent {
 
 
   }
+
+
 }

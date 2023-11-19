@@ -106,6 +106,7 @@ export class ModifierCompteClientComponent {
 
     if(this.modCompteClntForm.valid)
     {
+      alert(this.modCompteClntForm.get("prenom"))
       let date = new Date(this.modCompteClntForm.get('date')!.value)
       this.routingService.postChangementMDPAuthentifier(this.oldEmail, this.modCompteClntForm.get("validationActuel")!.value, this.modCompteClntForm.get('password')!.value).subscribe({
         next: (data: any) => {

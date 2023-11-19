@@ -97,7 +97,7 @@ export class CommandesDetailsComponent {
   getCommandeDetail(){
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
-      alert(id)
+
       if (id) {
         // Do something with the 'courriel' parameter
 
