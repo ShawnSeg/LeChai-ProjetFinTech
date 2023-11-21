@@ -19,6 +19,8 @@ import { MdpOublierEnvoiComponent } from './components/mdp-oublier-envoi/mdp-oub
 import { authGuard } from './auth.guard';
 import { Page404Component } from './components/page404/page404.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 
 const routes: Routes = [
@@ -40,6 +42,8 @@ const routes: Routes = [
   {path: "mdpOublierChangement", component:MdpOublierChangementComponent},
   {path: "mdpOublierEnvoi", component:MdpOublierEnvoiComponent, canActivate: [authGuard]},
   {path: "checkClient", component:VerifyUserComponent},
+  {path: "success", component:SuccessComponent},
+  {path: "cancel", component:CancelComponent},
   {path: '**', component: Page404Component},
 ];
 

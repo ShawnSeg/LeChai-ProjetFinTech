@@ -8,6 +8,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { concatMap, map, concat, reduce } from 'rxjs';
+import { StripeServiceCustomService } from 'src/app/services/stripe-service-custom.service';
 
 
 interface KeyValue<K, V> {
@@ -52,7 +53,7 @@ export class PaiementComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService, private footerPosition:FooterPositionService){
+  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService, private footerPosition:FooterPositionService, private stripeService: StripeServiceCustomService){
 
   }
 

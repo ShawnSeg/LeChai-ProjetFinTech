@@ -37,6 +37,8 @@ import { Page404Component } from './components/page404/page404.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 import { ConnexionService } from './services/connexion.service';
 import { DatePipe } from '@angular/common';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 
 
@@ -74,6 +76,8 @@ import { DatePipe } from '@angular/common';
     MdpOublierChangementComponent,
     Page404Component,
     VerifyUserComponent,
+    SuccessComponent,
+    CancelComponent,
   ],
   imports: [
     BrowserModule,

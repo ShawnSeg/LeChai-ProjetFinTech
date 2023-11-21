@@ -12,6 +12,7 @@ import { ToastService } from './toast.service';
 import { Route, Router } from '@angular/router';
 import { ConnexionService } from './connexion.service';
 import { Stripe } from '@stripe/stripe-js';
+import { StripeService } from 'ngx-stripe';
 
 @Injectable({
   providedIn: 'root'
@@ -433,7 +434,9 @@ export class RoutingService {
 
   sessionId: string = "";
 
-  async onCheckout(no_civique: number, rue: String, villeID: number) {
+
+
+  async onCheckout(no_civiquee: number, ruee: String, villeIDe: number) {
 
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
@@ -443,12 +446,13 @@ export class RoutingService {
     try {
         // Make an HTTP POST request to your server to create a Checkout Session
         const response: any = await this.http.post('https://localhost:7247/Commandes/CheckoutPanier', {
-            NoCiviqueLivraison: no_civique,
-            RueLivraison: rue,
-            VilleID: villeID
+            no_civique: no_civiquee,
+            rue: ruee,
+            VilleID: villeIDe
         },{headers:headers}).toPromise();
+        console.log(response)
 
-        this.sessionId = response.sessionId;
+        this.sessionId = response.id;
 
         // Load the Stripe library using loadStripe
         const stripe = await loadStripe("pk_test_51O1boKAHfZleTlSefhQnJ1560TcCFfAvM6FcjLWFiLJSp0JTrbU5Te0xoQ7VvjvMV6AJtxsCZaHdYj6rurxK9K0D00TxrE9Az3");
@@ -471,9 +475,43 @@ export class RoutingService {
         // Handle server request errors
         console.error('Error creating Checkout Session:', error);
     }
+
+
 }
 
+/*async onCheckout(no_civique: number, rue: String, villeID: number) {
 
+  const token = localStorage.getItem("token");
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  });
+
+
+  // Define the data you want to send to the server
+  const requestData = {
+    // Include any data needed by your server-side endpoint
+    // For example, you might include the user ID, address information, etc.
+    NoCiviqueLivraison: no_civique,
+    RueLivraison: rue,
+    VilleID: villeID
+  };
+
+
+  // Make the API call to your server
+  this.http.post('https://localhost:7247/Commandes/CheckoutPanier', requestData, { headers })
+    .subscribe((response) => {
+      // Handle the response from your server
+      console.log(response);
+
+      // If needed, you can also handle the Stripe Checkout response here
+      // Note: The actual session creation in Stripe might be asynchronous,
+      // and you may want to handle the client-side logic accordingly.
+    }, (error) => {
+      // Handle any errors that occurred during the API call
+      console.error(error);
+    });
+}*/
 
 
   UpdateChangementInfoClient(prenom:string, nom:string,dateNaissance:Date,email:string, id:number){
