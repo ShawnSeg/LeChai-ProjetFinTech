@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import { CategoriesAPI, ClientInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
+import { CategoriesAPI, ClientInterface, Couleur, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
 import { Commandes, AdresseLivraison } from 'src/shawnInterface';
 import { Observable } from 'rxjs';
 import {loadStripe} from '@stripe/stripe-js';
@@ -703,6 +703,21 @@ export class RoutingService {
     });
     // Make an HTTP POST request to add the product to the panier
     return this.http.get<ProduitInterface[]>(url,{headers:headers});
+  }
+
+  getCouleur(){
+    const url = this.baseURL+"/Couleurs/Getall";
+
+    // Create a request body with the product ID to send to the backend
+
+
+    const token = localStorage.getItem("token");
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.get<Couleur[]>(url,{headers:headers});
   }
 
 }

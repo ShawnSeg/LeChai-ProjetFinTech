@@ -68,7 +68,7 @@ export class MdpOublierChangementComponent {
   onSignup(){
     if(this.signupForm.valid)
     {
-      console.log(this.signupForm.value)
+
       // envoyer à la base de données
 
       this.routingService.postChangementMDP(this.signupForm.get("password")!.value, this.signupForm.get("token")!.value).subscribe({

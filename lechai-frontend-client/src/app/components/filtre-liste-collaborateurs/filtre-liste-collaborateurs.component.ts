@@ -1,9 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Collaborateurs, CollaborateursAPI, CompagniesAPI } from 'src/ameInterfaces';
 import { Compagnie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 @Component({
   selector: 'app-filtre-liste-collaborateurs',
@@ -11,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./filtre-liste-collaborateurs.component.scss']
 })
 export class FiltreListeCollaborateursComponent {
+  @ViewChild('filtreWeb', { static: true }) filtreWeb?: ElementRef;
 
   @ViewChild('filtreButton', { static: true }) filtreButton?: ElementRef;
   @ViewChild('filtreForm', { static: true }) filtreForm?: ElementRef;
@@ -45,14 +47,18 @@ export class FiltreListeCollaborateursComponent {
   public filtreCompagnie:String = '';
   public filteredCollabs?: Collaborateurs[];
 
-  constructor(private routingService:RoutingService, private footerPosition: FooterPositionService){
+  constructor(private routingService:RoutingService, private footerPosition: FooterPositionService, private couleurService:CouleursService, private renderer:Renderer2){
 
   }
 
   ngOnInit() {
     this.getCompagnies();
     this.routingService.callRefresh();
-
+    this.couleurService.onDataReady().subscribe(() => {
+      // Data is ready, now you can safely call getCouleurByName
+      this.getCouleur();
+    });
+    this.footerPosition.setIsAbsolute(false)
   }
 
   toggleButton():void{
@@ -172,7 +178,7 @@ export class FiltreListeCollaborateursComponent {
           }
           this.collaborators.push(collaborateur)
           this.filteredCollabs = this.collaborators;
-          console.log(data)
+
 
         }
         if(this.filteredCollabs?.length==0)
@@ -185,7 +191,7 @@ export class FiltreListeCollaborateursComponent {
         }
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
   }
@@ -210,9 +216,18 @@ export class FiltreListeCollaborateursComponent {
         this.getCollaborateurs();
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
+  }
+
+  getCouleur()
+  {
+    this.renderer.setStyle(this.filtreWeb?.nativeElement, 'border-bottom-color', this.couleurService.getCouleurByName("CouleurBordures"));
+    this.renderer.setStyle(this.filtreWeb?.nativeElement, 'border-right-color', this.couleurService.getCouleurByName("CouleurBordures"));
+
+    this.renderer.setStyle(this.filtreForm?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+
   }
 }
 

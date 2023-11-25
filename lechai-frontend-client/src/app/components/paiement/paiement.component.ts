@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import {loadStripe} from '@stripe/stripe-js';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { RoutingService } from 'src/app/services/routing.service';
 import { CommandeInterface, ProduitPanier, TypeFormatAPI } from 'src/shawnInterface';
 import { AdresseLivraison } from 'src/shawnInterface';
@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { concatMap, map, concat, reduce } from 'rxjs';
 import { StripeServiceCustomService } from 'src/app/services/stripe-service-custom.service';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 
 interface KeyValue<K, V> {
@@ -22,7 +23,7 @@ interface KeyValue<K, V> {
   styleUrls: ['./paiement.component.scss']
 })
 export class PaiementComponent {
-
+  @ViewChild('form', { static: true }) form?: ElementRef;
   @ViewChild('villeChoisie', { static: true }) villeChoisie?: ElementRef;
 
   public produits$?: ProduitPanier[] =[];
@@ -53,7 +54,7 @@ export class PaiementComponent {
   public aggregatedTaxes: { [taxName: string]: number } = {};
 
 
-  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService, private footerPosition:FooterPositionService, private stripeService: StripeServiceCustomService){
+  constructor(private http:HttpClient, private routingService: RoutingService, private toast:ToastService, private footerPosition:FooterPositionService, private stripeService: StripeServiceCustomService, private renderer:Renderer2, private couleurService:CouleursService){
 
   }
 
@@ -64,7 +65,9 @@ export class PaiementComponent {
     this.getAdresseLivraison();
     this.footerPosition.setIsAbsolute(false)
     this.routingService.callRefresh();
-
+    this.couleurService.onDataReady().subscribe(()=>{
+      this.getCouleur()
+    })
   }
 
 
@@ -161,23 +164,23 @@ export class PaiementComponent {
               }
             }
 
-            console.log(this.produits$);
+
             this.calculateTotalCost()
             this.routingService.getVilles().subscribe({
               next:(data:{[id:string]:string})=>{
                 this.villeDeservie = {}
                 this.villeDeservie = data
-                console.log(this.villeDeservie)
+
               },
               error:(error:HttpErrorResponse)=>
               {
-                console.log(error.status)
+
               }
             })
           });
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
+
       }
     });
   }
@@ -227,6 +230,11 @@ export class PaiementComponent {
     else{
       this.promoIsValide = true;
     }
+
+  }
+
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
 
   }
 }

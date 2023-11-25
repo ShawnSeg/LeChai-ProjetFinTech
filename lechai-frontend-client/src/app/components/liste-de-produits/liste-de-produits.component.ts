@@ -20,7 +20,7 @@ export class ListeDeProduitsComponent {
   {
 
     this.image+=this.prod?.image[0]
-    console.log(this.image)
+
   }
 
   ajoutPanier()

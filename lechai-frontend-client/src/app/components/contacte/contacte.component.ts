@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { ToastService } from 'src/app/services/toast.service';
@@ -9,6 +9,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Observable } from 'rxjs';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ClientInterface } from 'src/shawnInterface';
+import { CouleursService } from 'src/app/services/couleurs.service';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-contacte',
@@ -16,7 +19,7 @@ import { ClientInterface } from 'src/shawnInterface';
   styleUrls: ['./contacte.component.scss']
 })
 export class ContacteComponent {
-
+  @ViewChild('form', { static: true }) form?: ElementRef;
   sujet: string = "";
   message: string = "";
   connecter:boolean = false;
@@ -42,7 +45,7 @@ export class ContacteComponent {
     },
   ];
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService, private auth: AuthService, private footerPosition: FooterPositionService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private routingService:RoutingService, private auth: AuthService, private footerPosition: FooterPositionService, private renderer:Renderer2, private couleurService:CouleursService){
 
   }
 
@@ -68,6 +71,10 @@ export class ContacteComponent {
     this.routingService.callRefresh();
     this.courriel = ""
     this.getInfoClient();
+
+    this.couleurService.onDataReady().subscribe(()=>{
+      this.getCouleur()
+    })
 
   }
 
@@ -99,14 +106,19 @@ export class ContacteComponent {
     this.routingService.getClientInfo().subscribe({
       next:(data:ClientInterface)=>
       {
-        console.log(data)
+
         this.courriel = data.Email
       },
       error:(error:HttpErrorResponse)=>
       {
-        console.log(error.status)
+
       }
     })
+  }
+
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+
   }
 
 }

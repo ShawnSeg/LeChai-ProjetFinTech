@@ -57,7 +57,7 @@ export class DetailsProduitComponent implements OnInit{
       const productId = +params['id']; // Convertir en nombre si nécessaire
 
       // Vous pouvez maintenant utiliser 'productId' dans votre composant
-      console.log('ID du produit :', productId);
+
 
       // Vous pouvez charger le produit correspondant à l'aide de 'productId'
 
@@ -65,9 +65,7 @@ export class DetailsProduitComponent implements OnInit{
 
 
       // Vérifiez si le produit a été trouvé
-      if (!this.produitAafficher) {
-        console.log(`Aucun produit trouvé avec l'ID ${productId}`);
-      }
+
 
       this.getProduit(params['id'])
     });
@@ -137,9 +135,7 @@ export class DetailsProduitComponent implements OnInit{
       {
         formatsChoisi.push(this.selectedFormats[key])
       }
-      console.log(this.produits.id)
-      console.log(this.selectedQuantite)
-      console.log(formatsChoisi)
+
       if(this.produits&& this.selectedQuantite<this.produits?.quantite!)
       {
         this.routingService.postProduitDansPanier(this.produits.id, this.selectedQuantite, formatsChoisi).subscribe({
@@ -171,7 +167,7 @@ export class DetailsProduitComponent implements OnInit{
   getProduit(id:number){
     this.routingService.getProduitDetail(id).subscribe({
       next:(data:ProduitInterface)=>{
-        console.log(data.Nom)
+
 
         let imageProduit:string[]=[]
         for(let j = 0; j<data.Images.length;j++)
@@ -193,7 +189,6 @@ export class DetailsProduitComponent implements OnInit{
         }
         this.produitAafficher = this.produits;
 
-        console.log(this.produitAafficher)
         for(let i = 0; i<this.produits.format!.length;i++)
         {
           if(this.formats.hasOwnProperty(this.produits.format![i].TypeFormat))
@@ -209,11 +204,11 @@ export class DetailsProduitComponent implements OnInit{
         for (const key of Object.keys(this.formats)) {
           this.selectedFormats[key] = this.formats[key][0].FormatID;
       }
-        console.log(this.formats)
+
 
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
   }

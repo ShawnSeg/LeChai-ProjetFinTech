@@ -34,7 +34,7 @@ export class CarouselAccueilComponent implements OnInit {
     this.routingService.testRecevoirAPI().subscribe({
       next: (data: any) => {
         // Handle successful response here
-        console.log(data)
+
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here
@@ -82,11 +82,11 @@ export class CarouselAccueilComponent implements OnInit {
       next: (data: Carousel[]) => {
         this.images=data;
         this.images.push(this.testVideo)
-        console.log(this.images[0].Lien)
+
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here
-       console.log(error.status);
+
 
       }
     });

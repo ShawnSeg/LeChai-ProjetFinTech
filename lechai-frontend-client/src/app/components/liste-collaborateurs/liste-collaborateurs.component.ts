@@ -28,11 +28,11 @@ export class ListeCollaborateursComponent {
   {
     this.routingService.getProduitsCollaborateurs(this.collab?.id||0).subscribe({
       next:(data:ProduitInterface[])=>{
-        console.log(data)
+
         this.nbrProduit=data.length
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
   }

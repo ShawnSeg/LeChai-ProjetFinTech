@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
@@ -9,6 +9,9 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ClientInterface } from 'src/shawnInterface';
 import { DatePipe } from '@angular/common';
+import { CouleursService } from 'src/app/services/couleurs.service';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 
 @Component({
@@ -17,7 +20,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./modifier-compte-client.component.scss']
 })
 export class ModifierCompteClientComponent {
-
+  @ViewChild('form', { static: true }) form?: ElementRef;
   client: Client={
     id:0,
     nom:"",
@@ -51,7 +54,7 @@ export class ModifierCompteClientComponent {
   modCompteClntForm!: FormGroup;
   clientInfo = this.client;
 
-  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService){
+  constructor(private fb: FormBuilder, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService,  private renderer:Renderer2, private couleurService:CouleursService){
 
   }
 
@@ -59,7 +62,9 @@ export class ModifierCompteClientComponent {
 
 
     this.getInfoClient();
-
+    this.couleurService.onDataReady().subscribe(()=>{
+      this.getCouleur()
+    })
 
 
   }
@@ -156,7 +161,7 @@ export class ModifierCompteClientComponent {
   {
     this.routingService.getClientInfo().subscribe({
       next:(data:ClientInterface)=>{
-        console.log(data)
+
         this.client!.id = data.ID;
         this.client!.prenom=data.Prenom;
         this.client!.nom=data.Nom;
@@ -166,7 +171,7 @@ export class ModifierCompteClientComponent {
 
 
         this.clientInfo = this.client;
-        console.log(this.clientInfo);
+
         this.modCompteClntForm = this.fb.group({
           prenom: [this.clientInfo?.prenom, Validators.required],
           nom: [this.clientInfo?.nom, Validators.required],
@@ -190,9 +195,14 @@ export class ModifierCompteClientComponent {
       error: (error: HttpErrorResponse) => {
         // Handle error response here
         this.toast.showToast("error", 'non.', "bottom-center", 4000);
-        console.error('Status code:', error.status);
+
 
       }
     })
+  }
+
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+
   }
 }

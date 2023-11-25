@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Produit } from 'src/ameInterfaces';
 import { Categorie } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { CategoriesAPI, ProduitInterface, ProduitTestAPI } from 'src/shawnInterface';
 import { ActivatedRoute } from '@angular/router';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 @Component({
   selector: 'app-filtres-liste-de-produits',
@@ -16,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 export class FiltresListeDeProduitsComponent {
   @ViewChild('filtreButton', { static: true }) filtreButton?: ElementRef;
   @ViewChild('filtreForm', { static: true }) filtreForm?: ElementRef;
+  @ViewChild('filtreWeb', { static: true }) filtreWeb?: ElementRef;
 
   @ViewChild('filterNom', { static: true }) filterNom?: ElementRef;
   @ViewChild('filterCategorie', { static: true }) filterCategorie?: ElementRef;
@@ -71,7 +73,7 @@ export class FiltresListeDeProduitsComponent {
 
   public collaborateurID:number=0
 
-  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService, private route: ActivatedRoute){
+  constructor(private routingService:RoutingService, private toast: ToastService, private footerPosition:FooterPositionService, private route: ActivatedRoute, private couleurService:CouleursService, private renderer:Renderer2){
 
   }
 
@@ -82,16 +84,17 @@ export class FiltresListeDeProduitsComponent {
       if (params['id_collaborateur']) {
         // Parameter exists, retrieve and handle it
         this.collaborateurID = params['id_collaborateur'];
-        console.log('Parameter found:', this.collaborateurID);
+
         // Perform actions with the parameter
-      } else {
-        // No parameter, act normally
-        console.log('No parameter found.');
-        // Perform normal actions
       }
     });
     this.getAllCategorie();
     this.routingService.callRefresh();
+
+    this.couleurService.onDataReady().subscribe(() => {
+      // Data is ready, now you can safely call getCouleurByName
+      this.getCouleur();
+    });
   }
 
   groupProductsByCategory() {
@@ -257,11 +260,7 @@ export class FiltresListeDeProduitsComponent {
         {
           this.footerPosition.setIsAbsolute(false)
         }
-        console.log(this.categories)
-        console.log(this.produits)
-        console.log(this.filteredProduit)
-        console.log(this.filteredCategoryList)
-        console.log(this.filteredCat)
+
       },
       error: (error: HttpErrorResponse) => {
         // Handle error response here
@@ -318,7 +317,7 @@ export class FiltresListeDeProduitsComponent {
             nom:data[i].Nom,
             nomCatMere:data[i].CategorieMere||""
           }
-          console.log(data[i])
+
           this.categories.push(categorie)
         }
         if(this.collaborateurID==0)
@@ -329,7 +328,7 @@ export class FiltresListeDeProduitsComponent {
       },
       error:(error:HttpErrorResponse)=>
       {
-        console.log(error.status)
+
       }
     })
   }
@@ -377,16 +376,19 @@ export class FiltresListeDeProduitsComponent {
         {
           this.footerPosition.setIsAbsolute(false)
         }
-        console.log(this.categories)
-        console.log(this.produits)
-        console.log(this.filteredProduit)
-        console.log(this.filteredCategoryList)
-        console.log(this.filteredCat)
+
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
   }
+  getCouleur()
+  {
+    this.renderer.setStyle(this.filtreWeb?.nativeElement, 'border-bottom-color', this.couleurService.getCouleurByName("CouleurBordures"));
+    this.renderer.setStyle(this.filtreWeb?.nativeElement, 'border-right-color', this.couleurService.getCouleurByName("CouleurBordures"));
 
+    this.renderer.setStyle(this.filtreForm?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+
+  }
 }

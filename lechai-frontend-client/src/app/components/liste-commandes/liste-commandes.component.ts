@@ -267,7 +267,7 @@ export class ListeCommandesComponent {
     let produitParCommande:ProduitPanier[] = []
     this.routingService.getProduitParCommandes(idCommande).subscribe({
       next:(data:ProduitPanier[])=>{
-        console.log(data)
+
         return data
       }
     })

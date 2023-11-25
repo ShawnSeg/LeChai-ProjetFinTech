@@ -15,13 +15,25 @@ p{
   /* ================================ WEB ======================================== */
 
   h2{
+    font-size:xx-large;
     text-align: center;
     margin: 10em 0em 2em 0;
   }
 
   p{
+    font-size: x-large;
     text-align: justify;
     margin: 0em 15em 5em 15em;
   }
+
+  section{
+    background-color:beige;
+    margin-left:20%;
+    width:60%;
+    padding-bottom: 1px;
+    border-radius: 5%;
+  }
+
+
 
 }

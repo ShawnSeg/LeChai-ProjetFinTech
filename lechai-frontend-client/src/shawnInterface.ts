@@ -186,3 +186,9 @@ export interface ConnexionInterface{
   userID:number
 }
 
+export interface Couleur{
+  ID:number,
+  NomVariable:String,
+  Value:String,
+  Description:String
+}

@@ -4,11 +4,11 @@
   <span class="img_container">
     <ng-container *ngFor="let img of images; let i = index">
       <ng-container *ngIf="img.TypeMediaID==1">
-        <img  [src]="'../assets/image/img temp/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
+        <img  [src]="'https://localhost:7247/GetImage/carousselMedia/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
         [ngClass]="{'animate-opacity': i === currentIndex}">
       </ng-container>
       <ng-container *ngIf="img.TypeMediaID==2">
-        <video width="320" height="240" controls class="img_carousel" [class.hidden]="i !== currentIndex"
+        <video  autoplay  [muted]="'muted'" loop class="img_carousel" [class.hidden]="i !== currentIndex"
         [ngClass]="{'animate-opacity': i === currentIndex}">
           <source [src]="'https://localhost:7247/GetImage/carousselMedia/test.mp4'" type="video/mp4">
 

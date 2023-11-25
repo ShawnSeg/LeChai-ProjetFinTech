@@ -41,7 +41,7 @@ export class ProduitListeSouhaitComponent {
 
   }
   ngOnInit(){
-    console.log(this.produit)
+
     this.selectedQuantite= this.produit?.quantite||0;
     this.image += this.produit?.Images[0].URL||""
 
@@ -100,7 +100,7 @@ export class ProduitListeSouhaitComponent {
 
       }
     }
-    console.log(oldFormat)
+
     this.routingService.updateChangementFormatChoisiProduitPanier(this.produit!.id, Number(value), oldFormat).subscribe({
       next:(data:any)=>
       {

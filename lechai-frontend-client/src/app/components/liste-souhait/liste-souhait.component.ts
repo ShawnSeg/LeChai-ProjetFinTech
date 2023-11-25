@@ -24,6 +24,10 @@ export class ListeSouhaitComponent {
   ngOnInit(){
     this.getListeSouhait();
     this.routingService.callRefresh();
+    if(this.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
   }
 
   // Function to remove a product from the array
@@ -40,6 +44,7 @@ export class ListeSouhaitComponent {
           this.toastService.showToast("success", "le produit a été enlevé de la liste de souhait avec succès!", "bottom-center", 4000);
           this.produits$?.splice(index, 1);
           this.length = this.produits$?.length
+          console.log(this.length)
           if(this.length&& this.length>0)
           {
             this.footerPosition.setIsAbsolute(false)
@@ -76,7 +81,7 @@ getListeSouhait() {
   this.routingService.getListeSouhait()
     .pipe(
       switchMap((data: CommandeInterface[]) => {
-        console.log(data)
+
         return this.routingService.getProduitParCommandes(data[0].id)
           .pipe(
             concatMap((produits: ProduitPanier[]) => {
@@ -119,7 +124,7 @@ getListeSouhait() {
           }
         }
       }
-      console.log(produits);
+
       this.produits$ = produits; // Assign the array of produits to produits$
     },
     (error) => { // Handle the error here

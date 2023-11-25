@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
@@ -11,6 +11,7 @@ import { group } from '@angular/animations';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observer } from 'rxjs';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 @Component({
   selector: 'app-connexion',
@@ -18,7 +19,7 @@ import { FooterPositionService } from 'src/app/services/footer-position.service'
   styleUrls: ['./connexion.component.scss']
 })
 export class ConnexionComponent implements OnInit {
-
+  @ViewChild('form', { static: true }) form?: ElementRef;
   passType: string = "password";
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash";
@@ -30,7 +31,7 @@ export class ConnexionComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService, private http:HttpClient, private footerPosition:FooterPositionService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router,  private routingSevice:RoutingService, private http:HttpClient, private footerPosition:FooterPositionService, private renderer:Renderer2, private couleurService:CouleursService){
 
 
   }
@@ -42,6 +43,9 @@ export class ConnexionComponent implements OnInit {
     })
     this.routingSevice.callRefresh();
     this.footerPosition.setIsAbsolute(false)
+    this.couleurService.onDataReady().subscribe(()=>{
+      this.getCouleur()
+    })
   }
 
   hideShowPass(){
@@ -103,5 +107,8 @@ export class ConnexionComponent implements OnInit {
     }
   }
 
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
 
+  }
 }

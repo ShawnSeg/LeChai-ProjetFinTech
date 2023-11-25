@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Collaborateurs, CollaborateursAPI } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 @Component({
   selector: 'app-carousel-collaborateur-accueil',
@@ -9,7 +10,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./carousel-collaborateur-accueil.component.scss']
 })
 export class CarouselCollaborateurAccueilComponent {
-
+  @ViewChild('section', { static: true }) section?: ElementRef;
   collaborators: Collaborateurs[] = [
     {
       id:1,
@@ -41,11 +42,14 @@ export class CarouselCollaborateurAccueilComponent {
   imageFlecheGauche:string="https://localhost:7247/GetImage/imagesAutres/fleche_gauche.png"
   imageFlecheDroite:string="https://localhost:7247/GetImage/imagesAutres/fleche_droite.png"
 
-  constructor(private routingService:RoutingService){}
+  constructor(private routingService:RoutingService, private couleurService:CouleursService, private renderer:Renderer2){}
 
   ngOnInit(): void {
     this.getCollaborateurs();
-
+    this.couleurService.onDataReady().subscribe(() => {
+      // Data is ready, now you can safely call getCouleurByName
+      this.getCouleur();
+    });
   }
 
   // Méthode pour changer d'image
@@ -105,13 +109,20 @@ export class CarouselCollaborateurAccueilComponent {
         this.startCarousel(); // Démarre le carrousel automatique au chargement de la page
       },
       error:(error:HttpErrorResponse)=>{
-        console.log(error.status)
+
       }
     })
 
   }
   selectCollaborateur(i:number){
     this.currentIndex = i;
+  }
+
+  getCouleur()
+  {
+    this.renderer.setStyle(this.section?.nativeElement, 'border-bottom-color', this.couleurService.getCouleurByName("CouleurBordures"));
+    this.renderer.setStyle(this.section?.nativeElement, 'border-right-color', this.couleurService.getCouleurByName("CouleurBordures"));
+
   }
 }
 

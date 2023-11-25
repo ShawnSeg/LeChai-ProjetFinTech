@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import ValidationInput from 'src/app/helpers/validationInput';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RoutingService } from 'src/app/services/routing.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ConnexionService } from 'src/app/services/connexion.service';
+import { CouleursService } from 'src/app/services/couleurs.service';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-inscription',
@@ -15,7 +18,7 @@ import { ConnexionService } from 'src/app/services/connexion.service';
   styleUrls: ['./inscription.component.scss']
 })
 export class InscriptionComponent {
-
+  @ViewChild('form', { static: true }) form?: ElementRef;
   passType: string = "password";
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash";
@@ -26,7 +29,7 @@ export class InscriptionComponent {
 
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private footerPosition:FooterPositionService, private connexionService:ConnexionService){
+  constructor(private fb: FormBuilder, private auth: AuthService, private toast: ToastService, private router: Router, private routingService:RoutingService, private connexionService:ConnexionService, private routingSevice:RoutingService, private http:HttpClient, private footerPosition:FooterPositionService, private renderer:Renderer2, private couleurService:CouleursService){
 
   }
 
@@ -43,6 +46,10 @@ export class InscriptionComponent {
     });
     this.routingService.callRefresh();
     this.footerPosition.setIsAbsolute(false)
+
+    this.couleurService.onDataReady().subscribe(()=>{
+      this.getCouleur()
+    })
   }
 
   passwordMatchValidator(group: FormGroup) {
@@ -72,7 +79,7 @@ export class InscriptionComponent {
   onSignup(){
     if(this.signupForm.valid)
     {
-      console.log(this.signupForm.value)
+
 
       this.routingService.inscription(this.signupForm.get('prenom')!.value, this.signupForm.get('nom')!.value,this.signupForm.get('date')!.value,this.signupForm.get('courriel')!.value,this.signupForm.get('password')!.value).subscribe(
         (data: any) => {
@@ -113,5 +120,10 @@ export class InscriptionComponent {
 
   sendInfo(prenom:string, nom:string, date:Date, courrie:string, password:string){
     this.routingService.inscription(prenom, nom, date, courrie, password);
+  }
+
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+
   }
 }

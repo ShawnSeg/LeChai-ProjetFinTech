@@ -36,7 +36,10 @@ export class PanierComponent {
   ngOnInit(){
     this.getProduitPanier();
     this.routingService.callRefresh();
-
+    if(this.produits$?.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
   }
 
   footerPosCheck(){
@@ -169,6 +172,10 @@ export class PanierComponent {
           this.produits$?.splice(index, 1);
           this.calculateTotalCost(); // Recalculate the total cost
           this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+          if(this.produits$?.length==0)
+          {
+            this.footerPosition.setIsAbsolute(true)
+          }
         },
         (error: HttpErrorResponse) => {
           // Handle error response here
@@ -246,7 +253,7 @@ export class PanierComponent {
               }
             }
 
-            console.log(this.produits$);
+
             this.calculateTotalCost()
             this.footerPosCheck()
           });

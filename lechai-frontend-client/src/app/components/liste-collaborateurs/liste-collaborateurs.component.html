@@ -2,21 +2,23 @@
 
   <div class="collab">
     <div class="teteCollab">
-      <img [src]="image" alt="collab 1">
+      <img [src]="image" alt="collab 1" id="image_coll">
       <div class="entete">
         <h3>{{collab?.prenom}} {{collab?.nom}}</h3>
 
-        <div *ngFor="let socialLink of collab?.socialLinks" class="lienCollab">
-          <a href="{{ socialLink.Liens }}" target="_blank">
-            <img [src]="'https://localhost:7247/GetImage/imagesAutres/'+socialLink.ReseauxSociauxNom+'.png'" alt="facebook" class="collab_FB"></a>
+        <div class="texteCollab">
+          <p>{{collab?.description}}</p>
+          <p id="nbrProduit">Nbr de produits: {{nbrProduit}}</p>
+          <a *ngIf="nbrProduit>0" routerLink="/listeProduits/{{collab?.id}}" id="lienProduits">Voir ses produits</a>
         </div>
-        <p>Nbr de produits: {{nbrProduit}}</p>
-        <a *ngIf="nbrProduit>0" routerLink="/listeProduits/{{collab?.id}}" class="lienProduits">Voir ses produits</a>
+
       </div>
     </div>
 
-    <div class="texteCollab">
-      <p>{{collab?.description}}</p>
+
+    <div *ngFor="let socialLink of collab?.socialLinks" class="lienCollab">
+      <a href="{{ socialLink.Liens }}" target="_blank">
+        <img [src]="'https://localhost:7247/GetImage/imagesAutres/'+socialLink.ReseauxSociauxNom+'.png'" alt="facebook" id="collab_FB"></a>
     </div>
   </div>
 </section>

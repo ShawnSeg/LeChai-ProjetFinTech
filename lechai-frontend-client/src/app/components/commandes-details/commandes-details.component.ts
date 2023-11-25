@@ -104,12 +104,12 @@ export class CommandesDetailsComponent {
         this.routingService.getCommandesDetail(id).subscribe({
           next:(data:CommandeInterface)=>{
              this.commande = data
-             console.log(data)
+
              this.routingService.getProduitParCommandes(this.commande.id).subscribe({
               next:(data:ProduitPanier[])=>{
-                console.log(data)
+
                 this.commande.produitsAchetes=data
-                console.log(this.commande)
+
                 this.calculateTotalCost();
               }
              })
@@ -117,7 +117,7 @@ export class CommandesDetailsComponent {
           },
 
           error:(error:HttpErrorResponse)=>{
-            console.log(error.status)
+
           }
         })
       }

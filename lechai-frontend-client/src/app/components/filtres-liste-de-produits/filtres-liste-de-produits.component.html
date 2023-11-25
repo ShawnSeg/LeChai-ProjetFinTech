@@ -1,6 +1,6 @@
 
   <div class="mobile">
-    <button #filtreButton ngModel class="filtreButton" (click)="toggleButton()">Filtrer <img src="assets/image/filtre.png" alt=""></button>
+    <button #filtreButton ngModel class="filtreButton" (click)="toggleButton()">Filtrer <img [src]="'https://localhost:7247/GetImage/imagesAutres/filtre.png'" alt=""></button>
     <aside #filtreForm ngModel class="filtreForm hide">
 
       <h3>Filtres </h3>
@@ -55,7 +55,7 @@
 
     <div class="flex conteneur-web">
 
-      <aside class="filtreFormWeb">
+      <aside class="filtreFormWeb" #filtreWeb ngModel>
         <h2>Filtres </h2>
 
         <div class="filtre">

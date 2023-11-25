@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastService } from './services/toast.service';
-
+import { CouleursService } from './services/couleurs.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,7 +13,7 @@ export class AppComponent {
   toastType = "";
   toastPosition = "";
 
-  constructor(private toast: ToastService) {
+  constructor(private toast: ToastService, private couleurService:CouleursService) {
 
   }
 
@@ -29,6 +29,14 @@ export class AppComponent {
         this.toastMsg = msg;
       }
     })
+
+    this.couleurService.getCouleursBD();
+    this.couleurService.onDataReady().subscribe(() => {
+      // Data is ready, now you can proceed to initialize other components
+      // For example, trigger the initialization of NavbarComponent
+      this.initializeNavbarComponent();
+    });
+
   }
 
   closeToast() {
@@ -37,5 +45,9 @@ export class AppComponent {
 
   onActive(){
     window.scroll(0, 0);
+  }
+
+  private initializeNavbarComponent() {
+    // Initialize NavbarComponent or trigger whatever logic you need
   }
 }

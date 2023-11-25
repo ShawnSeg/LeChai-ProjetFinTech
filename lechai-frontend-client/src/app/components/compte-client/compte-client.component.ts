@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { Client } from 'src/ameInterfaces';
 import { RoutingService } from 'src/app/services/routing.service';
 import { FooterPositionService } from 'src/app/services/footer-position.service';
 import { ClientInterface } from 'src/shawnInterface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CouleursService } from 'src/app/services/couleurs.service';
 
 @Component({
   selector: 'app-compte-client',
@@ -11,6 +12,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./compte-client.component.scss']
 })
 export class CompteClientComponent {
+  @ViewChild('form', { static: true }) form?: ElementRef;
 
   client: Client =
     {
@@ -28,7 +30,7 @@ export class CompteClientComponent {
       codePostal:'J2B J4H',
     };
 
-  constructor(private routingService : RoutingService, private footerPosition:FooterPositionService)
+  constructor(private routingService : RoutingService, private footerPosition:FooterPositionService, private couleurService:CouleursService, private renderer:Renderer2)
   {
 
   }
@@ -37,7 +39,12 @@ export class CompteClientComponent {
   {
     this.getClientInfo();
     this.routingService.callRefresh();
-    this.footerPosition.setIsAbsolute(false)
+    this.footerPosition.setIsAbsolute(true)
+
+    this.couleurService.onDataReady().subscribe(() => {
+      // Data is ready, now you can safely call getCouleurByName
+      this.getCouleur();
+    });
   }
 
   getClientInfo()
@@ -61,5 +68,7 @@ export class CompteClientComponent {
     })
   }
 
-
+  getCouleur(){
+    this.renderer.setStyle(this.form?.nativeElement, 'background-color', this.couleurService.getCouleurByName("CouleurBackForm"));
+  }
 }

@@ -72,9 +72,7 @@ export class ProduitPanierComponent {
 
       }
     }
-    console.log(this.produit?.id)
-    console.log(value)
-    console.log(oldFormat)
+
 
     this.changeFormatSelected.emit({ productId: this.produit?.id || 0, selected_format: Number(value), old_format:oldFormat}); // Pass the product ID to the parent
   }
