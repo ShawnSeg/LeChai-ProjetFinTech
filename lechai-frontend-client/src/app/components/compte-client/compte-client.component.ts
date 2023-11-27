@@ -39,7 +39,7 @@ export class CompteClientComponent {
   {
     this.getClientInfo();
     this.routingService.callRefresh();
-    this.footerPosition.setIsAbsolute(true)
+    this.footerPosition.setIsAbsolute(false)
 
     this.couleurService.onDataReady().subscribe(() => {
       // Data is ready, now you can safely call getCouleurByName
