@@ -8,7 +8,7 @@ $headerHeight:3rem;
 *, *::before, *::after{
   font-family: "ADLaMDisplay";
   box-sizing: border-box;
-
+  z-index: 9999;
 }
 
 a{

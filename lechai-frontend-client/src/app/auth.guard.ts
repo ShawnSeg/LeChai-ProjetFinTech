@@ -9,7 +9,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const toast = inject(ToastService);
 
 
-  console.log('token', token);
 
   if(token)
   {

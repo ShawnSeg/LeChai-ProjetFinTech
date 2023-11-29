@@ -17,7 +17,7 @@ export class CouleursService {
     this.routingService.getCouleur().subscribe({
       next: (data: Couleur[]) => {
         this.CouleursSites = data;
-        console.log(this.CouleursSites);
+
 
         // Emit a signal to indicate that data is ready
         this.couleursSubject.next();

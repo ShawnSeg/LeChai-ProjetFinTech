@@ -107,7 +107,7 @@ export class RoutingService {
   }
 
   getProduitParCommandes(id:number){
-    console.log(id)
+
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -310,7 +310,6 @@ export class RoutingService {
   postLSVersPanier(productId: number){
     // Define the URL of your backend API endpoint for adding a product to the panier
     const url = this.baseURL+"/ProduitsParCommande/MoveToPanier";
-    console.log(productId)
     // Create a request body with the product ID to send to the backend
     const body = {
       id : productId,
@@ -330,7 +329,7 @@ export class RoutingService {
   postProduitDansPanier(productId: number, quantite:number=1, format_choisi:number[]=[]){
     // Define the URL of your backend API endpoint for adding a product to the panier
     const url = this.baseURL+"/ProduitsParCommande/InsertPanier";
-    console.log(productId)
+
     // Create a request body with the product ID to send to the backend
     const body = {
       Token : localStorage.getItem("token"),
@@ -450,7 +449,7 @@ export class RoutingService {
             rue: ruee,
             VilleID: villeIDe
         },{headers:headers}).toPromise();
-        console.log(response)
+
 
         this.sessionId = response.id;
 
@@ -465,11 +464,11 @@ export class RoutingService {
 
             if (error) {
                 // Handle any errors that occurred during Checkout initiation
-                console.error('Error initiating Stripe Checkout:', error);
+
             }
         } else {
             // Handle the case where Stripe is null
-            console.error('Stripe is not available.');
+
         }
     } catch (error) {
         // Handle server request errors

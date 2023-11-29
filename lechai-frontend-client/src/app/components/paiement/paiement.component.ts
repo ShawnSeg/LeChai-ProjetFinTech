@@ -195,8 +195,6 @@ export class PaiementComponent {
     if( this.validerForm())
     {
       const villetest = (this.villeChoisie?.nativeElement as HTMLSelectElement).value;
-      alert(this.no_civique)
-      alert(this.rue)
       this.routingService.onCheckout(Number(this.no_civique), this.rue, Number(villetest))
 
     }

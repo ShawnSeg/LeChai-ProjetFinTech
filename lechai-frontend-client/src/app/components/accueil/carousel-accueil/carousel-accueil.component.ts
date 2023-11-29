@@ -55,7 +55,7 @@ export class CarouselAccueilComponent implements OnInit {
   startCarousel(): void {
     this.intervalId = setInterval(() => {
       this.changeImg(1); // Change l'image automatiquement
-    }, 10000);
+    }, 6000);
   }
 
   // Méthode pour arrêter le carrousel automatique
