@@ -10,7 +10,7 @@ export class ProduitCommandeDetailComponent {
   @Input() produit?:ProduitPanier
 
 
-  image:string = "https://localhost:7247/GetImage/"
+  image:string = "https://apilechai.azurewebsites.net/GetImage/"
 
   ngOnInit()
   {

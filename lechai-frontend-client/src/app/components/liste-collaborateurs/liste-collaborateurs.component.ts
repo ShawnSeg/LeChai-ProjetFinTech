@@ -13,7 +13,7 @@ import { CategoriesAPI, ProduitInterface, ProduitTestAPI } from 'src/shawnInterf
 export class ListeCollaborateursComponent {
   @Input() collab?:Collaborateurs
 
-  image:string="https://localhost:7247/GetImage/"
+  image:string="https://apilechai.azurewebsites.net/GetImage/"
   nbrProduit = 0;
 
   constructor(private routingService:RoutingService){}

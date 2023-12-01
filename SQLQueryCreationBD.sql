@@ -1,10 +1,5 @@
-use master
-GO
-DROP DATABASE leChai
 
-CREATE DATABASE leChai;
-GO
-use leChai;
+use leChaiData;
 
 
 /*** CREATE TABLE ***/

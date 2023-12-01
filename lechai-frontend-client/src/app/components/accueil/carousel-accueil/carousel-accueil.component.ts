@@ -14,14 +14,14 @@ export class CarouselAccueilComponent implements OnInit {
   intervalId: any;
   timeInterval: number = 0;
 
-  imageFlecheGauche:string="https://localhost:7247/GetImage/imagesAutres/fleche_gauche.png"
-  imageFlecheDroite:string="https://localhost:7247/GetImage/imagesAutres/fleche_droite.png"
+  imageFlecheGauche:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/fleche_gauche.png"
+  imageFlecheDroite:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/fleche_droite.png"
 
   selectedIndex = 0;
 
   testVideo:Carousel={ID:4, Lien:"test", Nom:"testVidéo", TypeMediaID:2, TypeMedia:"Video"}
 
-  lienMedia:string="https://localhost:7247/GetImage/"
+  lienMedia:string="https://apilechai.azurewebsites.net/GetImage/"
 
   constructor(private routingService:RoutingService){
 

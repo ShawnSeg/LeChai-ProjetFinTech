@@ -19,7 +19,7 @@ import { StripeService } from 'ngx-stripe';
 })
 export class RoutingService {
 
-  public baseURL = "https://localhost:7247";
+  public baseURL = "https://apilechai.azurewebsites.net";
 
   private routesPermises:String[] = []
 

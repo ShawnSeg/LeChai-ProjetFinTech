@@ -8,7 +8,7 @@
     <div *ngFor="let collaborator of collaborators; let i = index" class="container_carousel_collab fade" [class.hidden]="i !== currentIndex">
       <!-- Contenu du collaborateur -->
       <span class="img_collab">
-        <img [src]="'https://localhost:7247/GetImage/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
+        <img [src]="'https://apilechai.azurewebsites.net/GetImage/' + collaborator.image" alt="image carousel temporaire" class="img_collab">
       </span>
       <span class="desc_coll_carousel">
         <h3>{{ collaborator.prenom + " " + collaborator.nom}}</h3>
@@ -21,7 +21,7 @@
 
           <span *ngFor="let socialLink of collaborator.socialLinks" class="collab_lien">
             <a href="{{ socialLink.Liens }}" target="_blank">
-              <img [src]="'https://localhost:7247/GetImage/imagesAutres/'+ socialLink.ReseauxSociauxNom +'.png'" alt="Facebook" class="collab_lienImg">
+              <img [src]="'https://apilechai.azurewebsites.net/GetImage/imagesAutres/'+ socialLink.ReseauxSociauxNom +'.png'" alt="Facebook" class="collab_lienImg">
               </a>
           </span>
 

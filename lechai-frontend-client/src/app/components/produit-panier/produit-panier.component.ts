@@ -34,7 +34,7 @@ export class ProduitPanierComponent {
   @ViewChild('typeFormat', { static: true }) formatTypeLabel?: ElementRef;
 
 
-  image:string = "https://localhost:7247/GetImage/"
+  image:string = "https://apilechai.azurewebsites.net/GetImage/"
 
   ngOnInit()
   {

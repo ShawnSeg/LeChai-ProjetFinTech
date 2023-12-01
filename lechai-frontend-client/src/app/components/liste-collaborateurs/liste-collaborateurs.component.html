@@ -18,7 +18,7 @@
 
     <div *ngFor="let socialLink of collab?.socialLinks" class="lienCollab">
       <a href="{{ socialLink.Liens }}" target="_blank">
-        <img [src]="'https://localhost:7247/GetImage/imagesAutres/'+socialLink.ReseauxSociauxNom+'.png'" alt="facebook" id="collab_FB"></a>
+        <img [src]="'https://apilechai.azurewebsites.net/GetImage/imagesAutres/'+socialLink.ReseauxSociauxNom+'.png'" alt="facebook" id="collab_FB"></a>
     </div>
   </div>
 </section>

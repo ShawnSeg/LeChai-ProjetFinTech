@@ -35,7 +35,7 @@ export class ProduitListeSouhaitComponent {
 
   selectedQuantite: number = this.produit?.quantite||0; // Property to store the selected quantity
   selectedFormats: { [key: string]: number } = {}; // Property to store selected format values
-  image:string = "https://localhost:7247/GetImage/"
+  image:string = "https://apilechai.azurewebsites.net/GetImage/"
 
   constructor(private routingService:RoutingService, private toast:ToastService){
 

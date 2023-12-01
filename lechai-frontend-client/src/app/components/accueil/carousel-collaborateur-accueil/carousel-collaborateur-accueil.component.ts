@@ -39,8 +39,8 @@ export class CarouselCollaborateurAccueilComponent {
   intervalId: any;
   timeInterval: number = 0;
 
-  imageFlecheGauche:string="https://localhost:7247/GetImage/imagesAutres/fleche_gauche.png"
-  imageFlecheDroite:string="https://localhost:7247/GetImage/imagesAutres/fleche_droite.png"
+  imageFlecheGauche:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/fleche_gauche.png"
+  imageFlecheDroite:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/fleche_droite.png"
 
   constructor(private routingService:RoutingService, private couleurService:CouleursService, private renderer:Renderer2){}
 

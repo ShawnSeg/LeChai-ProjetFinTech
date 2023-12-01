@@ -14,7 +14,7 @@ export class ListeDeProduitsComponent {
   @Output() listeSouhait = new EventEmitter<number>(); // Event emitter for removing the product
 
   currentIndex: number = 0;
-  image:string = "https://localhost:7247/GetImage/"
+  image:string = "https://apilechai.azurewebsites.net/GetImage/"
 
   ngOnInit()
   {

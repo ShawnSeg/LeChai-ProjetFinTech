@@ -21,10 +21,10 @@ export class NavbarComponent {
   connecter:boolean = false;
   token$!: Observable<string | null>;
 
-  imagePanier:string="https://localhost:7247/GetImage/imagesAutres/panier.png"
-  imageListeSouhait:string="https://localhost:7247/GetImage/imagesAutres/liste_souhait.png"
-  imageTitre:string="https://localhost:7247/GetImage/imagesAutres/devany chai (1).png"
-  imageLogo:string="https://localhost:7247/GetImage/imagesAutres/logo.png"
+  imagePanier:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/panier.png"
+  imageListeSouhait:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/liste_souhait.png"
+  imageTitre:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/devany chai (1).png"
+  imageLogo:string="https://apilechai.azurewebsites.net/GetImage/imagesAutres/logo.png"
 
   private subscription: Subscription;
 
