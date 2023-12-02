@@ -19,7 +19,7 @@ import { StripeService } from 'ngx-stripe';
 })
 export class RoutingService {
 
-  public baseURL = "https://apilechai.azurewebsites.net";
+  public baseURL = "https://localhost:7247";
 
   private routesPermises:String[] = []
 
@@ -437,6 +437,7 @@ export class RoutingService {
 
   async onCheckout(no_civiquee: number, ruee: String, villeIDe: number) {
 
+    console.log(no_civiquee, ruee, villeIDe)
     const token = localStorage.getItem("token");
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
