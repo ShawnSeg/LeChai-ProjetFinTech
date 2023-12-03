@@ -4,7 +4,7 @@
   <span class="img_container">
     <ng-container *ngFor="let img of images; let i = index">
       <ng-container *ngIf="img.TypeMediaID==1">
-        <img  [src]="'https://apilechai.azurewebsites.net' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
+        <img  [src]="'https://apilechai.azurewebsites.net/' + img.Lien" alt="image carousel temporaire" class="img_carousel" [class.hidden]="i !== currentIndex"
         [ngClass]="{'animate-opacity': i === currentIndex}">
       </ng-container>
       <ng-container *ngIf="img.TypeMediaID==2">
