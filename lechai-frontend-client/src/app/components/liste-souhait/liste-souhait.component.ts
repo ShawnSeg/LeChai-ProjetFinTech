@@ -28,6 +28,10 @@ export class ListeSouhaitComponent {
     {
       this.footerPosition.setIsAbsolute(true)
     }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
   }
 
   // Function to remove a product from the array
