@@ -107,7 +107,7 @@ export class PanierComponent {
           (data: any) => {
             // Handle successful response here
 
-            this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+            this.toast.showToast("success", "Le quantité a été changé avec succès!", "bottom-center", 4000)
           },
           (error: HttpErrorResponse) => {
             // Handle error response here
@@ -140,7 +140,7 @@ export class PanierComponent {
           (data: any) => {
             // Handle successful response here
 
-            this.toast.showToast("success", "Le produit a été enlevé avec succès!", "bottom-center", 4000)
+            this.toast.showToast("success", "Le format a été changé avec succès!", "bottom-center", 4000)
           },
           (error: HttpErrorResponse) => {
             // Handle error response here
