@@ -58,7 +58,7 @@ export class ProduitPanierComponent {
   }
   changeProductFormatSelected(value:String, key:string,)
   {
-    alert(value)
+
 
     const formatSelected = this.formatSelected?.nativeElement as HTMLSelectElement;
     const typeFormat = this.formatTypeLabel?.nativeElement as HTMLElement;
