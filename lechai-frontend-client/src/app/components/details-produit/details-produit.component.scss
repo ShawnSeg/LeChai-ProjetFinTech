@@ -197,10 +197,9 @@
     }
 
     .img_carousel{
-      max-width: 100%; /* Assurez-vous que les images ne dépassent pas la largeur du conteneur */
-      max-height: 50%;
-      height: 50%;
-      margin-left:5%;
+      aspect-ratio: 1;
+      height: 5rem;
+      margin-left:3rem;
     }
 
     .webRight{
@@ -245,7 +244,7 @@
   }
 
   .droite_carousel{
-    margin-left: 10%;
+    margin-left: 8rem;
   }
 
   .videoProd{
