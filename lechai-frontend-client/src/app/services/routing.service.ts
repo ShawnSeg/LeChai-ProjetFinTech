@@ -435,7 +435,7 @@ export class RoutingService {
 
 
 
-  async onCheckout(no_civiquee: number, ruee: String, villeIDe: number) {
+  async onCheckout(no_civiquee: number, ruee: String, villeIDe: number, code_postale:String) {
 
     console.log(no_civiquee, ruee, villeIDe)
     const token = localStorage.getItem("token");
@@ -448,7 +448,8 @@ export class RoutingService {
         const response: any = await this.http.post('https://localhost:7247/Commandes/CheckoutPanier', {
             no_civique: no_civiquee,
             rue: ruee,
-            VilleID: villeIDe
+            VilleID: villeIDe,
+            code_postal:code_postale
         },{headers:headers}).toPromise();
 
 
@@ -718,6 +719,22 @@ export class RoutingService {
     });
     // Make an HTTP POST request to add the product to the panier
     return this.http.get<Couleur[]>(url,{headers:headers});
+  }
+
+  putSuccess(){
+    const url = this.baseURL+"/Commandes/ConfirmPayment";
+
+    // Create a request body with the product ID to send to the backend
+
+
+    const token = localStorage.getItem("token");
+    alert(token)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    // Make an HTTP POST request to add the product to the panier
+    return this.http.put(url,{},{headers:headers});
   }
 
 }
