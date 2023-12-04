@@ -19,7 +19,7 @@ import { StripeService } from 'ngx-stripe';
 })
 export class RoutingService {
 
-  public baseURL = "https://clientlechai.azurewebsites.net";
+  public baseURL = "https://apilechai.azurewebsites.net";
 
   private routesPermises:String[] = []
 
@@ -29,7 +29,7 @@ export class RoutingService {
   //Voir avec amélie comment elle stock le id client
 
   testAPI() {
-    return this.http.get<ApiResponse>("https://clientlechai.azurewebsites.net/testProduit");
+    return this.http.get<ApiResponse>("https://apilechai.azurewebsites.net/testProduit");
   }
   getRoutesPermisesClients(): void{
     //Store les routes que les clients pourront utiliser
@@ -445,7 +445,7 @@ export class RoutingService {
     });
     try {
         // Make an HTTP POST request to your server to create a Checkout Session
-        const response: any = await this.http.post('https://clientlechai.azurewebsites.net/Commandes/CheckoutPanier', {
+        const response: any = await this.http.post('https://apilechai.azurewebsites.net/Commandes/CheckoutPanier', {
             no_civique: no_civiquee,
             rue: ruee,
             VilleID: villeIDe,
@@ -500,7 +500,7 @@ export class RoutingService {
 
 
   // Make the API call to your server
-  this.http.post('https://clientlechai.azurewebsites.net/Commandes/CheckoutPanier', requestData, { headers })
+  this.http.post('https://apilechai.azurewebsites.net/Commandes/CheckoutPanier', requestData, { headers })
     .subscribe((response) => {
       // Handle the response from your server
       console.log(response);
