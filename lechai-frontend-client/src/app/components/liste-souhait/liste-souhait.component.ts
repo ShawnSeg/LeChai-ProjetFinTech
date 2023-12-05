@@ -24,14 +24,7 @@ export class ListeSouhaitComponent {
   ngOnInit(){
     this.getListeSouhait();
     this.routingService.callRefresh();
-    if(this.length==0)
-    {
-      this.footerPosition.setIsAbsolute(false)
-    }
-    else
-    {
-      this.footerPosition.setIsAbsolute(false)
-    }
+
   }
 
   // Function to remove a product from the array
@@ -130,6 +123,14 @@ getListeSouhait() {
       }
 
       this.produits$ = produits; // Assign the array of produits to produits$
+      if(this.produits$.length==0)
+    {
+      this.footerPosition.setIsAbsolute(true)
+    }
+    else
+    {
+      this.footerPosition.setIsAbsolute(false)
+    }
     },
     (error) => { // Handle the error here
       console.error('Error fetching products:', error);
