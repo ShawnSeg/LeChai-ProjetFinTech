@@ -126,7 +126,7 @@
 }
 
 .gauche_carousel{
-  width: 4%;
+  width: 10%;
   position: absolute;
   z-index: 5;
   left: 1em;
@@ -134,8 +134,8 @@
 }
 
 .droite_carousel{
-  width: 4%;
-  position: absolute;
+  width: 10%;
+
   z-index: 5;
   left: 23em;
   cursor: pointer;
@@ -200,7 +200,8 @@
       max-width: 100%; /* Assurez-vous que les images ne dépassent pas la largeur du conteneur */
       max-height: 50%;
       height: 50%;
-      margin-left:5%;
+      width:60%;
+      margin-left:30%;
     }
 
     .webRight{
@@ -239,8 +240,8 @@
 
   .container_carousel{
     position: absolute;
-    max-width: 20%;
-    top:10%;
+    max-width: 30%;
+    left:15%;
 
   }
 
