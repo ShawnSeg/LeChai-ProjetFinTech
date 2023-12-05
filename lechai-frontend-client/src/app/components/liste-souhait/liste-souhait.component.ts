@@ -26,7 +26,7 @@ export class ListeSouhaitComponent {
     this.routingService.callRefresh();
     if(this.length==0)
     {
-      this.footerPosition.setIsAbsolute(true)
+      this.footerPosition.setIsAbsolute(false)
     }
     else
     {
