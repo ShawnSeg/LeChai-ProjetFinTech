@@ -728,7 +728,7 @@ export class RoutingService {
 
 
     const token = localStorage.getItem("token");
-    alert(token)
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

@@ -74,7 +74,7 @@ export class ProduitListeSouhaitComponent {
     const quantiteProduit = this.quantiteProduit?.nativeElement as HTMLInputElement;
     let quantite = quantiteProduit.value
     let quantiteNew = parseInt(quantite)
-    alert(quantiteNew)
+
     this.routingService.updateChangementQuantiteProduitPanier(this.produit!.id, quantiteNew).subscribe({
       next:(data:any)=>
       {
